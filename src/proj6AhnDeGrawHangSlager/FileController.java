@@ -304,7 +304,7 @@ public class FileController {
         }
 
         // creation of the codeArea
-        JavaCodeArea codeArea = new JavaCodeArea();
+        JavaCodeAreas codeArea = new JavaCodeAreas();
         codeArea.setOnKeyPressed(event -> markFileAsSaved());
         codeArea.replaceText(content);
         codeArea.setParagraphGraphicFactory(LineNumberFactory.get(codeArea));

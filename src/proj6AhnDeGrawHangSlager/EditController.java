@@ -129,7 +129,7 @@ public class EditController {
     public void handleMatchBracketOrParen() {
 
         // get in-focus code area
-        JavaCodeArea curJavaCodeArea = getCurJavaCodeArea();
+        JavaCodeAreas curJavaCodeArea = getCurJavaCodeArea();
 
         // get any highlighted text in the code area
         String highlightedText = curJavaCodeArea.getSelectedText();
@@ -309,7 +309,7 @@ public class EditController {
      */
     public void toggleSingleLineComment() {
 
-        JavaCodeArea curCodeArea = getCurJavaCodeArea();
+        JavaCodeAreas curCodeArea = getCurJavaCodeArea();
 
         // position caret at start of line
         curCodeArea.lineStart(SelectionPolicy.ADJUST);
@@ -347,7 +347,7 @@ public class EditController {
         caretIdxStart = curCodeArea.getCaretPosition();
     }
 
-    private void getFullSelectedText(JavaCodeArea curCodeArea){
+    private void getFullSelectedText(JavaCodeAreas curCodeArea){
         if (selectedText.equals("")) {
             curCodeArea.selectLine();
             selectedText = curCodeArea.getSelectedText();
@@ -396,7 +396,7 @@ public class EditController {
      * undoes a "layer" of commenting (pair of forward slashes "//") if there >= one
      */
     public void handleCommenting(){
-        JavaCodeArea curCodeArea = getCurJavaCodeArea();
+        JavaCodeAreas curCodeArea = getCurJavaCodeArea();
 
         selectedText = curCodeArea.getSelectedText();
         getFullSelectedText(curCodeArea);
@@ -433,7 +433,7 @@ public class EditController {
      */
 
     public void handleTabbing() {
-        JavaCodeArea curCodeArea = getCurJavaCodeArea();
+        JavaCodeAreas curCodeArea = getCurJavaCodeArea();
 
         selectedText = curCodeArea.getSelectedText();
         getFullSelectedText(curCodeArea);
@@ -451,7 +451,7 @@ public class EditController {
      */
 
     public void handleUnTabbing() {
-        JavaCodeArea curCodeArea = getCurJavaCodeArea();
+        JavaCodeAreas curCodeArea = getCurJavaCodeArea();
 
         selectedText = curCodeArea.getSelectedText();
         getFullSelectedText(curCodeArea);
@@ -467,7 +467,7 @@ public class EditController {
      * Tabs a single line
      */
     private void singleLineTabbing(int caretIdx) {
-        JavaCodeArea curCodeArea = getCurJavaCodeArea();
+        JavaCodeAreas curCodeArea = getCurJavaCodeArea();
         curCodeArea.replaceText(caretIdx, caretIdx, "\t");
     }
 
@@ -476,7 +476,7 @@ public class EditController {
      */
     private void singleLineUnTabbing(String curLineText, int caretIdx) {
 
-        JavaCodeArea curCodeArea = getCurJavaCodeArea();
+        JavaCodeAreas curCodeArea = getCurJavaCodeArea();
 
         // regex to check if current line is tabbed
         if (Pattern.matches("(?:[ \\t].*)", curLineText)) {
@@ -502,7 +502,7 @@ public class EditController {
      */
     public void handleFindText(Boolean showNumMatchesAlert) {
 
-        JavaCodeArea curJavaCodeArea = getCurJavaCodeArea();
+        JavaCodeAreas curJavaCodeArea = getCurJavaCodeArea();
         if (curJavaCodeArea == null) {
             showAlert("NO FILES OPEN");
             resetFindMatchingStringData();
@@ -578,7 +578,7 @@ public class EditController {
 
         if (this.canHighlightMatches()) {
 
-            JavaCodeArea curJavaCodeArea = getCurJavaCodeArea();
+            JavaCodeAreas curJavaCodeArea = getCurJavaCodeArea();
             if (curJavaCodeArea == null) {
                 showAlert("NO FILES OPEN");
                 return;
@@ -621,7 +621,7 @@ public class EditController {
 
         if (this.canHighlightMatches()) {
 
-            JavaCodeArea curJavaCodeArea = getCurJavaCodeArea();
+            JavaCodeAreas curJavaCodeArea = getCurJavaCodeArea();
             if (curJavaCodeArea == null) {
                 showAlert("NO FILES OPEN");
                 return;
@@ -660,7 +660,7 @@ public class EditController {
      * @return true if any matches from Find can currently be highlighted, else false
      */
     private boolean canHighlightMatches() {
-        JavaCodeArea curJavaCodeArea = getCurJavaCodeArea();
+        JavaCodeAreas curJavaCodeArea = getCurJavaCodeArea();
         if (curJavaCodeArea == null) {
             showAlert("NO FILES OPEN");
             return false;
@@ -744,13 +744,13 @@ public class EditController {
     /**
      * @return the JavaCodeArea currently in focus of the TabPane
      */
-    public JavaCodeArea getCurJavaCodeArea() {
+    public JavaCodeAreas getCurJavaCodeArea() {
 
         if (this.tabPane.getTabs().size() == 0) return null;
 
         Tab curTab = this.tabPane.getSelectionModel().getSelectedItem();
         VirtualizedScrollPane<CodeArea> curPane =
                 (VirtualizedScrollPane<CodeArea>) curTab.getContent();
-        return (JavaCodeArea) curPane.getContent();
+        return (JavaCodeAreas) curPane.getContent();
     }
 }
