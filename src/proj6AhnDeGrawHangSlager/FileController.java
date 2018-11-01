@@ -34,6 +34,8 @@ import javafx.scene.control.ButtonType;
 import javafx.scene.layout.VBox;
 import javafx.stage.FileChooser;
 import javafx.stage.Window;
+import javafx.beans.value.ObservableValue;
+import javafx.beans.value.ChangeListener;
 
 import org.fxmisc.flowless.VirtualizedScrollPane;
 import org.fxmisc.richtext.CodeArea;
@@ -129,7 +131,6 @@ public class FileController {
         filenames.put(newTab, file.getPath());
         return newTab;
     }
-
 
     /**
      * Handler for the "Close" menu item in the "File" menu.
@@ -316,6 +317,22 @@ public class FileController {
         tabPane.getTabs().add(0,newTab);
         tabPane.getSelectionModel().select(newTab);
         newTab.setOnCloseRequest(event -> mController.handleClose(event));
+
+        codeArea.textProperty().addListener(new ChangeListener<String>() {
+            @Override
+            public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+               if (newValue.length() != 0) {
+                   String lastChar = Character.toString(newValue.charAt(newValue.length() - 1));
+                   if (lastChar.equalsIgnoreCase("(")) {
+                       codeArea.appendText(")");
+                   }
+                   else if(lastChar.equalsIgnoreCase("{")) {
+                       codeArea.appendText("\n}");
+                   }
+               }
+            }
+            }
+        );
         return newTab;
     }
 

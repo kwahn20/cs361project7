@@ -118,8 +118,6 @@ public class EditController {
     }
 
 
-
-
     /**
      * if a single "{", "}", "[", "]", "(", ")" is highlighted, this will attempt to find
      * the matching opening or closing character and if successful, will highlight the
