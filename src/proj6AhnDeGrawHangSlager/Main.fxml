@@ -25,6 +25,7 @@
 
 
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.TreeView?>
 <VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity"
       minWidth="-Infinity" prefHeight="800.0"
       prefWidth="1200.0" xmlns="http://javafx.com/javafx/10.0.1"
@@ -60,9 +61,12 @@
             <MenuItem mnemonicParsing="false" onAction="#handleUnTabbing" text="Un-Tab" accelerator="Shortcut+["/>
             <MenuItem mnemonicParsing="false" onAction="#handleSelectAll"
                       text="Select All" accelerator="Shortcut+A"/>
-            <MenuItem mnemonicParsing="false" onAction="#handleMatchBracketOrParen" text="Match Bracket/Parenthesis" accelerator="Shortcut+M"/>
-            <MenuItem mnemonicParsing="false" onAction="#handleFocusOnFindTextEntry" text="Go To Find" accelerator="Shortcut+F"/>
-            <MenuItem mnemonicParsing="false" onAction="#handleFocusOnReplaceTextEntry" text="Go To Replace" accelerator="Shortcut+R" />
+            <MenuItem mnemonicParsing="false" onAction="#handleMatchBracketOrParen" text="Match Bracket/Parenthesis"
+                      accelerator="Shortcut+M"/>
+            <MenuItem mnemonicParsing="false" onAction="#handleFocusOnFindTextEntry" text="Go To Find"
+                      accelerator="Shortcut+F"/>
+            <MenuItem mnemonicParsing="false" onAction="#handleFocusOnReplaceTextEntry" text="Go To Replace"
+                      accelerator="Shortcut+R"/>
 
         </Menu>
         <Menu fx:id="prefMenu" mnemonicParsing="false" text="Preferences">
@@ -70,7 +74,8 @@
                       text="Normal Mode" disable="true"/>
             <MenuItem fx:id="darkModeMenuItem" mnemonicParsing="false" onAction="#handleDarkMode" text="Dark Mode"/>
             <MenuItem fx:id="funModeMenuItem" mnemonicParsing="false" onAction="#handleFunMode" text="Fun Mode"/>
-            <MenuItem fx:id="hallowThemeItem" mnemonicParsing="false" onAction="#handleHallowThemeMode" text="HallowTheme"/>
+            <MenuItem fx:id="hallowThemeItem" mnemonicParsing="false" onAction="#handleHallowThemeMode"
+                      text="HallowTheme"/>
         </Menu>
         <Menu mnemonicParsing="false" text = "Help">
             <MenuItem mnemonicParsing="false" onAction="#handleOpenJavaTutorial" text = "Java Tutorial"/>
@@ -80,22 +85,29 @@
         <Button fx:id="compileButton" onAction="#handleCompile" text="Compile"/>
         <Button fx:id="compileRunButton" onAction="#handleCompileAndRun" text="Compile And Run"/>
         <Button fx:id="stopButton" onAction="#handleStop" text="Stop"/>
-        <TextField fx:id="findTextEntry" promptText="Find" />
-        <Button fx:id="findButton" onAction="#handleFindText" text="Find" />
-        <Button fx:id="findPrevBtn" onAction="#handleHighlightPrevMatch" text="Previous" />
+        <TextField fx:id="findTextEntry" promptText="Find"/>
+        <Button fx:id="findButton" onAction="#handleFindText" text="Find"/>
+        <Button fx:id="findPrevBtn" onAction="#handleHighlightPrevMatch" text="Previous"/>
         <Button fx:id="findNextBtn" onAction="#handleHighlightNextMatch" text="Next"/>
-        <TextField fx:id="replaceTextEntry" promptText="Replace" />
-        <Button fx:id="replaceBtn" onAction="#handleReplaceText" text="Replace" />
+        <TextField fx:id="replaceTextEntry" promptText="Replace"/>
+        <Button fx:id="replaceBtn" onAction="#handleReplaceText" text="Replace"/>
     </ToolBar>
-    <SplitPane orientation="VERTICAL" focusTraversable="true" VBox.vgrow="ALWAYS">
-        <items>
-            <TabPane fx:id="tabPane" prefHeight="392.0" prefWidth="600.0" VBox.vgrow="ALWAYS">
-            </TabPane>
 
-            <Console fx:id="console" prefHeight="228.0" prefWidth="1200.0" VBox.vgrow="ALWAYS"
-                     onKeyPressed="#handleUserKeypress">
-            </Console>
+    <SplitPane dividerPositions="0.2" maxHeight="Infinity"
+               maxWidth="Infinity"
+               VBox.vgrow="ALWAYS">
+        <TreeView fx:id="directoryTree"/>
 
-        </items>
+        <SplitPane orientation="VERTICAL" focusTraversable="true" VBox.vgrow="ALWAYS">
+            <items>
+                <TabPane fx:id="tabPane" prefHeight="392.0" prefWidth="600.0" VBox.vgrow="ALWAYS">
+                </TabPane>
+
+                <Console fx:id="console" prefHeight="228.0" prefWidth="1200.0" VBox.vgrow="ALWAYS"
+                         onKeyPressed="#handleUserKeypress">
+                </Console>
+
+            </items>
+        </SplitPane>
     </SplitPane>
 </VBox>

@@ -65,10 +65,10 @@
 
 
 .keyword {
-    -fx-fill: #9966ff;
-    -fx-font-weight: bold;
+    -fx-fill: #ff9900;
 }
 .semicolon {
+    -fx-fill: #ff9900;
     -fx-font-weight: bold;
 }
 .paren {
@@ -76,7 +76,7 @@
     -fx-font-weight: bold;
 }
 .bracket {
-    -fx-fill: teal;
+    -fx-fill: white;
     -fx-font-weight: bold;
 }
 .brace {
@@ -84,15 +84,15 @@
     -fx-font-weight: bold;
 }
 .string {
-    -fx-fill: #008ae6;
+    -fx-fill: #00b300;
 }
 
 .comment {
-    -fx-fill: cadetblue;
+    -fx-fill: #bfbfbf;
 }
 
 .intconst {
-    -fx-fill: #ff4d4d;
+    -fx-fill: #008ae6;
 }
 .err {
     -fx-fill: red;

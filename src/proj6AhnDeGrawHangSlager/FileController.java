@@ -61,19 +61,23 @@ public class FileController {
     private HashMap<Tab, Boolean> saveStatus;
 
     private HashMap<Tab, String> filenames;
+
     private VBox vBox;
     private MasterController mController;
+
+    private DirectoryController directoryController;
 
     /**
      * Constructor for the class. Intializes the save status
      * and the filenames in a HashMap
      */
-    public FileController(VBox vBox, TabPane tabPane,MasterController mController) {
+    public FileController(VBox vBox, TabPane tabPane,MasterController mController, DirectoryController directoryController) {
         this.saveStatus = new HashMap<>();
         this.filenames = new HashMap<>();
         this.vBox = vBox;
         this.tabPane = tabPane;
         this.mController = mController;
+        this.directoryController = directoryController;
     }
 
     /**
@@ -129,7 +133,16 @@ public class FileController {
 
         saveStatus.put(newTab, true);
         filenames.put(newTab, file.getPath());
+        directoryController.createDirectoryTree();
         return newTab;
+    }
+
+    public Tab handleOpenFile(File file){
+        Tab newTab =  makeNewTab(file, tabPane);
+        saveStatus.put(newTab, true);
+        filenames.put(newTab, file.getPath());
+        return newTab;
+
     }
 
     /**
@@ -164,7 +177,6 @@ public class FileController {
         Tab curTab = this.tabPane.getSelectionModel().getSelectedItem();
         if (filenames.get(curTab) != null){
             File file = new File(filenames.get(curTab));
-            writeFile(file);
             saveStatus.replace(curTab, true);
             return true;
         }
@@ -191,6 +203,7 @@ public class FileController {
             writeFile(file);
             filenames.replace(curTab,file.getPath());
             saveStatus.replace(curTab, true);
+            this.directoryController.createDirectoryTree();
         }
         curTab.setText(file.getName());
         return true;
@@ -367,5 +380,9 @@ public class FileController {
     private void markFileAsSaved() {
         Tab curTab = this.tabPane.getSelectionModel().getSelectedItem();
         saveStatus.replace(curTab, false);
+    }
+
+    public HashMap<Tab,String> getFilenames(){
+        return this.filenames;
     }
 }

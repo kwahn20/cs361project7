@@ -60,16 +60,21 @@ public class MasterController {
     @FXML private Button findNextBtn;
     @FXML private TextField replaceTextEntry;
     @FXML private Menu prefMenu;
-
+    @FXML private TreeView directoryTree;
 
     private EditController editController;
     private FileController fileController;
     private ToolbarController toolbarController;
+    private DirectoryController directoryController;
 
     @FXML
     public void initialize(){
+        directoryController = new DirectoryController();
         editController = new EditController(tabPane, findTextEntry, findPrevBtn, findNextBtn, replaceTextEntry);
-        fileController = new FileController(vBox,tabPane,this);
+        fileController = new FileController(vBox,tabPane,this, directoryController);
+
+        setupDirectoryController();
+
         toolbarController = new ToolbarController(console,stopButton,compileButton,compileRunButton,tabPane);
         SimpleListProperty<Tab> listProperty = new SimpleListProperty<Tab> (tabPane.getTabs());
         editMenu.disableProperty().bind(listProperty.emptyProperty());
@@ -448,6 +453,16 @@ public class MasterController {
     @FXML
     public void handleFocusOnReplaceTextEntry() {
         this.replaceTextEntry.requestFocus();
+    }
+
+    /**
+     * Creates a reference to the DirectoryController and passes in the directory
+     * tree for the controller to take ownership of.
+     */
+    private void setupDirectoryController() {
+        this.directoryController.setDirectoryTree(directoryTree);
+        this.directoryController.setTabPane(this.tabPane);
+        this.directoryController.setFileController(this.fileController);
     }
 
 }
