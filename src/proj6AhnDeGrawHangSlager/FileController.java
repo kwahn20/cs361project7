@@ -263,8 +263,8 @@ public class FileController {
         }
         catch (IOException e) {
             Alert alert = new Alert(AlertType.INFORMATION);
-            alert.setHeaderText("File Not Found");
-            alert.setContentText("Cannot find file. Please select a new file or try again.");
+            alert.setHeaderText("File Error");
+            alert.setContentText("Cannot find file or file is Read-only. Please select a new file.");
             alert.showAndWait();
             return;
         }
@@ -299,7 +299,7 @@ public class FileController {
             catch (FileNotFoundException | NullPointerException e) {
                 Alert alert = new Alert(AlertType.INFORMATION);
                 alert.setHeaderText("File Error");
-                alert.setContentText("File not Found or is Read-Only: Please select a new file.");
+                alert.setContentText("File not Found: Please select a new file.");
                 alert.showAndWait();
             }
         }

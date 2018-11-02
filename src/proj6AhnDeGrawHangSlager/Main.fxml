@@ -73,7 +73,7 @@
             <MenuItem fx:id="hallowThemeItem" mnemonicParsing="false" onAction="#handleHallowThemeMode" text="HallowTheme"/>
         </Menu>
         <Menu mnemonicParsing="false" text = "Help">
-            <MenuItem mnemonicParsing="false" onAction="#handleJavaTutorial" text = "Java Tutorial"/>
+            <MenuItem mnemonicParsing="false" onAction="#handleOpenJavaTutorial" text = "Java Tutorial"/>
         </Menu>
     </MenuBar>
     <ToolBar>

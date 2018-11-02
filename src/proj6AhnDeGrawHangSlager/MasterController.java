@@ -378,7 +378,7 @@ public class MasterController {
      * When the item is clicked, a Java tutorial will be opened in a browser.
      */
     @FXML
-    public void handleJavaTutorial(){
+    public void handleOpenJavaTutorial(){
         try {
             URI url = new URI("https://docs.oracle.com/javase/tutorial/");
             Desktop.getDesktop().browse(url);
