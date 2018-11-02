@@ -13,6 +13,8 @@
 
 package proj6AhnDeGrawHangSlager;
 
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import org.fxmisc.richtext.StyleClassedTextArea;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -31,7 +33,6 @@ import javafx.beans.value.ObservableValue;
  */
 public class Console extends StyleClassedTextArea {
     // Whether or not a user-input command has been received
-
     // Constructor, using StyleClassedTextArea default
     public Console(){
         super();
@@ -78,3 +79,4 @@ public class Console extends StyleClassedTextArea {
         this.requestFollowCaret();
     }
 }
+

@@ -72,6 +72,9 @@
             <MenuItem fx:id="funModeMenuItem" mnemonicParsing="false" onAction="#handleFunMode" text="Fun Mode"/>
             <MenuItem fx:id="hallowThemeItem" mnemonicParsing="false" onAction="#handleHallowThemeMode" text="HallowTheme"/>
         </Menu>
+        <Menu mnemonicParsing="false" text = "Help">
+            <MenuItem mnemonicParsing="false" onAction="#handleJavaTutorial" text = "Java Tutorial"/>
+        </Menu>
     </MenuBar>
     <ToolBar>
         <Button fx:id="compileButton" onAction="#handleCompile" text="Compile"/>

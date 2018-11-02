@@ -20,7 +20,10 @@ import javafx.scene.control.*;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.VBox;
 import javafx.event.Event;
-
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.awt.Desktop;
+import java.io.IOException;
 
 /**
  * This is the master controller for the program. it references
@@ -57,6 +60,7 @@ public class MasterController {
     @FXML private Button findNextBtn;
     @FXML private TextField replaceTextEntry;
     @FXML private Menu prefMenu;
+
 
     private EditController editController;
     private FileController fileController;
@@ -366,6 +370,20 @@ public class MasterController {
             else{
                 item.setDisable(true);
             }
+        }
+    }
+
+    /**
+     * Handler for the "Java Tutorial" menu item in the "Help" Menu.
+     * When the item is clicked, a Java tutorial will be opened in a browser.
+     */
+    @FXML
+    public void handleJavaTutorial(){
+        try {
+            URI url = new URI("https://docs.oracle.com/javase/tutorial/");
+            Desktop.getDesktop().browse(url);
+        } catch (IOException|URISyntaxException e) {
+            e.printStackTrace();
         }
     }
 

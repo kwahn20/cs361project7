@@ -298,8 +298,8 @@ public class FileController {
             }
             catch (FileNotFoundException | NullPointerException e) {
                 Alert alert = new Alert(AlertType.INFORMATION);
-                alert.setHeaderText("File Not Found");
-                alert.setContentText("Please select a new file.");
+                alert.setHeaderText("File Error");
+                alert.setContentText("File not Found or is Read-Only: Please select a new file.");
                 alert.showAndWait();
             }
         }
