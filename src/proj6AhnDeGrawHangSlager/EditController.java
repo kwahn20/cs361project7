@@ -725,10 +725,9 @@ public class EditController {
             String textToReplaceMatch = this.replaceTextEntry.getText();
 
             // check that there is some text in the replace text entry
-            if (textToReplaceMatch.length() > 0) {
+            if (textToReplaceMatch.length() == 0) {
 
-
-                    // get idx of currently highlighted match
+                // get idx of currently highlighted match
                 int curHighlightedMatchStartingIdx =
                         this.matchStartingIndices.get(this.curMatchHighlightedIdx);
 
