@@ -43,7 +43,7 @@
             <MenuItem mnemonicParsing="false" fx:id="saveMenuItem" onAction="#handleSave" text="Save" disable="true"
                       accelerator="Shortcut+S"/>
             <MenuItem mnemonicParsing="false" fx:id="saveAsMenuItem" onAction="#handleSaveAs"
-                      text="Save As..." disable="true"/>
+                      text="Save As..." disable="true" accelerator="Shortcut+Shift+S"/>
             <SeparatorMenuItem mnemonicParsing="false"/>
             <MenuItem mnemonicParsing="false" onAction="#handleExit" text="Exit" accelerator="Shortcut+Q"/>
         </Menu>
