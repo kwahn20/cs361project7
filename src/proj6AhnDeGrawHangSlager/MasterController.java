@@ -196,6 +196,13 @@ public class MasterController {
     }
 
     /**
+     * Handles the find and replace button action.
+     * Opens a find and replace popup window.
+     */
+    @FXML
+    private void handleFindAndReplace() { editController.handleFindAndReplace(); }
+
+    /**
      * Handler for the "About" menu item in the "File" menu.
      * Creates an Information alert dialog to display author and information of this program
      */

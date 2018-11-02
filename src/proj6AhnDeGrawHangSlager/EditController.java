@@ -117,6 +117,13 @@ public class EditController {
         getCurJavaCodeArea().selectAll();
     }
 
+    /**
+     * Handles the findAndReplace button action.
+     */
+    public void handleFindAndReplace() {
+        FindAndReplaceWidget findAndReplace = new FindAndReplaceWidget(this);
+        findAndReplace.setupWidget();
+    }
 
     /**
      * if a single "{", "}", "[", "]", "(", ")" is highlighted, this will attempt to find

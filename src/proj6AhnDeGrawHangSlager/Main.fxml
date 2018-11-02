@@ -57,6 +57,8 @@
                       text="Paste" accelerator="Shortcut+V"/>
             <MenuItem mnemonicParsing="false" onAction="#handleCommenting" text="Comment/Uncomment"
                       accelerator="Shortcut+/"/>
+            <MenuItem fx:id="findAndReplaceMenuItem" onAction="#handleFindAndReplace"
+                      text="Find and Replace" accelerator="Shortcut+L"/>
             <MenuItem mnemonicParsing="false" onAction="#handleTabbing" text="Tab" accelerator="Shortcut+]"/>
             <MenuItem mnemonicParsing="false" onAction="#handleUnTabbing" text="Un-Tab" accelerator="Shortcut+["/>
             <MenuItem mnemonicParsing="false" onAction="#handleSelectAll"
