@@ -83,4 +83,9 @@
     -fx-background-color: #f2f9fc;
 }
 
+/* style of context menu */
+.contextMenu {
+    -fx-text-base-color: black;
+}
+
 

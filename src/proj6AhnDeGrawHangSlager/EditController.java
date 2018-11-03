@@ -242,11 +242,14 @@ public class EditController {
 
                     // check that the character is not not written as a string "(" or '('
                     try {
-                        if (curJavaCodeArea.getText(i - 2, i - 1).equals("\"")
-                                && curJavaCodeArea.getText(i, i + 1).equals("\"")
-                                || curJavaCodeArea.getText(i - 2, i - 1).equals("'")
-                                && curJavaCodeArea.getText(i, i + 1).equals("'")) {
-                            continue;
+                        int textLen = curJavaCodeArea.getText().length();
+                        if (i > textLen) {
+                            if (curJavaCodeArea.getText(i - 2, i - 1).equals("\"")
+                                    && curJavaCodeArea.getText(i, i + 1).equals("\"")
+                                    || curJavaCodeArea.getText(i - 2, i - 1).equals("'")
+                                    && curJavaCodeArea.getText(i, i + 1).equals("'")) {
+                                continue;
+                            }
                         }
                     } catch (IndexOutOfBoundsException e) {
                         throw(e);

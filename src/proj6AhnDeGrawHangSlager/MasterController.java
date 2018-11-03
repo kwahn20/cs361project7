@@ -65,6 +65,7 @@ public class MasterController {
     private EditController editController;
     private FileController fileController;
     private ToolbarController toolbarController;
+    private ContextMenuController contextMenuController;
     private DirectoryController directoryController;
 
     @FXML
@@ -81,6 +82,21 @@ public class MasterController {
         saveAsMenuItem.disableProperty().bind(listProperty.emptyProperty());
         closeMenuItem.disableProperty().bind(listProperty.emptyProperty());
         disableToolbar();
+        this.setupContextMenuController();
+
+
+    }
+
+    /**
+     * Creates a reference to the ContextMenuController and passes in window items and other sub Controllers when necessary.
+     */
+    private void setupContextMenuController() {
+        this.contextMenuController = new ContextMenuController();
+        this.contextMenuController.setFileMenuController(this.fileController);
+        this.contextMenuController.setEditMenuController(this.editController);
+        this.contextMenuController.setToolBarController(this.toolbarController);
+
+        this.fileController.setContextMenuController(this.contextMenuController);
     }
 
     /**

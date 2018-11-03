@@ -65,6 +65,11 @@ public class FileController {
     private VBox vBox;
     private MasterController mController;
 
+    /**
+     * ContextMenuController handling context menu actions
+     */
+    private ContextMenuController contextMenuController;
+
     private DirectoryController directoryController;
 
     /**
@@ -78,6 +83,15 @@ public class FileController {
         this.tabPane = tabPane;
         this.mController = mController;
         this.directoryController = directoryController;
+    }
+
+    /**
+     * Sets the contextMenuController.
+     *
+     * @param contextMenuController ContextMenuController handling context menu actions
+     */
+    public void setContextMenuController(ContextMenuController contextMenuController) {
+        this.contextMenuController = contextMenuController;
     }
 
     /**
@@ -320,6 +334,7 @@ public class FileController {
 
         // creation of the codeArea
         JavaCodeAreas codeArea = new JavaCodeAreas();
+        this.contextMenuController.setupStyledJavaCodeAreaContextMenuHandler(codeArea);
         codeArea.setOnKeyPressed(event -> markFileAsSaved());
         codeArea.replaceText(content);
         codeArea.setParagraphGraphicFactory(LineNumberFactory.get(codeArea));
@@ -332,8 +347,10 @@ public class FileController {
         tabPane.getSelectionModel().select(newTab);
         newTab.setOnCloseRequest(event -> mController.handleClose(event));
 
+        this.contextMenuController.setupTabContextMenuHandler(newTab);
+
         /**
-         * Lines 336 to 352 are obtained from Douglas-Hanssen-MacDonald-Zhang
+         * Lines 356 to 372 are obtained from Douglas-Hanssen-MacDonald-Zhang
          * Used for closing braces and parentheses at the end of a code area
          */
         codeArea.textProperty().addListener(new ChangeListener<String>() {
