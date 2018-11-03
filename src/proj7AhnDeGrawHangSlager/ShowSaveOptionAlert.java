@@ -7,7 +7,7 @@
 */
 
 
-package proj6AhnDeGrawHangSlager;
+package proj7AhnDeGrawHangSlager;
 
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonBar;

@@ -11,7 +11,7 @@
  *
  */
 
-package proj6AhnDeGrawHangSlager;
+package proj7AhnDeGrawHangSlager;
 
 import javafx.event.Event;
 import java.util.Scanner;

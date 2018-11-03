@@ -5,7 +5,7 @@
  * Date: October 12, 2018
  */
 
-package proj6AhnDeGrawHangSlager;
+package proj7AhnDeGrawHangSlager;
 
 import org.fxmisc.richtext.CodeArea;
 import org.fxmisc.richtext.model.StyleSpans;

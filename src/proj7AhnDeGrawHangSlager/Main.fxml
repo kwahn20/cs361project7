@@ -20,7 +20,7 @@
 <?import javafx.scene.control.ToolBar?>
 <?import javafx.scene.control.TabPane?>
 <?import javafx.scene.layout.VBox?>
-<?import proj6AhnDeGrawHangSlager.Console?>
+<?import proj7AhnDeGrawHangSlager.Console?>
 <?import javafx.scene.control.SplitPane?>
 
 
@@ -30,7 +30,7 @@
       minWidth="-Infinity" prefHeight="800.0"
       prefWidth="1200.0" xmlns="http://javafx.com/javafx/10.0.1"
       xmlns:fx="http://javafx.com/fxml/1"
-      fx:controller="proj6AhnDeGrawHangSlager.MasterController"
+      fx:controller="proj7AhnDeGrawHangSlager.MasterController"
       fx:id="vBox"
       stylesheets="@Main.css">
     <MenuBar>

@@ -11,7 +11,7 @@
  *
  */
 
-package proj6AhnDeGrawHangSlager;
+package proj7AhnDeGrawHangSlager;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.*;

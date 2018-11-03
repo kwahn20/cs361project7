@@ -11,7 +11,7 @@
  *
  */
 
-package proj6AhnDeGrawHangSlager;
+package proj7AhnDeGrawHangSlager;
 
 import javafx.application.Application;
 import javafx.scene.Parent;

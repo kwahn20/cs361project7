@@ -11,7 +11,7 @@
  *
  */
 
-package proj6AhnDeGrawHangSlager;
+package proj7AhnDeGrawHangSlager;
 
 
 import javafx.beans.property.SimpleListProperty;
@@ -348,7 +348,7 @@ public class MasterController {
      */
     @FXML
     public void handleDarkMode(){
-       handleThemeChange("proj6AhnDeGrawHangSlager/DarkMode.css", darkModeMenuItem);
+       handleThemeChange("proj7AhnDeGrawHangSlager/DarkMode.css", darkModeMenuItem);
     }
 
     /**
@@ -365,7 +365,7 @@ public class MasterController {
      */
     @FXML
     public void handleFunMode(){
-        handleThemeChange("proj6AhnDeGrawHangSlager/FunMode.css", funModeMenuItem);
+        handleThemeChange("proj7AhnDeGrawHangSlager/FunMode.css", funModeMenuItem);
     }
 
 
@@ -375,7 +375,7 @@ public class MasterController {
      */
     @FXML
     public void handleHallowThemeMode(){
-        handleThemeChange("proj6AhnDeGrawHangSlager/HallowTheme.css", hallowThemeItem);
+        handleThemeChange("proj7AhnDeGrawHangSlager/HallowTheme.css", hallowThemeItem);
     }
     /**
      * Helper method to change the theme
