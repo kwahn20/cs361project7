@@ -72,7 +72,6 @@ public class MasterController {
         directoryController = new DirectoryController();
         editController = new EditController(tabPane, findTextEntry, findPrevBtn, findNextBtn, replaceTextEntry);
         fileController = new FileController(vBox,tabPane,this, directoryController);
-
         setupDirectoryController();
 
         toolbarController = new ToolbarController(console,stopButton,compileButton,compileRunButton,tabPane);
@@ -372,11 +371,11 @@ public class MasterController {
      * disables the menu item of the theme that is currently on
      * display
      *
-     * @param menItem the menu item that needs to be disabled
+     * @param menuItem the menu item that needs to be disabled
      */
-    private void enableUnselectedThemes(MenuItem menItem){
+    private void enableUnselectedThemes(MenuItem menuItem){
         for(MenuItem item: prefMenu.getItems()){
-            if(!item.equals(menItem)){
+            if(!item.equals(menuItem)){
                 item.setDisable(false);
             }
             else{

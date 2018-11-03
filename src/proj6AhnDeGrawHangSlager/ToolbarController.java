@@ -149,7 +149,7 @@ public class ToolbarController {
             this.stopButton.setDisable(true);
         }
         else{
-            enableCompileAndRunButtons();
+           disableCompileAndRunButtons();
         }
 
         return compSuccessful;
@@ -194,9 +194,10 @@ public class ToolbarController {
 
         if (this.tabPane.getTabs().isEmpty()){
             this.stopButton.setDisable(true);
+
         }
         else{
-            enableCompileAndRunButtons();
+            disableCompileAndRunButtons();
         }
     }
 

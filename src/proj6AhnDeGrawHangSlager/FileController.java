@@ -177,6 +177,7 @@ public class FileController {
         Tab curTab = this.tabPane.getSelectionModel().getSelectedItem();
         if (filenames.get(curTab) != null){
             File file = new File(filenames.get(curTab));
+            writeFile(file);
             saveStatus.replace(curTab, true);
             return true;
         }

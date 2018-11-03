@@ -63,7 +63,6 @@ public class DirectoryController {
     }
 
 
-
     /**
      * Sets the tabPane.
      *
@@ -118,11 +117,10 @@ public class DirectoryController {
         // capture current file
         String fileName = this.tabFileMap.get(this.tabPane.getSelectionModel().getSelectedItem());
         if (fileName != null) {
-            System.out.println(fileName);
             File file = new File(fileName);
             // create the directory tree
             this.directoryTree.setRoot(this.getNode(file.getParentFile()));
-            this.directoryTree.getRoot().setExpanded(true);
+            this.directoryTree.getRoot().setExpanded(false);
         }
     }
 
@@ -137,7 +135,7 @@ public class DirectoryController {
             event.consume();
             TreeItem selectedItem = (TreeItem) directoryTree.getSelectionModel().getSelectedItem();
             String fileName = (String) selectedItem.getValue();
-            if (fileName.endsWith(".java")) {
+            if (fileName.endsWith(".java") || fileName.endsWith(".css") || fileName.endsWith(".fxml")) {
                 this.fileController.handleOpenFile(this.treeItemFileMap.get(selectedItem));
             }
         }
