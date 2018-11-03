@@ -114,11 +114,6 @@ public class Console extends StyleClassedTextArea {
      * @param e the keyEvent
      */
     private void handleKeyPressed(KeyEvent e) {
-        //If there are no process running consume the event and return
-//        if(!toolbarController.getTaskStatus()){
-//            e.consume();
-//            return;
-//        }
 
         //If there is current command stored
         if (this.commandStartIndex != -1) {

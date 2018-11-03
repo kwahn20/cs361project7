@@ -65,7 +65,10 @@ public class MasterController {
     private EditController editController;
     private FileController fileController;
     private ToolbarController toolbarController;
+
+    // this line from JianQuanMarcello project 6
     private ContextMenuController contextMenuController;
+
     private DirectoryController directoryController;
 
     @FXML
@@ -83,15 +86,16 @@ public class MasterController {
         closeMenuItem.disableProperty().bind(listProperty.emptyProperty());
         this.toolbarController.setReceivedCommand(false);
         this.console.setToolbarController(this.toolbarController);
-
         disableToolbar();
-        this.setupContextMenuController();
 
+        // this line from JianQuanMarcello project 6
+        this.setupContextMenuController();
 
     }
 
     /**
      * Creates a reference to the ContextMenuController and passes in window items and other sub Controllers when necessary.
+     * this method is from JianQuanMarcello project 6
      */
     private void setupContextMenuController() {
         this.contextMenuController = new ContextMenuController();
@@ -235,7 +239,7 @@ public class MasterController {
      */
     @FXML public void handleNew() {
         fileController.handleNew();
-        if(!toolbarController.getTaskStatus() && this.tabPane.getTabs().size() > 0) {
+        if(!toolbarController.isTaskRunning() && this.tabPane.getTabs().size() > 0) {
             toolbarController.enableCompileAndRunButtons();
         }
     }
@@ -248,7 +252,7 @@ public class MasterController {
      */
     @FXML public void handleOpen() {
         fileController.handleOpen();
-        if(!toolbarController.getTaskStatus() && this.tabPane.getTabs().size() > 0) {
+        if(!toolbarController.isTaskRunning() && this.tabPane.getTabs().size() > 0) {
             toolbarController.enableCompileAndRunButtons();
         }
     }
@@ -261,7 +265,7 @@ public class MasterController {
      */
     @FXML public void handleClose(Event event) {
         fileController.handleClose(event);
-        if (this.tabPane.getTabs().isEmpty()&&!toolbarController.getTaskStatus()){
+        if (this.tabPane.getTabs().isEmpty()&&!toolbarController.isTaskRunning()){
             disableToolbar();
         }
 

@@ -6,18 +6,20 @@
  * This file contains the ContextMenuController class, handling context menu related actions.
  */
 
+/*
+ * Edited by Lucas DeGraw 11/1/18
+ * removed setupConsoleContextMenuHandler method,
+ * changed variables names as appropriate to work with AhnDeGrawHangSlager project 7
+ */
+
 package proj6AhnDeGrawHangSlager;
 
-import javafx.beans.binding.BooleanBinding;
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.Tab;
 import javafx.scene.input.MouseButton;
 import javafx.scene.Node;
 import javafx.scene.control.SeparatorMenuItem;
-import org.fxmisc.richtext.StyleClassedTextArea;
-import javafx.beans.property.ReadOnlyBooleanProperty;
-import javafx.scene.control.Button;
 
 /**
  * ContextMenu Controller, handling context menu related actions.
@@ -92,12 +94,11 @@ public class ContextMenuController {
      * @param tab Tab being clicked on
      */
     public void setupTabContextMenuHandler(Tab tab) {
-        System.out.println("here1");
         ContextMenu rightClickMenu = new ContextMenu();
         rightClickMenu.getStyleClass().add("contextMenu");
 
         MenuItem SaveItem = new MenuItem("Save");
-//        SaveItem.setOnAction(e -> this.fileMenuController.handleSave());
+        SaveItem.setOnAction(e -> this.fileMenuController.handleSave());
 
         MenuItem SaveAsItem = new MenuItem("SaveAs");
         SaveAsItem.setOnAction(e -> this.fileMenuController.handleSaveAs());
@@ -128,8 +129,7 @@ public class ContextMenuController {
      *
      * @param styledJavaCodeArea StyledJavaCodeArea being clicked on
      */
-    public void setupStyledJavaCodeAreaContextMenuHandler(JavaCodeArea styledJavaCodeArea) {
-        System.out.println("here");
+    public void setupJavaCodeAreaContextMenuHandler(JavaCodeArea styledJavaCodeArea) {
         ContextMenu rightClickMenu = new ContextMenu();
 
         MenuItem UndoItem = new MenuItem("Undo");

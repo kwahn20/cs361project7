@@ -145,12 +145,8 @@ public class ToolbarController {
             compileTask.stop();
         }
 
-        if (this.tabPane.getTabs().isEmpty()){
-            this.stopButton.setDisable(true);
-        }
-        else{
-           disableCompileAndRunButtons();
-        }
+        if (this.isTaskRunning()) disableCompileAndRunButtons();
+        else enableCompileAndRunButtons();
 
         return compSuccessful;
     }
@@ -164,6 +160,7 @@ public class ToolbarController {
         // Try to compile
         boolean compSuccessful = compileFile(fileNameWithPath);
         if(!compSuccessful){
+            enableCompileAndRunButtons();
             return;
         }
         // Disable appropriate compile buttons
@@ -190,15 +187,15 @@ public class ToolbarController {
         // if the program is interrupted, stop running
         catch (CancellationException e){
             runTask.stop();
+            enableCompileAndRunButtons();
         }
 
         if (this.tabPane.getTabs().isEmpty()){
             this.stopButton.setDisable(true);
+        }
 
-        }
-        else{
-            disableCompileAndRunButtons();
-        }
+        if (this.isTaskRunning()) disableCompileAndRunButtons();
+        else enableCompileAndRunButtons();
     }
 
 
@@ -285,6 +282,7 @@ public class ToolbarController {
             stdError.close();
             stdInput.close();
             stdOutput.close();
+//            this.curProcess.get();
             return taskSuccessful;
         }
 
@@ -302,12 +300,18 @@ public class ToolbarController {
      * Check if the task is still running.
      * @return true if this task is running, and false otherwise
      */
-    public boolean getTaskStatus(){
+    public boolean isTaskRunning(){
         if(this.curFutureTask == null){
             return false;
         }
         else{
-            return !this.curFutureTask.isDone();
+            try {
+                if (this.curFutureTask.get()) return !this.curFutureTask.isDone();
+            }
+            catch(Exception e) {
+                this.curFutureTask.cancel(true);
+            }
+            return false;
         }
     }
 

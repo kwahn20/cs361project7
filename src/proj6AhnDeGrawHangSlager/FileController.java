@@ -334,7 +334,7 @@ public class FileController {
 
         // creation of the codeArea
         JavaCodeArea codeArea = new JavaCodeArea();
-        this.contextMenuController.setupStyledJavaCodeAreaContextMenuHandler(codeArea);
+        this.contextMenuController.setupJavaCodeAreaContextMenuHandler(codeArea);
         codeArea.setOnKeyPressed(event -> markFileAsSaved());
         codeArea.replaceText(content);
         codeArea.setParagraphGraphicFactory(LineNumberFactory.get(codeArea));
