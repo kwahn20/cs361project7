@@ -32,10 +32,31 @@ import javafx.beans.value.ObservableValue;
  *
  */
 public class Console extends StyleClassedTextArea {
+
+    private int commandStartIndex;
+    private ToolbarController toolbarController;
+    private String command;
     // Whether or not a user-input command has been received
     // Constructor, using StyleClassedTextArea default
     public Console(){
         super();
+        this.commandStartIndex = -1;
+        this.toolbarController = null;
+        this.command = "";
+        this.addEventFilter(KeyEvent.KEY_PRESSED, e -> {
+            this.handleKeyPressed(e);
+        });
+        this.addEventFilter(KeyEvent.KEY_TYPED, e -> {
+            this.handleKeyTyped(e);
+        });
+    }
+
+    /**
+     * Set the toolbarController related to this console
+     * @param toolbarController The toolbarController to assign to the field.
+     */
+    public void setToolbarController(ToolbarController toolbarController){
+        this.toolbarController = toolbarController;
     }
 
     /**
@@ -43,15 +64,12 @@ public class Console extends StyleClassedTextArea {
      * @return String that the user has input to the console
      */
     public String getConsoleCommand(){
-        String[] lines = this.getText().split("\n");
-        int newLineIndex = lines.length-1;
-        int caretPos = this.getCaretPosition();
+        String userCommand = this.command;
+        this.command = "";
 
-        // if user gave no input
-        if(this.getText().substring(caretPos-2).equals("\n\n")){
-            return "";
-        }
-        return lines[newLineIndex]+"\n";
+        //-1 means no command is stored
+        this.commandStartIndex = -1;
+        return userCommand + "\n";
     }
 
 
@@ -78,5 +96,70 @@ public class Console extends StyleClassedTextArea {
         this.moveTo(this.getText().length());
         this.requestFollowCaret();
     }
+
+    /**
+     * Consume all keyTyped event if it is before the commandstartindex
+     * @param e the keyEvent
+     */
+    private void handleKeyTyped(KeyEvent e){
+        if (this.getCaretPosition() < commandStartIndex) {
+            e.consume();
+        }
+    }
+
+    /**
+     * Handles the keyPressed events in the console
+     * Updates the content in the console and command stored in the field
+     * The key press would not do anything if not pressed after the command start index
+     * @param e the keyEvent
+     */
+    private void handleKeyPressed(KeyEvent e) {
+        //If there are no process running consume the event and return
+//        if(!toolbarController.getTaskStatus()){
+//            e.consume();
+//            return;
+//        }
+
+        //If there is current command stored
+        if (this.commandStartIndex != -1) {
+            //Change the color of the user input text to default
+            this.setStyleClass(commandStartIndex, this.getText().length(), ".default");
+            this.command = this.getText().substring(commandStartIndex);
+        }
+
+        //If there are no command, update the start index of the command to the end of the current text
+        else if (this.command.isEmpty()) {
+            this.commandStartIndex = this.getText().length();
+        }
+
+        //If the user pressed Enter
+        if (e.getCode() == KeyCode.ENTER) {
+            e.consume();
+            //If Enter was pressed in the middle of a command append a new line to the end
+            if (this.getCaretPosition() >= commandStartIndex) {
+                toolbarController.setReceivedCommand(true);
+                this.appendText("\n");
+                this.requestFollowCaret();
+            }
+        }
+
+        //If the user pressed back space.
+        else if (e.getCode() == KeyCode.BACK_SPACE) {
+            //If the keypress was before the start of the command, nothing would happen
+            if (this.getCaretPosition() < commandStartIndex + 1) {
+                e.consume();
+            }
+        }
+
+        //If the user pressed delete key.
+        else if (e.getCode() == KeyCode.DELETE) {
+            //If the keypress was before the start of the command, nothing would happen
+            if (this.getCaretPosition() < commandStartIndex){
+                e.consume();
+            }
+        }
+    }
+
+
 }
 

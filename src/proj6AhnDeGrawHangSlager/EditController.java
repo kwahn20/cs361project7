@@ -48,6 +48,7 @@ public class EditController {
     private Button nextMatchBtn;
     private TextField replaceTextEntry;
 
+
     private String[] lines;
     private int caretIdxStart;
     private int caretIdxEnd;
@@ -243,7 +244,7 @@ public class EditController {
                     // check that the character is not not written as a string "(" or '('
                     try {
                         int textLen = curJavaCodeArea.getText().length();
-                        if (i > textLen) {
+                        if(i > textLen) {
                             if (curJavaCodeArea.getText(i - 2, i - 1).equals("\"")
                                     && curJavaCodeArea.getText(i, i + 1).equals("\"")
                                     || curJavaCodeArea.getText(i - 2, i - 1).equals("'")

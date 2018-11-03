@@ -81,6 +81,9 @@ public class MasterController {
         saveMenuItem.disableProperty().bind(listProperty.emptyProperty());
         saveAsMenuItem.disableProperty().bind(listProperty.emptyProperty());
         closeMenuItem.disableProperty().bind(listProperty.emptyProperty());
+        this.toolbarController.setReceivedCommand(false);
+        this.console.setToolbarController(this.toolbarController);
+
         disableToolbar();
         this.setupContextMenuController();
 

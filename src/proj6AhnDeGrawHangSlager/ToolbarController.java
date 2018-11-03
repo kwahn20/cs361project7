@@ -201,6 +201,7 @@ public class ToolbarController {
         }
     }
 
+
     /**
      * An inner class used for a thread to execute the run task
      * Designed to be used for compilation or running.
@@ -283,6 +284,7 @@ public class ToolbarController {
             return taskSuccessful;
         }
 
+
         /**
          * Stop the current process
          */
@@ -298,7 +300,7 @@ public class ToolbarController {
      * @return true if this task is running, and false otherwise
      */
     public boolean getTaskStatus(){
-        if(this.curFutureTask == null ){
+        if(this.curFutureTask == null){
             return false;
         }
         else{
@@ -322,6 +324,10 @@ public class ToolbarController {
         this.compileButton.setDisable(false);
         this.compileRunButton.setDisable(false);
         this.stopButton.setDisable(true);
+    }
+
+    public void setReceivedCommand(Boolean ifReceived){
+        this.receivedCommand = ifReceived;
     }
 
 }
