@@ -1,11 +1,17 @@
 package proj6AhnDeGrawHangSlager;
 
 /*
- * File: DirectoryController.java
+ *  File: DirectoryController.java
+ *  Names: Kevin Ahn, Lucas DeGraw, Jackie Hang, Kyle Slager
+ *  Date: 11/02/2018
+
+--------------------------------------------------------
+ * Edited From:
  * CS361 Project 6
  * Names: Douglas Abrams, Martin Deutsch, Robert Durst, Matt Jones
  * Date: 10/27/2018
- * This file contains the DirectoryController class, handling the file directory portion of the GUI.
+ * This file contains the DirectoryController class, handling the file
+ * directory portion of the GUI.
  */
 
 

@@ -484,6 +484,7 @@ public class MasterController {
     /**
      * Creates a reference to the DirectoryController and passes in the directory
      * tree for the controller to take ownership of.
+     * @author Abrams-Deutsch-Durst-Jones
      */
     private void setupDirectoryController() {
         this.directoryController.setDirectoryTree(directoryTree);

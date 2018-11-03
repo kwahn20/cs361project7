@@ -365,6 +365,7 @@ public class EditController {
      * comments out the line that the cursor is one if it uncommented,
      * undoes a "layer" of commenting (pair of forward slashes "//") if there >= one
      *
+     * @author: Abulhab-Feng-Mao-Savillo
      */
     public void handleCommenting() {
 
