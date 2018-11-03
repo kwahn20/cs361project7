@@ -23,13 +23,13 @@ public class FindAndReplaceWidget {
 
     private Iterator<int[]> indices = new ArrayList<int[]>().iterator();
     private String target, textToSearch;
-    private EditController menuController;
+    private EditController editController;
     private Button findButton;
     private Button replaceAllButton;
     private TextField userEntryTextField;
 
-    public FindAndReplaceWidget(EditController menuController) {
-        this.menuController = menuController;
+    public FindAndReplaceWidget(EditController editController) {
+        this.editController = editController;
     }
 
     public String getTarget() {
@@ -62,7 +62,7 @@ public class FindAndReplaceWidget {
      * Once this method is run, the find and replace widget can be operated by the user.
      */
     public void setupWidget() {
-        CodeArea currentCodeArea = this.menuController.getCurJavaCodeArea();
+        CodeArea currentCodeArea = this.editController.getCurJavaCodeArea();
         Stage popupWindow  = new Stage();
         GridPane layout    = new GridPane();
         Scene scene        = new Scene(layout);
@@ -95,7 +95,7 @@ public class FindAndReplaceWidget {
      * has entered in the TextField of the FindAndReplaceWidget.
      */
     private void selectNext() {
-        CodeArea currentCodeArea   = menuController.getCurJavaCodeArea();
+        CodeArea currentCodeArea   = editController.getCurJavaCodeArea();
         String   currentText       = currentCodeArea.getText();
         String   currentTarget     = userEntryTextField.getText();
         boolean  targetHasChanged  = !Objects.equals(this.getTarget(), currentTarget);
@@ -121,7 +121,7 @@ public class FindAndReplaceWidget {
      * is called.
      */
     private void replaceAll() {
-        String source = menuController.getCurJavaCodeArea().getText();
+        String source = editController.getCurJavaCodeArea().getText();
         String target = userEntryTextField.getText();
 
         TextInputDialog dialog = new TextInputDialog();
@@ -136,8 +136,8 @@ public class FindAndReplaceWidget {
 
         String replacement = userSelection.get();
         String newText     = source.replace(target, replacement);
-        menuController.handleSelectAll();
-        menuController.getCurJavaCodeArea().replaceSelection(newText);
+        editController.handleSelectAll();
+        editController.getCurJavaCodeArea().replaceSelection(newText);
     }
 
     /**
