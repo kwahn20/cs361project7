@@ -306,7 +306,6 @@ public class ToolbarController {
         }
     }
 
-
     /**
      * Disables the Compile and Compile and Run buttons, enables the Stop button.
      */

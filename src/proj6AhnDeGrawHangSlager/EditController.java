@@ -48,7 +48,6 @@ public class EditController {
     private Button nextMatchBtn;
     private TextField replaceTextEntry;
 
-
     private String[] lines;
     private int caretIdxStart;
     private int caretIdxEnd;
@@ -307,45 +306,6 @@ public class EditController {
         a.setHeaderText(header);
         a.show();
     }
-
-    /**
-     * comments out the line that the cursor is one if it uncommented,
-     * undoes a "layer" of commenting (pair of forward slashes "//") if there >= one
-     */
-    public void toggleSingleLineComment() {
-
-        JavaCodeAreas curCodeArea = getCurJavaCodeArea();
-
-        // position caret at start of line
-        curCodeArea.lineStart(SelectionPolicy.ADJUST);
-
-        // get caret index location in file
-        int caretIdx = curCodeArea.getCaretPosition();
-
-        // temporarily highlight the current line to get its text as a string
-        curCodeArea.selectLine();
-        String curLineText = curCodeArea.getSelectedText();
-        curCodeArea.deselect();
-
-        // regex to check if current line is commented
-        if (Pattern.matches(" *\\/\\/.*", curLineText)) {
-
-            // uncomment the line by taking out the first instance of "//"
-            String curLineUncommented =
-                    curLineText.replaceFirst("//", "");
-
-            // replace the current line with the newly commented line
-            curCodeArea.replaceText(caretIdx, caretIdx + curLineText.length(),
-                    curLineUncommented);
-
-            return;
-        }
-
-        // add a "//" at the beginning of the line to comment it out
-        curCodeArea.replaceText(caretIdx, caretIdx, "//");
-    }
-
-
 
     private void incrementCaretIdx(CodeArea curCodeArea){
         curCodeArea.moveTo(curCodeArea.getCurrentParagraph()+1, 0);

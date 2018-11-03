@@ -332,6 +332,10 @@ public class FileController {
         tabPane.getSelectionModel().select(newTab);
         newTab.setOnCloseRequest(event -> mController.handleClose(event));
 
+        /**
+         * Lines 336 to 352 are obtained from Douglas-Hanssen-MacDonald-Zhang
+         * Used for closing braces and parentheses at the end of a code area
+         */
         codeArea.textProperty().addListener(new ChangeListener<String>() {
             @Override
             public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {

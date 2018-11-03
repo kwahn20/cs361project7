@@ -385,6 +385,7 @@ public class MasterController {
     }
 
     /**
+     * Code for handleOpenJavaTutorial obtained from Li-Lian-KeithHardy-Zhou
      * Handler for the "Java Tutorial" menu item in the "Help" Menu.
      * When the item is clicked, a Java tutorial will be opened in a browser.
      */
