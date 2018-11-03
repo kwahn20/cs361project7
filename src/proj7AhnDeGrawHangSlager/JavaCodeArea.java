@@ -6,7 +6,13 @@
  */
 
 package proj7AhnDeGrawHangSlager;
-
+/*
+ * File: JavaCodeArea.java
+ * Names: Kevin Ahn, Lucas DeGraw, Jackie Hang, Kyle Slager
+ * Class: CS 361
+ * Project 7
+ * Date: November 2, 2018
+ */
 import org.fxmisc.richtext.CodeArea;
 import org.fxmisc.richtext.model.StyleSpans;
 import org.fxmisc.richtext.model.StyleSpansBuilder;
@@ -25,7 +31,7 @@ import java.util.regex.Pattern;
  * @author  Kevin Ahn, Lucas DeGraw, Jackie Hang, Kyle Slager
  * @author  Zena Abulhab, Paige Hanssen, Kyle Slager Kevin Zhou
  * @version 2.0
- * @since   10-3-2018
+ * @since   11-02-2018
  */
 
 public class JavaCodeArea extends CodeArea{

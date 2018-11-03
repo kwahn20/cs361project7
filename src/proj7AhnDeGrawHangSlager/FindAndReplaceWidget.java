@@ -1,6 +1,10 @@
 package proj7AhnDeGrawHangSlager;
-/**
- *
+/*
+ * File: FindAndReplaceWidget.java
+ * Names: Kevin Ahn, Lucas DeGraw, Jackie Hang, Kyle Slager
+ * Class: CS 361
+ * Project 7
+ * Date: November 2, 2018
  */
 
 import javafx.scene.Scene;

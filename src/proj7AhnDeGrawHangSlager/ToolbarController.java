@@ -2,8 +2,8 @@
  * File: ToolbarController.java
  * Names: Kevin Ahn, Lucas DeGraw, Jackie Hang, Kyle Slager
  * Class: CS 361
- * Project 6
- * Date: October 26, 2018
+ * Project 7
+ * Date: November 2, 2018
  * ---------------------------
  * Edited From: Zena Abulhab, Paige Hanssen, Kyle Slager, Kevin Zhou
  * Project 5
@@ -30,7 +30,7 @@ import java.util.concurrent.*;
  * @author  Kevin Ahn, Jackie Hang, Matt Jones, Kevin Zhou
  * @author  Zena Abulhab, Paige Hanssen, Kyle Slager Kevin Zhou (Project 5)
  * @version 2.0
- * @since   10-26-2018
+ * @since   11-2-2018
  *
  */
 public class ToolbarController {
