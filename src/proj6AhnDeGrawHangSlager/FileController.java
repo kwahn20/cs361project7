@@ -333,7 +333,7 @@ public class FileController {
         }
 
         // creation of the codeArea
-        JavaCodeAreas codeArea = new JavaCodeAreas();
+        JavaCodeArea codeArea = new JavaCodeArea();
         this.contextMenuController.setupStyledJavaCodeAreaContextMenuHandler(codeArea);
         codeArea.setOnKeyPressed(event -> markFileAsSaved());
         codeArea.replaceText(content);

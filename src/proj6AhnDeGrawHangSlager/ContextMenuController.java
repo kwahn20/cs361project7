@@ -128,7 +128,7 @@ public class ContextMenuController {
      *
      * @param styledJavaCodeArea StyledJavaCodeArea being clicked on
      */
-    public void setupStyledJavaCodeAreaContextMenuHandler(JavaCodeAreas styledJavaCodeArea) {
+    public void setupStyledJavaCodeAreaContextMenuHandler(JavaCodeArea styledJavaCodeArea) {
         System.out.println("here");
         ContextMenu rightClickMenu = new ContextMenu();
 

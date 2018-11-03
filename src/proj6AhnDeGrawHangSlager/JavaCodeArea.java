@@ -28,9 +28,9 @@ import java.util.regex.Pattern;
  * @since   10-3-2018
  */
 
-public class JavaCodeAreas extends CodeArea{
+public class JavaCodeArea extends CodeArea{
 
-    public JavaCodeAreas(){
+    public JavaCodeArea(){
         super();
         this.subscribe();
     }
