@@ -404,6 +404,10 @@ public class FileController {
         saveStatus.replace(curTab, false);
     }
 
+    /**
+     *A getter to get the hashmap that stores the filenames
+     * @return  Hashmap<Tab,String> of tabs and the filenames of files in the tabs
+     */
     public HashMap<Tab,String> getFilenames(){
         return this.filenames;
     }

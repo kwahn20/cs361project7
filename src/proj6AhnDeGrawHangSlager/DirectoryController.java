@@ -34,7 +34,7 @@ public class DirectoryController {
     /**
      * a HashMap mapping the tabs and the associated files
      */
-    private Map<Tab, String> tabFileMap;
+    private Map<Tab, String> tabFileNameMap;
     /**
      * A HashMap mapping the TreeItems and associated files
      */
@@ -76,13 +76,14 @@ public class DirectoryController {
     }
 
     /**
-     * Sets the FileMenuController.
+     * Sets the FileController and sets the hashmap returned
+     * from the FileController
      *
      * @param fileController FileController created in main Controller.
      */
     public void setFileController(FileController fileController) {
         this.fileController = fileController;
-        this.tabFileMap = fileController.getFilenames();
+        this.tabFileNameMap = fileController.getFilenames();
 
     }
 
@@ -115,7 +116,7 @@ public class DirectoryController {
      */
     public void createDirectoryTree() {
         // capture current file
-        String fileName = this.tabFileMap.get(this.tabPane.getSelectionModel().getSelectedItem());
+        String fileName = this.tabFileNameMap.get(this.tabPane.getSelectionModel().getSelectedItem());
         if (fileName != null) {
             File file = new File(fileName);
             // create the directory tree

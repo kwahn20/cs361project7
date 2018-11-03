@@ -18,6 +18,7 @@ import javafx.scene.control.*;
 import org.fxmisc.flowless.VirtualizedScrollPane;
 import org.fxmisc.richtext.CodeArea;
 import org.fxmisc.richtext.NavigationActions.SelectionPolicy;
+import org.fxmisc.richtext.Selection;
 
 import java.util.regex.Pattern;
 import java.util.Stack;
@@ -363,35 +364,36 @@ public class EditController {
     /**
      * comments out the line that the cursor is one if it uncommented,
      * undoes a "layer" of commenting (pair of forward slashes "//") if there >= one
+     *
      */
-    public void handleCommenting(){
+    public void handleCommenting() {
+
         JavaCodeAreas curCodeArea = getCurJavaCodeArea();
+        // get the start paragraph and the end paragraph of the selection
+        Selection<?, ?, ?> selection = curCodeArea.getCaretSelectionBind();
+        int startIdx = selection.getStartParagraphIndex();
+        int endIdx = selection.getEndParagraphIndex();
 
-        selectedText = curCodeArea.getSelectedText();
-        getFullSelectedText(curCodeArea);
-
-        for (int i = 0; i < lines.length; i++) {
-
-            String curLineText = lines[i];
-
-            // regex to check if current line is commented
-            if (Pattern.matches(" *[ \\t]*\\/\\/.*", curLineText)) {
-
-                // uncomment the line by taking out the first instance of "//"
-                String curLineUncommented =
-                        curLineText.replaceFirst("//", "");
-
-                // replace the current line with the newly commented line
-                curCodeArea.replaceText(caretIdxStart, caretIdxStart + curLineText.length(),
-                        curLineUncommented);
+        // If there is one line that is not commented in the selected paragraphs,
+        // comment all selected paragraphs.
+        boolean shouldComment = false;
+        for (int lineNum = startIdx; lineNum <= endIdx; lineNum++) {
+            if (!(curCodeArea.getParagraph(lineNum).getText().startsWith("//"))) {
+                shouldComment = true;
             }
-            else {
-                // add a "//" at the beginning of the line to comment it out
-                curCodeArea.replaceText(caretIdxStart, caretIdxStart, "//");
+        }
+
+        // If we should comment all paragraphs, comment all paragraphs.
+        // If all selected the paragraphs are commented,
+        // uncomment the selected paragraphs.
+        if (shouldComment) {
+            for (int lineNum = startIdx; lineNum <= endIdx; lineNum++) {
+                curCodeArea.insertText(lineNum, 0, "//");
             }
-
-            incrementCaretIdx(curCodeArea);
-
+        } else {
+            for (int lineNum = startIdx; lineNum <= endIdx; lineNum++) {
+                curCodeArea.deleteText(lineNum, 0, lineNum, 2);
+            }
         }
 
     }
