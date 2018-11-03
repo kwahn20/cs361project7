@@ -72,29 +72,29 @@ public class Console extends StyleClassedTextArea {
         return userCommand + "\n";
     }
 
-
     /**
      * Adds a new, separate line of text to this console.
      * Used in ToolbarController when printing to the console.
-     * @param newLine the string to add to the new line
+     * @param newString the string to add to the console
      */
-    public void WriteLineToConsole(String newLine, String strType){
-        String separator = System.getProperty("line.separator");
-        int len = newLine.length();
-        this.appendText(newLine);
-        this.appendText(separator);
-        if(strType == "ERROR"){
-            this.setStyleClass(this.getText().length() - len - 1, this.getText().length(), "err");
+    public void WriteLineToConsole(String newString, String type){
+
+        int fromIndex = this.getText().length();
+        this.appendText(newString);
+
+        //Style the texts differently base on their source provided
+        int toIndex = this.getText().length();
+        if(type.equals("INPUT")) {
+            this.setStyleClass(fromIndex, toIndex, "inp");
         }
-        else if(strType == "INPUT"){
-            this.setStyleClass(this.getText().length() - len - 1, this.getText().length(), "inp");
+        else if(type.equals("ERROR")){
+            this.setStyleClass(fromIndex, toIndex, "err");
         }
-        else if(strType == "CONS"){
-            this.setStyleClass(this.getText().length() - len - 1, this.getText().length(), "cons");
+        else if(type.equals("CONS")){
+            this.setStyleClass(fromIndex, toIndex, "cons");
         }
-        this.setStyleClass(this.getText().length(),this.getText().length(), "normal");
-        this.moveTo(this.getText().length());
-        this.requestFollowCaret();
+        this.moveCaretToEnd();
+        this.setStyleClass(toIndex, toIndex, "normal");
     }
 
     /**
@@ -158,6 +158,15 @@ public class Console extends StyleClassedTextArea {
                 e.consume();
             }
         }
+    }
+
+    /**
+     * Moves the caret to the end of the text and movee the scroll bar to the caret position
+     */
+    private void moveCaretToEnd(){
+        int length = this.getText().length();
+        this.moveTo(length);
+        this.requestFollowCaret();
     }
 
 

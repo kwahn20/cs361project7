@@ -75,7 +75,7 @@ public class ToolbarController {
     public void handleStop(){
         if(curFutureTask!=null) {
             this.curFutureTask.cancel(true);
-            this.console.WriteLineToConsole("Process terminated.", "CONS");
+            this.console.WriteLineToConsole("Process terminated.\n", "CONS");
         }
     }
 
@@ -138,7 +138,7 @@ public class ToolbarController {
             compSuccessful = curFutureTask.get();
             if (compSuccessful) {
                 Platform.runLater(() ->
-                        this.console.WriteLineToConsole("Compilation was Successful.", "CONS"));
+                        this.console.WriteLineToConsole("Compilation was Successful.\n", "CONS"));
             }
             compileExecutor.shutdown();
         } catch (ExecutionException | InterruptedException | CancellationException e) {
@@ -258,21 +258,25 @@ public class ToolbarController {
                 }
             }).start();
 
+
+            int inp;
+            int err = -1;
             // While there is some input to the console, or errors that have occurred,
             // append them to the console for the user to see.
-            while ((inputLine = stdInput.readLine()) != null || (errorLine = stdError.readLine()) != null){
+            while ((inp = stdInput.read()) >= 0 || (err = stdError.read()) >= 0){
 
-                final String finalInputLine = inputLine;
-                final String finalErrorLine = errorLine;
-                if (finalInputLine != null) {
-                    Platform.runLater(() -> this.console.WriteLineToConsole(finalInputLine, "INPUT"));
+                final char finalInput = (char)inp;
+                final char finalError = (char)err;
+
+                if (inp >= 0) {
+                    Platform.runLater(() -> this.console.WriteLineToConsole(Character.toString(finalInput), "INPUT"));
                 }
-                if(finalErrorLine != null) {
+                if(err >= 0) {
                     taskSuccessful = false;
-                    Platform.runLater(() -> this.console.WriteLineToConsole(finalErrorLine, "ERROR"));
+                    Platform.runLater(() -> this.console.WriteLineToConsole(Character.toString(finalError), "ERROR"));
                 }
                 try {
-                    Thread.sleep(50);
+                    Thread.sleep(2);
                 }catch (InterruptedException e){
                     this.stop();
                     return taskSuccessful;
@@ -283,7 +287,6 @@ public class ToolbarController {
             stdOutput.close();
             return taskSuccessful;
         }
-
 
         /**
          * Stop the current process
