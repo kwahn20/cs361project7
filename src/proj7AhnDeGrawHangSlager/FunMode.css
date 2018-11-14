@@ -31,7 +31,7 @@
 #tabPane {
     -pref-height: 200px;
     -pref-width: 200px;
-    -fx-background-image: url(ASSETS/rainbowCopy.jpg)
+    -fx-background-image: url(resources/rainbowCopy.jpg)
 }
 
 .button{
@@ -39,7 +39,7 @@
 }
 
 #console{
-    -fx-background-image: url(ASSETS/rainbow.jpg)
+    -fx-background-image: url(resources/rainbow.jpg)
 }
 
 .menu-item{
@@ -55,7 +55,7 @@
 }
 
 .code-area{
-     -fx-background-image: url(ASSETS/rainbowStripes.png)
+     -fx-background-image: url(resources/rainbowStripes.png)
 }
 
 .tool-bar{

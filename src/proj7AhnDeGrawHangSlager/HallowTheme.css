@@ -45,7 +45,7 @@
 }
 
 .tab-pane{
-    -fx-background-image: url(ASSETS/pumpkin.jpg)
+    -fx-background-image: url(resources/pumpkin.jpg)
 }
 
 .tab{
