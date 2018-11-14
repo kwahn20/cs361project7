@@ -411,7 +411,7 @@ public class EditController {
         getFullSelectedText(curCodeArea);
 
         for (int i = 0; i < lines.length; i++) {
-            singleLineTabbing(caretIdxStart);
+            tabSingleLine(caretIdxStart);
             incrementCaretIdx(curCodeArea);
 
         }
@@ -430,7 +430,7 @@ public class EditController {
 
         for (int i = 0; i < lines.length; i++) {
             String curLineText = lines[i];
-            singleLineUnTabbing(curLineText, caretIdxStart);
+            untabSingleLine(curLineText, caretIdxStart);
             incrementCaretIdx(curCodeArea);
         }
     }
@@ -438,7 +438,7 @@ public class EditController {
     /**
      * Tabs a single line
      */
-    private void singleLineTabbing(int caretIdx) {
+    private void tabSingleLine(int caretIdx) {
         JavaCodeArea curCodeArea = getCurJavaCodeArea();
         curCodeArea.replaceText(caretIdx, caretIdx, "\t");
     }
@@ -446,7 +446,7 @@ public class EditController {
     /**
      * Untabs a single line
      */
-    private void singleLineUnTabbing(String curLineText, int caretIdx) {
+    private void untabSingleLine(String curLineText, int caretIdx) {
 
         JavaCodeArea curCodeArea = getCurJavaCodeArea();
 
