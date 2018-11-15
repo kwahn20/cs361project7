@@ -14,6 +14,7 @@ package proj7AhnDeGrawHangSlager;
  * Date: November 2, 2018
  */
 import org.fxmisc.richtext.CodeArea;
+import org.fxmisc.richtext.LineNumberFactory;
 import org.fxmisc.richtext.model.StyleSpans;
 import org.fxmisc.richtext.model.StyleSpansBuilder;
 import org.reactfx.Subscription;
@@ -36,10 +37,17 @@ import java.util.regex.Pattern;
 
 public class JavaCodeArea extends CodeArea{
 
+    private ContextMenuController contextMenuController;
+
+    //ContextMenuController contextMenuController
     public JavaCodeArea(){
         super();
         this.subscribe();
+        this.setParagraphGraphicFactory(LineNumberFactory.get(this));
+        //this.contextMenuController = contextMenuController;
+        //this.contextMenuController.setupJavaCodeAreaContextMenuHandler(this);
     }
+
 
     /**
      * Method obtained from the RichTextFX Keywords Demo. Method allows
@@ -60,19 +68,8 @@ public class JavaCodeArea extends CodeArea{
                 .successionEnds(Duration.ofMillis(500))
 
                 // run the following code block when previous stream emits an event
-                .subscribe(ignore -> this.setStyleSpans(0, JavaStyle.computeHighlighting(this.getText())));
+                .subscribe(ignore -> this.setStyleSpans(0, computeHighlighting(this.getText())));
     }
-}
-
-
-/**
- * @source  https://moodle.colby.edu/pluginfile.php/294745/mod_resource/content/0/JavaKeywordsDemo.java
- * @author  Matt Jones, Kevin Zhou, Kevin Ahn, Jackie Hang
- * @author  Zena Abulhab, Paige Hanssen, Kyle Slager Kevin Zhou
- * @version 3.0
- * @since   09-30-2018
- */
-class JavaStyle {
 
     // a list of strings that contain the keywords for the IDE to identify.
     private static final String[] KEYWORDS = new String[]{
@@ -135,7 +132,7 @@ class JavaStyle {
                                                             matcher.group("COMMENT") != null ? "comment" :
                                                                     matcher.group("IDENTIFIER") != null ? "identifier" :
                                                                             matcher.group("INTCONST") != null ? "intconst" :
-                                                                                        null; /* never happens */
+                                                                                    null; /* never happens */
             assert styleClass != null;
             spansBuilder.add(Collections.emptyList(), matcher.start() - lastKwEnd);
             spansBuilder.add(Collections.singleton(styleClass), matcher.end() - matcher.start());
@@ -144,4 +141,9 @@ class JavaStyle {
         spansBuilder.add(Collections.emptyList(), text.length() - lastKwEnd);
         return spansBuilder.create();
     }
+
+
+
+
 }
+

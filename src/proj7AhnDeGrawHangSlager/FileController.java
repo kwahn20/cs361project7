@@ -337,7 +337,7 @@ public class FileController {
         this.contextMenuController.setupJavaCodeAreaContextMenuHandler(codeArea);
         codeArea.setOnKeyPressed(event -> markFileAsUnsaved());
         codeArea.replaceText(content);
-        codeArea.setParagraphGraphicFactory(LineNumberFactory.get(codeArea));
+        //codeArea.setParagraphGraphicFactory(LineNumberFactory.get(codeArea));
 
         // creation of the tab
         Tab newTab = new Tab(filename, new VirtualizedScrollPane<>(codeArea,
