@@ -21,6 +21,8 @@ import javafx.scene.input.MouseButton;
 import javafx.scene.Node;
 import javafx.scene.control.SeparatorMenuItem;
 
+import java.io.File;
+
 /**
  * ContextMenu Controller, handling context menu related actions.
  */
@@ -104,7 +106,7 @@ public class ContextMenuController {
         SaveAsItem.setOnAction(e -> this.fileMenuController.handleSaveAs());
 
         MenuItem NewItem = new MenuItem("New");
-        NewItem.setOnAction(e -> this.fileMenuController.handleNew());
+        NewItem.setOnAction(e -> this.fileMenuController.handleNew( new File("")));
 
         MenuItem OpenItem = new MenuItem("Open");
         OpenItem.setOnAction(e -> this.fileMenuController.handleOpen());

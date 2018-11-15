@@ -14,11 +14,10 @@
 package proj7AhnDeGrawHangSlager;
 
 import javafx.event.Event;
-import java.util.Scanner;
+
 import java.util.Optional;
 import java.io.File;
 import java.io.BufferedWriter;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.OutputStreamWriter;
 import java.io.IOException;
@@ -26,20 +25,15 @@ import java.util.HashMap;
 
 import javafx.application.Platform;
 import javafx.scene.control.Tab;
-import javafx.scene.control.TabPane;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
-import javafx.scene.control.ScrollPane;
 import javafx.scene.control.ButtonType;
 import javafx.scene.layout.VBox;
 import javafx.stage.FileChooser;
 import javafx.stage.Window;
-import javafx.beans.value.ObservableValue;
-import javafx.beans.value.ChangeListener;
 
 import org.fxmisc.flowless.VirtualizedScrollPane;
 import org.fxmisc.richtext.CodeArea;
-import org.fxmisc.richtext.LineNumberFactory;
 
 /**
  * This class contains the handlers for each of the menu options in the IDE.
@@ -54,16 +48,15 @@ import org.fxmisc.richtext.LineNumberFactory;
  */
 public class FileController {
 
-    private TabPane tabPane;
+    private JavaTabPane javaTabPane;
 
     // "True" means that the file has not been changed since its last save,
     // if any. False means that something has been changed in the file.
-    private HashMap<Tab, Boolean> saveStatus;
+//    private HashMap<Tab, Boolean> saveStatus;
 
-    private HashMap<Tab, String> filenames;
+    private HashMap<Tab, String> tabFilepathMap;
 
     private VBox vBox;
-    private MasterController mController;
 
     /**
      * ContextMenuController handling context menu actions
@@ -74,15 +67,13 @@ public class FileController {
 
     /**
      * Constructor for the class. Intializes the save status
-     * and the filenames in a HashMap
+     * and the tabFilepathMap in a HashMap
      */
-    public FileController(VBox vBox, TabPane tabPane,MasterController mController, DirectoryController directoryController) {
-        this.saveStatus = new HashMap<>();
-        this.filenames = new HashMap<>();
+    public FileController(VBox vBox, JavaTabPane javaTabPane, DirectoryController directoryController) {
         this.vBox = vBox;
-        this.tabPane = tabPane;
-        this.mController = mController;
+        this.javaTabPane = javaTabPane;
         this.directoryController = directoryController;
+        this.tabFilepathMap = new HashMap<>();
     }
 
     /**
@@ -98,9 +89,9 @@ public class FileController {
      * Returns the name of the file open in the current tab.
      * @return The name of the currently open file
      */
-    protected String getFileName(){
-        Tab curTab = this.tabPane.getSelectionModel().getSelectedItem();
-        return filenames.get(curTab);
+    protected String getFilePath(){
+        Tab curTab = this.javaTabPane.getSelectionModel().getSelectedItem();
+        return tabFilepathMap.get(curTab);
     }
 
     /**
@@ -120,14 +111,15 @@ public class FileController {
 
     /**
      * Handler for the "New" menu item in the "File" menu.
-     * Adds a new Tab to the TabPane, adds null to the filenames HashMap,
+     * Adds a new Tab to the TabPane, adds null to the tabFilepathMap HashMap,
      * and false to the saveStatus HashMap
      */
-    public Tab handleNew() {
-        Tab newTab = this.makeNewTab(null, tabPane);
-        saveStatus.put(newTab, false);
-        filenames.put(newTab,null);
-        return newTab;
+    public void handleNew(File file) {
+        this.javaTabPane.createNewTab(this, contextMenuController, file);
+        JavaTab t = (JavaTab)this.javaTabPane.getSelectionModel().getSelectedItem();
+        if (file == null) this.tabFilepathMap.put(t, null);
+        else this.tabFilepathMap.put(t, file.getPath());
+
     }
 
     /**
@@ -135,29 +127,18 @@ public class FileController {
      * Creates a FileChooser to select a file
      * Use scanner to read the file and write it into a new tab.
      */
-    public Tab handleOpen() {
+    public void handleOpen() {
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Open");
         Window stage = this.vBox.getScene().getWindow();
         File file = fileChooser.showOpenDialog(stage);
-        if (file == null){
-            return null;
+
+        if (file != null){
+            handleNew(file);
         }
-        Tab newTab =  makeNewTab(file, tabPane);
-
-        saveStatus.put(newTab, true);
-        filenames.put(newTab, file.getPath());
         directoryController.createDirectoryTree();
-        return newTab;
     }
 
-    public Tab handleOpenFile(File file){
-        Tab newTab =  makeNewTab(file, tabPane);
-        saveStatus.put(newTab, true);
-        filenames.put(newTab, file.getPath());
-        return newTab;
-
-    }
 
     /**
      * Handler for the "Close" menu item in the "File" menu.
@@ -166,15 +147,20 @@ public class FileController {
      * Otherwise, just close the tab.
      */
     public void handleClose(Event event) {
-        Tab curTab = this.tabPane.getSelectionModel().getSelectedItem();
-        if (filenames.get(curTab) != null) {
+        System.out.println("in close");
+        JavaTab curTab = (JavaTab)this.javaTabPane.getSelectionModel().getSelectedItem();
+
+//        if (this.javaTabPane.tabIsSaved(curTab)) this.closeTab();
+//        else this.askSaveAndClose(event);
+
+        if (tabFilepathMap.get(curTab) != null) {
             // check if any changes were made
-            if (saveStatus.get(curTab))
+            if (this.javaTabPane.tabIsSaved(curTab))
                 this.closeTab();
             else
                 this.askSaveAndClose(event);
         } else {
-            if(!filenames.isEmpty()) {
+            if(!tabFilepathMap.isEmpty()) {
                 this.askSaveAndClose(event);
             }
         }
@@ -188,11 +174,11 @@ public class FileController {
      * choose a filename and directory and then store the content of the tab to storage.
      */
     public boolean handleSave() {
-        Tab curTab = this.tabPane.getSelectionModel().getSelectedItem();
-        if (filenames.get(curTab) != null){
-            File file = new File(filenames.get(curTab));
+        JavaTab curTab = (JavaTab)this.javaTabPane.getSelectionModel().getSelectedItem();
+        if (tabFilepathMap.get(curTab) != null){
+            File file = new File(tabFilepathMap.get(curTab));    // this is what gets the path
             writeFile(file);
-            saveStatus.replace(curTab, true);
+            this.javaTabPane.updateTabSavedStatus(curTab, true);
             return true;
         }
         else
@@ -206,7 +192,7 @@ public class FileController {
      * Changes the name of the current tab to match the newly saved file's name.
      */
     public boolean handleSaveAs() {
-        Tab curTab = this.tabPane.getSelectionModel().getSelectedItem();
+        JavaTab curTab = (JavaTab)this.javaTabPane.getSelectionModel().getSelectedItem();
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Save as...");
         Window stage = this.vBox.getScene().getWindow();
@@ -216,8 +202,9 @@ public class FileController {
         }
         else{
             writeFile(file);
-            filenames.replace(curTab,file.getPath());
-            saveStatus.replace(curTab, true);
+//            tabFilepathMap.replace(curTab,file.getPath());
+//            saveStatus.replace(curTab, true);
+            this.javaTabPane.updateTabSavedStatus(curTab, true);
             this.directoryController.createDirectoryTree();
         }
         curTab.setText(file.getName());
@@ -230,14 +217,13 @@ public class FileController {
      * Returns when the user cancels exiting any tab.
      */
     public void handleExit(Event event) {
-        int numTabs = filenames.size();
-
+        int numTabs = tabFilepathMap.size();
         // Close each tab using handleClose()
         // Check if current number of tabs decreased by one to know if the user cancelled.
         for (int i = 0; i < numTabs; i++ ) {
             this.handleClose(event);
-            if (filenames.size() == (numTabs - i))
-                return;
+            if (tabFilepathMap.size() == (numTabs - i)) return;
+
         }
         Platform.exit();
     }
@@ -258,7 +244,9 @@ public class FileController {
                 event.consume();
                 return;
             } else if (result.get() == saveOptions.getYesButton()) {
+
                 boolean isNotCancelled = this.handleSave();
+
                 if(isNotCancelled) {
                     this.closeTab();
                 } else {
@@ -277,7 +265,7 @@ public class FileController {
      * @param file The file object to which the text is written to.
      */
     private void writeFile(File file) {
-        Tab curTab = this.tabPane.getSelectionModel().getSelectedItem();
+        JavaTab curTab = (JavaTab)this.javaTabPane.getSelectionModel().getSelectedItem();
         VirtualizedScrollPane<CodeArea> scrollPane = (VirtualizedScrollPane<CodeArea>) curTab.getContent();
         CodeArea codeArea = scrollPane.getContent();
         String text = codeArea.getText();
@@ -298,59 +286,12 @@ public class FileController {
         }
 
         // update File array
-        filenames.replace(curTab, file.getPath());
-        saveStatus.replace(curTab, true);
+//        tabFilepathMap.replace(curTab, file.getPath());
+//        saveStatus.replace(curTab, true);
+        this.javaTabPane.updateTabSavedStatus(curTab, true);
     }
 
-    /**
-     * A method to create a new tab with a codeArea inside of it and add it to the tabPane
-     * if there exists a file, a scanner will read in the content
-     * and write it to the codeArea.
-     *
-     * @param file the file opened into the new tab
-     * @param tabPane the tabPane of the IDE
-     * @return a Tab for the master controller to reference
-     */
-    private Tab makeNewTab(File file, TabPane tabPane){
-        // Make a new tab with a TextArea containing the content String,
-        // Make it the first tab and select it
-        String content = "";
-        String filename = "Untitled-" + Integer.toString(filenames.size()+1);
 
-        if (file != null){
-            filename = file.getName();
-            try {
-                Scanner scanner = new Scanner(file).useDelimiter("\\Z");
-                if (scanner.hasNext())
-                    content = scanner.next();
-            }
-            catch (FileNotFoundException | NullPointerException e) {
-                Alert alert = new Alert(AlertType.INFORMATION);
-                alert.setHeaderText("File Error");
-                alert.setContentText("File not Found: Please select a new file.");
-                alert.showAndWait();
-            }
-        }
-
-        // creation of the codeArea
-        JavaCodeArea codeArea = new JavaCodeArea();
-        this.contextMenuController.setupJavaCodeAreaContextMenuHandler(codeArea);
-        codeArea.setOnKeyPressed(event -> markFileAsUnsaved());
-        codeArea.replaceText(content);
-        //codeArea.setParagraphGraphicFactory(LineNumberFactory.get(codeArea));
-
-        // creation of the tab
-        Tab newTab = new Tab(filename, new VirtualizedScrollPane<>(codeArea,
-                ScrollPane.ScrollBarPolicy.ALWAYS,
-                ScrollPane.ScrollBarPolicy.ALWAYS));
-        tabPane.getTabs().add(0,newTab);
-        tabPane.getSelectionModel().select(newTab);
-        newTab.setOnCloseRequest(event -> mController.handleClose(event));
-
-        this.contextMenuController.setupTabContextMenuHandler(newTab);
-
-        return newTab;
-    }
 
     /**
      * Executes process for when a tab is closed, which is to remove the filename and saveStatus at
@@ -361,35 +302,17 @@ public class FileController {
         //NOTE: the following three lines has to be in this order removing the tab first would
         //result in calling handleUpdateCurrentTab() because the currently selected tab will
         //change, and thus the wrong File will be removed from the HashMaps
-        Tab curTab = this.tabPane.getSelectionModel().getSelectedItem();
-        saveStatus.remove(curTab);
-        filenames.remove(curTab);
-        tabPane.getTabs().remove(curTab);
+        JavaTab curTab = (JavaTab)this.javaTabPane.getSelectionModel().getSelectedItem();
+//        saveStatus.remove(curTab);
+        tabFilepathMap.remove(curTab);
+        javaTabPane.removeTab(curTab);
     }
 
     /**
-     * gets the saved status of the current tab.
-     * @return the saved status
+     *A getter to get the hashmap that stores the tabFilepathMap
+     * @return  Hashmap<Tab,String> of tabs and the tabFilepathMap of files in the tabs
      */
-    public boolean getSaveStatus(){
-        Tab curTab = this.tabPane.getSelectionModel().getSelectedItem();
-        return this.saveStatus.get(curTab);
-    }
-
-    /**
-     * Set the current save status of the current
-     * tab to false.
-     */
-    private void markFileAsUnsaved() {
-        Tab curTab = this.tabPane.getSelectionModel().getSelectedItem();
-        saveStatus.replace(curTab, false);
-    }
-
-    /**
-     *A getter to get the hashmap that stores the filenames
-     * @return  Hashmap<Tab,String> of tabs and the filenames of files in the tabs
-     */
-    public HashMap<Tab,String> getFilenames(){
-        return this.filenames;
+    public HashMap<Tab,String> getTabFilepathMap(){
+        return this.tabFilepathMap;
     }
 }

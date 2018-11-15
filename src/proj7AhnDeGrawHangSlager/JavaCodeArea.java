@@ -16,6 +16,7 @@ package proj7AhnDeGrawHangSlager;
 
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
+import javafx.scene.control.ContextMenu;
 import org.fxmisc.richtext.CodeArea;
 import org.fxmisc.richtext.LineNumberFactory;
 import org.fxmisc.richtext.model.StyleSpans;
@@ -43,12 +44,12 @@ public class JavaCodeArea extends CodeArea {
     private ContextMenuController contextMenuController;
 
     //ContextMenuController contextMenuController
-    public JavaCodeArea() {
+    public JavaCodeArea(ContextMenuController contextMenuController) {
         super();
         this.subscribe();
         this.setParagraphGraphicFactory(LineNumberFactory.get(this));
-        //this.contextMenuController = contextMenuController;
-        //this.contextMenuController.setupJavaCodeAreaContextMenuHandler(this);
+        this.contextMenuController = contextMenuController;
+        this.contextMenuController.setupJavaCodeAreaContextMenuHandler(this);
         /**
          * Obtained from Douglas-Hanssen-MacDonald-Zhang
          * Used for closing braces and parentheses at the end of a code area

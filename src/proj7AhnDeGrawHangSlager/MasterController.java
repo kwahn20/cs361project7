@@ -20,6 +20,7 @@ import javafx.scene.control.*;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.VBox;
 import javafx.event.Event;
+
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.awt.Desktop;
@@ -42,7 +43,7 @@ import java.io.IOException;
  */
 public class MasterController {
     @FXML private Menu editMenu;
-    @FXML private TabPane tabPane;
+    @FXML private JavaTabPane javaTabPane;
     @FXML private VBox vBox;
     @FXML private MenuItem saveMenuItem;
     @FXML private MenuItem saveAsMenuItem;
@@ -74,12 +75,12 @@ public class MasterController {
     @FXML
     public void initialize(){
         directoryController = new DirectoryController();
-        editController = new EditController(tabPane, findTextEntry, findPrevBtn, findNextBtn, replaceTextEntry);
-        fileController = new FileController(vBox,tabPane,this, directoryController);
+        editController = new EditController(javaTabPane, findTextEntry, findPrevBtn, findNextBtn, replaceTextEntry);
+        fileController = new FileController(vBox,javaTabPane, directoryController);
         setupDirectoryController();
 
-        toolbarController = new ToolbarController(console,stopButton,compileButton,compileRunButton,tabPane);
-        SimpleListProperty<Tab> listProperty = new SimpleListProperty<Tab> (tabPane.getTabs());
+        toolbarController = new ToolbarController(console,stopButton,compileButton,compileRunButton,javaTabPane);
+        SimpleListProperty<Tab> listProperty = new SimpleListProperty<Tab> (javaTabPane.getTabs());
         editMenu.disableProperty().bind(listProperty.emptyProperty());
         saveMenuItem.disableProperty().bind(listProperty.emptyProperty());
         saveAsMenuItem.disableProperty().bind(listProperty.emptyProperty());
@@ -147,10 +148,10 @@ public class MasterController {
      */
     private void callProperCompileMethod(String compileMethod) throws InterruptedException{
         if (compileMethod.equals("handleCompile")) {
-            toolbarController.handleCompile(fileController.getFileName());
+            toolbarController.handleCompile(fileController.getFilePath());
         }
         else {
-            toolbarController.handleCompileAndRun(fileController.getFileName());
+            toolbarController.handleCompileAndRun(fileController.getFilePath());
         }
     }
 
@@ -163,13 +164,15 @@ public class MasterController {
      */
     private void compileHelper(String compileMethod) throws InterruptedException{
         toolbarController.disableCompileAndRunButtons();
-        if(!fileController.getSaveStatus()) {
+        JavaTab curTab = (JavaTab)this.javaTabPane.getSelectionModel().getSelectedItem();
+        if (!javaTabPane.getTabSavedStatus(curTab)) {
+
             String saveResult = toolbarController.handleCompileSaveDialog();
             if (saveResult == "yesButton") {
                 fileController.handleSave();
                 callProperCompileMethod(compileMethod);
             } else if (saveResult == "noButton") {
-                if(fileController.getFileName() == null){
+                if(fileController.getFilePath() == null){
                     Alert alert = new Alert(Alert.AlertType.ERROR);
                     alert.setContentText("Cannot compile a file with no previous saved version.");
                     alert.showAndWait();
@@ -210,7 +213,7 @@ public class MasterController {
      */
     @FXML public void handleStop(){
         toolbarController.handleStop();
-        if(this.tabPane.getTabs().isEmpty()) {
+        if(this.javaTabPane.getTabs().isEmpty()) {
             this.stopButton.setDisable(true);
             return;
         }
@@ -238,8 +241,8 @@ public class MasterController {
      * Also sets the current tab for both the file and edit controllers.
      */
     @FXML public void handleNew() {
-        fileController.handleNew();
-        if(!toolbarController.isTaskRunning() && this.tabPane.getTabs().size() > 0) {
+        fileController.handleNew( null ); // TODO: decide whether to create a new File object or not here
+        if(!toolbarController.isTaskRunning() && this.javaTabPane.getTabs().size() > 0) {
             toolbarController.enableCompileAndRunButtons();
         }
     }
@@ -252,7 +255,7 @@ public class MasterController {
      */
     @FXML public void handleOpen() {
         fileController.handleOpen();
-        if(!toolbarController.isTaskRunning() && this.tabPane.getTabs().size() > 0) {
+        if(!toolbarController.isTaskRunning() && this.javaTabPane.getTabs().size() > 0) {
             toolbarController.enableCompileAndRunButtons();
         }
     }
@@ -265,9 +268,9 @@ public class MasterController {
      */
     @FXML public void handleClose(Event event) {
         fileController.handleClose(event);
-        if (this.tabPane.getTabs().isEmpty()&&!toolbarController.isTaskRunning()){
-            disableToolbar();
-        }
+//        if (this.tabPane.getTabs().isEmpty()&&!toolbarController.isTaskRunning()){
+//            disableToolbar();
+//        }
 
     }
 
@@ -492,7 +495,7 @@ public class MasterController {
      */
     private void setupDirectoryController() {
         this.directoryController.setDirectoryTree(directoryTree);
-        this.directoryController.setTabPane(this.tabPane);
+        this.directoryController.setTabPane(this.javaTabPane);
         this.directoryController.setFileController(this.fileController);
     }
 

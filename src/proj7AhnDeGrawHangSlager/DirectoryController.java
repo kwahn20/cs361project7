@@ -60,6 +60,7 @@ public class DirectoryController {
      * @param tv the directory tree
      */
     public void setDirectoryTree(TreeView tv) {
+        System.out.println("settong Dtree");
         this.directoryTree = tv;
         this.treeItemFileMap = new HashMap<>();
 
@@ -75,6 +76,7 @@ public class DirectoryController {
      * @param tabPane TabPane
      */
     public void setTabPane(TabPane tabPane) {
+        System.out.println("setting Dtree tabPane");
         this.tabPane = tabPane;
         // add listener to tab selection to switch directories based on open file
         this.tabPane.getSelectionModel().selectedItemProperty().addListener((observable, oldTab, newTab) ->
@@ -88,8 +90,9 @@ public class DirectoryController {
      * @param fileController FileController created in main Controller.
      */
     public void setFileController(FileController fileController) {
+        System.out.println("setting Dtree fileController");
         this.fileController = fileController;
-        this.tabFileNameMap = fileController.getFilenames();
+        this.tabFileNameMap = fileController.getTabFilepathMap();
 
     }
 
@@ -121,6 +124,7 @@ public class DirectoryController {
      * Adds the directory tree for the current file to the GUI
      */
     public void createDirectoryTree() {
+        System.out.println("creating tree");
         // capture current file
         String fileName = this.tabFileNameMap.get(this.tabPane.getSelectionModel().getSelectedItem());
         if (fileName != null) {
@@ -143,7 +147,8 @@ public class DirectoryController {
             TreeItem selectedItem = (TreeItem) directoryTree.getSelectionModel().getSelectedItem();
             String fileName = (String) selectedItem.getValue();
             if (fileName.endsWith(".java") || fileName.endsWith(".css") || fileName.endsWith(".fxml")) {
-                this.fileController.handleOpenFile(this.treeItemFileMap.get(selectedItem));
+                this.fileController.handleNew(this.treeItemFileMap.get(selectedItem));
+                // TODO: figure out if handleOpenFile can be substituted with handleNew here
             }
         }
     }
