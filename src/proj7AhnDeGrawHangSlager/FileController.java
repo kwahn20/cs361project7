@@ -349,25 +349,6 @@ public class FileController {
 
         this.contextMenuController.setupTabContextMenuHandler(newTab);
 
-        /**
-         * Lines 356 to 372 are obtained from Douglas-Hanssen-MacDonald-Zhang
-         * Used for closing braces and parentheses at the end of a code area
-         */
-        codeArea.textProperty().addListener(new ChangeListener<String>() {
-            @Override
-            public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
-               if (newValue.length() != 0) {
-                   String lastChar = Character.toString(newValue.charAt(newValue.length() - 1));
-                   if (lastChar.equalsIgnoreCase("(")) {
-                       codeArea.appendText(")");
-                   }
-                   else if(lastChar.equalsIgnoreCase("{")) {
-                       codeArea.appendText("\n}");
-                   }
-               }
-            }
-            }
-        );
         return newTab;
     }
 

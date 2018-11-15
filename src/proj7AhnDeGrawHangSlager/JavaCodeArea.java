@@ -13,6 +13,9 @@ package proj7AhnDeGrawHangSlager;
  * Project 7
  * Date: November 2, 2018
  */
+
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import org.fxmisc.richtext.CodeArea;
 import org.fxmisc.richtext.LineNumberFactory;
 import org.fxmisc.richtext.model.StyleSpans;
@@ -29,23 +32,41 @@ import java.util.regex.Pattern;
  * This class is the controller for all of the toolbar functionality.
  * Specifically the compile, compile and run, and stop buttons
  *
- * @author  Kevin Ahn, Lucas DeGraw, Jackie Hang, Kyle Slager
- * @author  Zena Abulhab, Paige Hanssen, Kyle Slager Kevin Zhou
+ * @author Kevin Ahn, Lucas DeGraw, Jackie Hang, Kyle Slager
+ * @author Zena Abulhab, Paige Hanssen, Kyle Slager Kevin Zhou
  * @version 2.0
- * @since   11-02-2018
+ * @since 11-02-2018
  */
 
-public class JavaCodeArea extends CodeArea{
+public class JavaCodeArea extends CodeArea {
 
     private ContextMenuController contextMenuController;
 
     //ContextMenuController contextMenuController
-    public JavaCodeArea(){
+    public JavaCodeArea() {
         super();
         this.subscribe();
         this.setParagraphGraphicFactory(LineNumberFactory.get(this));
         //this.contextMenuController = contextMenuController;
         //this.contextMenuController.setupJavaCodeAreaContextMenuHandler(this);
+        /**
+         * Obtained from Douglas-Hanssen-MacDonald-Zhang
+         * Used for closing braces and parentheses at the end of a code area
+         */
+        this.textProperty().addListener(new ChangeListener<String>() {
+                                            @Override
+                                            public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+                                                if (newValue.length() != 0) {
+                                                    String lastChar = Character.toString(newValue.charAt(newValue.length() - 1));
+                                                    if (lastChar.equalsIgnoreCase("(")) {
+                                                        appendText(")");
+                                                    } else if (lastChar.equalsIgnoreCase("{")) {
+                                                        appendText("\n}");
+                                                    }
+                                                }
+                                            }
+                                        }
+        );
     }
 
 
@@ -141,8 +162,6 @@ public class JavaCodeArea extends CodeArea{
         spansBuilder.add(Collections.emptyList(), text.length() - lastKwEnd);
         return spansBuilder.create();
     }
-
-
 
 
 }
