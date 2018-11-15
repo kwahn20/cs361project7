@@ -126,6 +126,7 @@ public class EditController {
         findAndReplace.setupWidget();
     }
 
+
     /**
      * if a single "{", "}", "[", "]", "(", ")" is highlighted, this will attempt to find
      * the matching opening or closing character and if successful, will highlight the
@@ -133,172 +134,8 @@ public class EditController {
      * otherwise will display an appropriate error message
      */
     public void handleMatchBracketOrParen() {
-
-        // get in-focus code area
-        JavaCodeArea curJavaCodeArea = getCurJavaCodeArea();
-
-        // get any highlighted text in the code area
-        String highlightedText = curJavaCodeArea.getSelectedText();
-
-        if (highlightedText.isEmpty()) {
-            showAlert("Please Highlight a Bracket!");
-            return;
-        } else if (highlightedText.length() == 1) {
-
-            // true if matching a closing character to an opening character,
-            // false if matching an opening character to a closing character
-            Boolean findClosingCharacter;
-
-            if (highlightedText.equals("{") || highlightedText.equals("[")
-                    || highlightedText.equals("(")) {
-                findClosingCharacter = true;
-            } else if (highlightedText.equals("}") || highlightedText.equals("]")
-                    || highlightedText.equals(")")) {
-                findClosingCharacter = false;
-            } else {
-                showAlert("VALID CHARACTER NOT HIGHLIGHTED\n" +
-                        "VALID CHARACTERS ARE '{', '}', '[', ']', '(' or ')'");
-                return;
-            }
-
-            // save length of whole file
-            int fileTextLength = curJavaCodeArea.getLength();
-
-
-            // this stack holds only opening "[","(","{" or closing "]",")","}" characters
-            // depending which type was initially highlighted to match against
-            // start with initial highlighted bracket/parenthesis/brace on the stack
-            Stack<String> charStack = new Stack<>();
-            charStack.push(highlightedText);
-
-            // get the indices of the highlighted character within the file
-            IndexRange highlightedCharRange = curJavaCodeArea.getSelection();
-
-            if (findClosingCharacter) {
-
-                String openingMatchCharacter;
-
-                // search forward through file
-                int idxAfterCharToMatch = highlightedCharRange.getEnd();
-                for (int i = idxAfterCharToMatch; i < fileTextLength; i++) {
-
-                    // get the opening char on top of stack
-                    openingMatchCharacter = charStack.peek();
-
-                    // current character being checked for a closing bracket match
-                    String curChar = curJavaCodeArea.getText(i, i + 1);
-
-                    // check that the character is not not written as a string "(" or '('
-                    try {
-                        if (curJavaCodeArea.getText(i - 1, i).equals("\"")
-                                && curJavaCodeArea.getText(i + 1, i + 2).equals("\"")
-                                || curJavaCodeArea.getText(i - 1, i).equals("'")
-                                && curJavaCodeArea.getText(i + 1, i + 2).equals("'")) {
-                            continue;
-                        }
-                    } catch (IndexOutOfBoundsException e) {
-                        throw(e);
-                    }
-                    /* pop the top opening char off the stack if its closing match is found,
-                     * otherwise push the newly found opening char onto the stack */
-                    switch (curChar) {
-                        case ("]"):
-                            if (openingMatchCharacter.equals("[")) charStack.pop();
-                            break;
-                        case (")"):
-                            if (openingMatchCharacter.equals("(")) charStack.pop();
-                            break;
-                        case ("}"):
-                            if (openingMatchCharacter.equals("{")) charStack.pop();
-                            break;
-                        case ("["):
-                            charStack.push(curChar);
-                            break;
-                        case ("("):
-                            charStack.push(curChar);
-                            break;
-                        case ("{"):
-                            charStack.push(curChar);
-                            break;
-                        default:
-                            break;
-                    }
-                    // stack is empty if the originally highlighted character has been
-                    /// matched with the current character
-                    if (charStack.isEmpty()) {
-                        // highlight between matching characters ({}, () or [])
-                        curJavaCodeArea.selectRange(idxAfterCharToMatch, i);
-                        return;
-                    }
-                }
-                showAlert("MATCHING CLOSING CHARACTER NOT FOUND");
-                return;
-            } else {
-                String closingMatchCharacter;
-                int idxBeforeCharToMatch = highlightedCharRange.getStart();
-                // search backward through file
-                for (int i = idxBeforeCharToMatch; i > 0; i--) {
-
-                    // get closing character on top of the stack
-                    closingMatchCharacter = charStack.peek();
-
-                    // check that the character is not not written as a string "(" or '('
-                    try {
-                        int textLen = curJavaCodeArea.getText().length();
-                        if(i > textLen) {
-                            if (curJavaCodeArea.getText(i - 2, i - 1).equals("\"")
-                                    && curJavaCodeArea.getText(i, i + 1).equals("\"")
-                                    || curJavaCodeArea.getText(i - 2, i - 1).equals("'")
-                                    && curJavaCodeArea.getText(i, i + 1).equals("'")) {
-                                continue;
-                            }
-                        }
-                    } catch (IndexOutOfBoundsException e) {
-                        throw(e);
-                    }
-
-                    // pop the top opening char off the stack if its closing match is found,
-                    // otherwise push the newly found opening char onto the stack
-                    // current character being checked for a closing bracket match
-                    String curChar = curJavaCodeArea.getText(i - 1, i);
-
-                    switch (curChar) {
-                        case ("["):
-                            if (closingMatchCharacter.equals("]")) charStack.pop();
-                            break;
-                        case ("("):
-                            if (closingMatchCharacter.equals(")")) charStack.pop();
-                            break;
-                        case ("{"):
-                            if (closingMatchCharacter.equals("}")) charStack.pop();
-                            break;
-                        case ("]"):
-                            charStack.push(curChar);
-                            break;
-                        case (")"):
-                            charStack.push(curChar);
-                            break;
-                        case ("}"):
-                            charStack.push(curChar);
-                            break;
-                        default:
-                            break;
-                    }
-                    // stack is empty if the originally highlighted character has been
-                    /// matched with the current character in the file
-                    if (charStack.isEmpty()) {
-                        // highlight between matching characters ({}, () or [])
-                        curJavaCodeArea.selectRange(i, idxBeforeCharToMatch);
-                        return;
-                    }
-                }
-                showAlert("MATCHING OPENING CHARACTER NOT FOUND");
-                return;
-            }
-        } else {
-            showAlert("VALID CHARACTERS ARE A SINGLE '{', '}', '[', ']', '(' or ')'");
-        }
-
+        MatchBracketorParen matchBorP = new MatchBracketorParen(this);
+        matchBorP.handleBracketorParenMatching();
     }
 
     /**
@@ -306,7 +143,7 @@ public class EditController {
      *
      * @param header the content of the alert
      */
-    private void showAlert(String header) {
+    public void showAlert(String header) {
         Alert a = new Alert(Alert.AlertType.INFORMATION);
         a.setHeaderText(header);
         a.show();
@@ -430,7 +267,7 @@ public class EditController {
 
         for (int i = 0; i < lines.length; i++) {
             String curLineText = lines[i];
-            untabSingleLine(curLineText, caretIdxStart);
+            unTabSingleLine(curLineText, caretIdxStart);
             incrementCaretIdx(curCodeArea);
         }
     }
@@ -446,7 +283,7 @@ public class EditController {
     /**
      * Untabs a single line
      */
-    private void untabSingleLine(String curLineText, int caretIdx) {
+    private void unTabSingleLine(String curLineText, int caretIdx) {
 
         JavaCodeArea curCodeArea = getCurJavaCodeArea();
 

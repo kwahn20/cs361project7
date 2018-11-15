@@ -335,7 +335,7 @@ public class FileController {
         // creation of the codeArea
         JavaCodeArea codeArea = new JavaCodeArea();
         this.contextMenuController.setupJavaCodeAreaContextMenuHandler(codeArea);
-        codeArea.setOnKeyPressed(event -> markFileAsSaved());
+        codeArea.setOnKeyPressed(event -> markFileAsUnsaved());
         codeArea.replaceText(content);
         codeArea.setParagraphGraphicFactory(LineNumberFactory.get(codeArea));
 
@@ -399,7 +399,7 @@ public class FileController {
      * Set the current save status of the current
      * tab to false.
      */
-    private void markFileAsSaved() {
+    private void markFileAsUnsaved() {
         Tab curTab = this.tabPane.getSelectionModel().getSelectedItem();
         saveStatus.replace(curTab, false);
     }
