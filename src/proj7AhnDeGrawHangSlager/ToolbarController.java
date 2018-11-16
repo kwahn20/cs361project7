@@ -60,6 +60,10 @@ public class ToolbarController {
         compileThread.start();
     }
 
+    public void handleScan(String filename){
+        System.out.println("HELLO");
+    }
+
     /**
      * Calls compile and runs the code
      * @param filename the name of the file to compile and run
@@ -319,18 +323,18 @@ public class ToolbarController {
      * Disables the Compile and Compile and Run buttons, enables the Stop button.
      */
     public void disableCompileAndRunButtons() {
-        this.compileButton.setDisable(true);
-        this.compileRunButton.setDisable(true);
-        this.stopButton.setDisable(false);
+//        this.compileButton.setDisable(true);
+//        this.compileRunButton.setDisable(true);
+//        this.stopButton.setDisable(false);
     }
 
     /**
      * Enables the Compile and Compile and Run buttons, disables the Stop button.
      */
     public void enableCompileAndRunButtons() {
-        this.compileButton.setDisable(false);
-        this.compileRunButton.setDisable(false);
-        this.stopButton.setDisable(true);
+//        this.compileButton.setDisable(false);
+//        this.compileRunButton.setDisable(false);
+//        this.stopButton.setDisable(true);
     }
 
     public void setReceivedCommand(Boolean ifReceived){

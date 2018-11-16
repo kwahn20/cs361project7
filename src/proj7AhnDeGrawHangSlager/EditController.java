@@ -19,12 +19,8 @@ import org.fxmisc.flowless.VirtualizedScrollPane;
 import org.fxmisc.richtext.CodeArea;
 import org.fxmisc.richtext.NavigationActions.SelectionPolicy;
 import org.fxmisc.richtext.Selection;
-
 import java.util.regex.Pattern;
-import java.util.Stack;
-
 import java.util.ArrayList;
-
 
 /**
  * This is the controller class for all of the edit functions
@@ -126,7 +122,6 @@ public class EditController {
         findAndReplace.setupWidget();
     }
 
-
     /**
      * if a single "{", "}", "[", "]", "(", ")" is highlighted, this will attempt to find
      * the matching opening or closing character and if successful, will highlight the
@@ -134,8 +129,8 @@ public class EditController {
      * otherwise will display an appropriate error message
      */
     public void handleMatchBracketOrParen() {
-        MatchBracketorParen matchBorP = new MatchBracketorParen(this);
-        matchBorP.handleBracketorParenMatching();
+        MatchBracketOrParen matchBorP = new MatchBracketOrParen(this);
+        matchBorP.handleBracketOrParenMatching();
     }
 
     /**
@@ -236,7 +231,6 @@ public class EditController {
 
     }
 
-
     /**
      * Tabs the selected text
      */
@@ -253,7 +247,6 @@ public class EditController {
 
         }
     }
-
 
     /**
      * Untabs the selected text

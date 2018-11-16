@@ -87,7 +87,7 @@ public class MasterController {
         closeMenuItem.disableProperty().bind(listProperty.emptyProperty());
         this.toolbarController.setReceivedCommand(false);
         this.console.setToolbarController(this.toolbarController);
-        disableToolbar();
+        //disableToolbar();
 
         // this line from JianQuanMarcello project 6
         this.setupContextMenuController();
@@ -207,6 +207,9 @@ public class MasterController {
         compileHelper("handleCompileAndRun");
     }
 
+    @FXML public void handleScan() throws InterruptedException {
+        System.out.println("TEST");
+    }
     /**
      * Handler for the Stop button in the toolbar.
      * Calls the handleStop() method from Toolbar Controller and re-enables the toolbar buttons.
@@ -352,6 +355,7 @@ public class MasterController {
     @FXML
     public void handleDarkMode(){
        handleThemeChange("proj7AhnDeGrawHangSlager/DarkMode.css", darkModeMenuItem);
+        System.out.println("Dark");
     }
 
     /**
@@ -361,6 +365,7 @@ public class MasterController {
     public void handleNormalMode(){
         vBox.getStylesheets().remove(vBox.getStylesheets().size()-1);
         enableUnselectedThemes(normalModeMenuItem);
+        System.out.println("Normal");
     }
 
     /**
@@ -369,6 +374,7 @@ public class MasterController {
     @FXML
     public void handleFunMode(){
         handleThemeChange("proj7AhnDeGrawHangSlager/FunMode.css", funModeMenuItem);
+        System.out.println("Fun");
     }
 
 
@@ -379,6 +385,7 @@ public class MasterController {
     @FXML
     public void handleHallowThemeMode(){
         handleThemeChange("proj7AhnDeGrawHangSlager/HallowTheme.css", hallowThemeItem);
+        System.out.println("Hallow");
     }
     /**
      * Helper method to change the theme
@@ -425,14 +432,14 @@ public class MasterController {
         }
     }
 
-    /**
-     * Disables the Compile, Compile and Run, and Stop buttons in the toolbar
-     */
-    private void disableToolbar(){
-        this.compileButton.setDisable(true);
-        this.compileRunButton.setDisable(true);
-        this.stopButton.setDisable(true);
-    }
+//    /**
+//     * Disables the Compile, Compile and Run, and Stop buttons in the toolbar
+//     */
+//    private void disableToolbar(){
+//        this.compileButton.setDisable(true);
+//        this.compileRunButton.setDisable(true);
+//        this.stopButton.setDisable(true);
+//    }
 
     /**
      * Calls handleMatchBracketOrParen() of the editController

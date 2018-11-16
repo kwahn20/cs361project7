@@ -4,11 +4,11 @@ import javafx.scene.control.IndexRange;
 import java.util.Stack;
 
 
-public class MatchBracketorParen {
+public class MatchBracketOrParen {
 
     private EditController editController;
 
-    public MatchBracketorParen(EditController editController) {
+    public MatchBracketOrParen(EditController editController) {
         this.editController = editController;
     }
 
@@ -18,7 +18,7 @@ public class MatchBracketorParen {
      * text in between the matching set of {}, [], or (),
      * otherwise will display an appropriate error message
      */
-    public void handleBracketorParenMatching() {
+    public void handleBracketOrParenMatching() {
         // get in-focus code area
         JavaCodeArea curJavaCodeArea = this.editController.getCurJavaCodeArea();
 
@@ -48,7 +48,6 @@ public class MatchBracketorParen {
 
             // save length of whole file
             int fileTextLength = curJavaCodeArea.getLength();
-
 
             // this stack holds only opening "[","(","{" or closing "]",")","}" characters
             // depending which type was initially highlighted to match against
