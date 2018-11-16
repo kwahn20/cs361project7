@@ -21,6 +21,12 @@
     -fx-background-radius: 100;
 }
 
+#scanButton {
+    -fx-font: 13 arial;
+    -fx-base: #00ff80;
+    -fx-background-radius: 100;
+}
+
 #stopButton {
     -fx-font: 13 arial;
     -fx-base: red;
