@@ -87,7 +87,7 @@ public class MasterController {
         closeMenuItem.disableProperty().bind(listProperty.emptyProperty());
         this.toolbarController.setReceivedCommand(false);
         this.console.setToolbarController(this.toolbarController);
-        disableToolbar();
+        //disableToolbar();
 
         // this line from JianQuanMarcello project 6
         this.setupContextMenuController();
@@ -207,6 +207,9 @@ public class MasterController {
         compileHelper("handleCompileAndRun");
     }
 
+    @FXML public void handleScan() throws InterruptedException {
+        System.out.println("TEST");
+    }
     /**
      * Handler for the Stop button in the toolbar.
      * Calls the handleStop() method from Toolbar Controller and re-enables the toolbar buttons.
@@ -425,14 +428,14 @@ public class MasterController {
         }
     }
 
-    /**
-     * Disables the Compile, Compile and Run, and Stop buttons in the toolbar
-     */
-    private void disableToolbar(){
-        this.compileButton.setDisable(true);
-        this.compileRunButton.setDisable(true);
-        this.stopButton.setDisable(true);
-    }
+//    /**
+//     * Disables the Compile, Compile and Run, and Stop buttons in the toolbar
+//     */
+//    private void disableToolbar(){
+//        this.compileButton.setDisable(true);
+//        this.compileRunButton.setDisable(true);
+//        this.stopButton.setDisable(true);
+//    }
 
     /**
      * Calls handleMatchBracketOrParen() of the editController
