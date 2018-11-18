@@ -34,6 +34,8 @@ import javafx.stage.Window;
 
 import org.fxmisc.flowless.VirtualizedScrollPane;
 import org.fxmisc.richtext.CodeArea;
+import proj9AhnDeGrawHangSlagerbantam.lexer.Scanner;
+import proj9AhnDeGrawHangSlagerbantam.util.ErrorHandler;
 
 /**
  * This class contains the handlers for each of the menu options in the IDE.
@@ -292,6 +294,13 @@ public class FileController {
     }
 
 
+    public void handleScan() {
+        JavaTab curTab = (JavaTab)this.javaTabPane.getSelectionModel().getSelectedItem();
+
+        String filename = this.tabFilepathMap.get(curTab);
+        Scanner scanner = new Scanner( filename, new ErrorHandler() );
+        scanner.scan();
+    }
 
     /**
      * Executes process for when a tab is closed, which is to remove the filename and saveStatus at

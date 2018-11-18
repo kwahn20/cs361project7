@@ -209,6 +209,7 @@ public class MasterController {
 
     @FXML public void handleScan() throws InterruptedException {
         System.out.println("TEST");
+        this.fileController.handleScan();
     }
     /**
      * Handler for the Stop button in the toolbar.
