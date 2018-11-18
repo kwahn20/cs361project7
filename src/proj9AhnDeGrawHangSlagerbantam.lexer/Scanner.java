@@ -11,7 +11,7 @@ public class Scanner
     private Character currentChar;
 
 
-    public void Scanner(ErrorHandler handler) {
+    public Scanner(ErrorHandler handler) {
         errorHandler = handler;
         currentChar = ' ';
         sourceFile = null;
@@ -23,7 +23,7 @@ public class Scanner
         sourceFile = new SourceFile(filename);
     }
 
-    public void Scanner(Reader reader, ErrorHandler handler) {
+    public Scanner(Reader reader, ErrorHandler handler) {
         errorHandler = handler;
         sourceFile = new SourceFile(reader);
     }
