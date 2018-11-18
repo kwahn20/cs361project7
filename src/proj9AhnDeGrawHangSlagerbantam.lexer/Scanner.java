@@ -34,15 +34,13 @@ public class Scanner
      */
     public Token scan()
     {
+        currentChar = sourceFile.getNextChar();
 
-        char eofToken = this.sourceFile.eof;
+        if (currentChar == this.sourceFile.eof) return new Token(Token.Kind.EOF,
+                currentChar.toString(), this.sourceFile.getCurrentLineNumber());
 
-        while ( !(this.currentChar = this.sourceFile.getNextChar()).equals(eofToken))  {
-            System.out.println(this.currentChar);
-
-        }
-
-        return null;  // REMOVE THIS LINE AND REPLACE IT WITH YOUR CODE
+        // this is a placeholder, scan() will never actually return null
+        return null;
     }
 
 }

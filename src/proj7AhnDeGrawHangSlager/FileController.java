@@ -35,6 +35,7 @@ import javafx.stage.Window;
 import org.fxmisc.flowless.VirtualizedScrollPane;
 import org.fxmisc.richtext.CodeArea;
 import proj9AhnDeGrawHangSlagerbantam.lexer.Scanner;
+import proj9AhnDeGrawHangSlagerbantam.lexer.Token;
 import proj9AhnDeGrawHangSlagerbantam.util.ErrorHandler;
 
 /**
@@ -299,7 +300,14 @@ public class FileController {
 
         String filename = this.tabFilepathMap.get(curTab);
         Scanner scanner = new Scanner( filename, new ErrorHandler() );
-        scanner.scan();
+
+        Token nextToken;
+
+        while ( (nextToken = scanner.scan()).kind != Token.Kind.EOF) {
+            System.out.println("nextToken: " + nextToken);
+
+            // send token to parser
+        }
     }
 
     /**
