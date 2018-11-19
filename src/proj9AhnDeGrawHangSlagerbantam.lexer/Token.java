@@ -34,7 +34,7 @@
          this.spelling = spelling;
          this.position = position;
 
-         //patch the kind in the case of boolean constants and keywords
+         // patch the kind in the case of boolean constants and keywords
          if (kind == Kind.IDENTIFIER && (spelling.equals("true") || spelling.equals("false"))) {
              this.kind = Kind.BOOLEAN;
          }

@@ -60,24 +60,12 @@ public class Scanner
 
             case('-'):
 
-            case('>'):
+            case('>'): return this.getCompareToken();
 
-            case('<'):
+            case('<'): return this.getCompareToken();
 
-            case('='):
-                currentChar = this.sourceFile.getNextChar();
+            case('='): return this.getCompareToken();
 
-                if (currentChar.equals('=')) {
-                    this.goToNextChar = true;
-                    return new Token(Token.Kind.COMPARE,
-                            "==", this.sourceFile.getCurrentLineNumber());
-                }
-
-                else {
-                    this.goToNextChar = false;
-                    return new Token(Token.Kind.LCURLY,
-                            "=", this.sourceFile.getCurrentLineNumber());
-                }
 
             case('&'):
 
@@ -115,6 +103,23 @@ public class Scanner
                 else return getIdentifierOrKeywordToken();
          }
     }
+
+
+    /**
+     *
+     * @return a token of Kind COMPARE, could be >, >=, <, <= or ==
+     */
+    private Token getCompareToken() {
+        Character prevChar = currentChar;
+        currentChar = this.sourceFile.getNextChar();
+
+        if (currentChar.equals('=')) {
+            String tokenSpelling = prevChar.toString().concat(currentChar.toString());
+            return new Token(Token.Kind.COMPARE, tokenSpelling, this.sourceFile.getCurrentLineNumber());
+        }
+        else return new Token(Token.Kind.COMPARE, prevChar.toString(), this.sourceFile.getCurrentLineNumber());
+    }
+
 
     private Token getIntConstToken() {
         String spelling = "";
