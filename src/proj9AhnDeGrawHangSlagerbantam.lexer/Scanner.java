@@ -18,7 +18,7 @@ public class Scanner
 
     private final Set<Character> illegalIdentifierOrKeywordChars =
             Set.of('"', '/', '+', '-', '>', '<', '=', '&', '{',
-                    '}', '[', ']', '(', ')', ';', ':', '!');
+                    '}', '[', ']', '(', ')', ';', ':', '!', ' ');
 
 
     public Scanner(ErrorHandler handler) {
@@ -68,7 +68,9 @@ public class Scanner
             case('='): return this.getCompareToken();
 
 
-            case('&'):
+            case('&'): return getBinaryLogicToken();
+
+            case('|'): return getBinaryLogicToken();
 
 
             case('{'): return new Token(Token.Kind.LCURLY,
@@ -108,6 +110,29 @@ public class Scanner
 
     /**
      *
+     * @return a token of Kind.BINARYLOGIC (|| or &&) or Kind.ERROR if neither found
+     */
+    private Token getBinaryLogicToken() {
+
+        Character prevChar = currentChar;
+        currentChar = this.sourceFile.getNextChar();
+
+        if (currentChar.equals(prevChar)) {
+            this.goToNextChar = true;
+
+            String spelling = prevChar.toString().concat(currentChar.toString());
+            return new Token(Token.Kind.BINARYLOGIC, spelling,
+                    this.sourceFile.getCurrentLineNumber());
+        }
+        else {
+            this.goToNextChar = false;
+            return new Token(Token.Kind.ERROR, currentChar.toString(),
+                    this.sourceFile.getCurrentLineNumber());
+        }
+    }
+
+    /**
+     *
      * @return a token of Kind COMPARE, could be >, >=, <, <= or ==
      */
     private Token getCompareToken() {
@@ -142,7 +167,7 @@ public class Scanner
 
     /**
      *
-     * @return a token of Kind.IDENTIFIER that may be an identifier or a keyword
+     * @return a token of Kind.IDENTIFIER or Kind.ERROR if its an
      *
      * if it should be a keyword, it will be converted to the appropriate Kind in the
      * Token constructer
