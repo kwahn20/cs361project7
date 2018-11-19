@@ -4,6 +4,7 @@ import proj9AhnDeGrawHangSlagerbantam.util.ErrorHandler;
 import javax.xml.transform.Source;
 import java.io.*;
 import java.util.Set;
+import proj9AhnDeGrawHangSlagerbantam.util.Error;
 
 public class Scanner
 {
@@ -124,7 +125,10 @@ public class Scanner
         }
     }
 
-
+    /**
+     *
+     * @return
+     */
     private Token getIntConstToken() {
         String spelling = "";
         while(digitChars.contains(currentChar)){
@@ -135,15 +139,30 @@ public class Scanner
         return new Token(Token.Kind.INTCONST, spelling, this.sourceFile.getCurrentLineNumber());
     }
 
+
+    /**
+     *
+     * @return a token of Kind.IDENTIFIER that may be an identifier or a keyword
+     *
+     * if it should be a keyword, it will be converted to the appropriate Kind in the
+     * Token constructer
+     */
     private Token getIdentifierOrKeywordToken() {
         String spelling = "";
         while(!illegalIdentifierOrKeywordChars.contains(currentChar)){
+
             if(Character.isLetterOrDigit(currentChar) || currentChar.equals('_')) {
                 spelling.concat(currentChar.toString());
                 currentChar = this.sourceFile.getNextChar();
             }
             else{
+                this.errorHandler.register(Error.Kind.LEX_ERROR,
+                        this.sourceFile.getFilename(), this.sourceFile.getCurrentLineNumber(),
+                        "INVALID IDENTIFIER CHARACTER");
 
+                this.goToNextChar = true;
+                return new Token(Token.Kind.ERROR, currentChar.toString(),
+                        this.sourceFile.getCurrentLineNumber());
             }
         }
         this.goToNextChar = false;
