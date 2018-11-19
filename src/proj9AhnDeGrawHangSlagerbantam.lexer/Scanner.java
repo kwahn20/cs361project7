@@ -81,6 +81,7 @@ public class Scanner
 
             case('&'):
 
+
             case('{'): return new Token(Token.Kind.LCURLY,
                     currentChar.toString(), this.sourceFile.getCurrentLineNumber());
 
@@ -116,7 +117,13 @@ public class Scanner
     }
 
     private Token getIntConstToken() {
-        return null;
+        String spelling = "";
+        while(digitChars.contains(currentChar)){
+            spelling.concat(currentChar.toString());
+            currentChar = this.sourceFile.getNextChar();
+        }
+        this.goToNextChar = false;
+        return new Token(Token.Kind.INTCONST, spelling, this.sourceFile.getCurrentLineNumber());
     }
 
     private Token getIdentifierOrKeywordToken() {
