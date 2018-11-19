@@ -14,9 +14,6 @@ public class Scanner
     private Character currentChar;
     private boolean goToNextChar = true;
 
-    private final Set<Character> digitChars =
-            Set.of('0', '1', '2', '3', '4', '5', '6', '7', '8', '9');
-
     private final Set<Character> illegalIdentifierOrKeywordChars =
             Set.of('"', '/', '+', '-', '>', '<', '=', '&', '{',
                     '}', '[', ']', '(', ')', ';', ':', '!', ' ');
@@ -100,7 +97,7 @@ public class Scanner
 
             default:
 
-                if (digitChars.contains(currentChar)) return getIntConstToken();
+                if (Character.isDigit(currentChar)) return getIntConstToken();
                 else return getIdentifierOrKeywordToken();
          }
     }
@@ -190,7 +187,7 @@ public class Scanner
 
     private Token getIntConstToken() {
         String spelling = "";
-        while(digitChars.contains(currentChar)){
+        while(Character.isDigit(currentChar)){
             spelling.concat(currentChar.toString());
             currentChar = this.sourceFile.getNextChar();
         }
@@ -198,6 +195,14 @@ public class Scanner
         return new Token(Token.Kind.INTCONST, spelling, this.sourceFile.getCurrentLineNumber());
     }
 
+
+    /**
+     *
+     * @return a token of Kind.IDENTIFIER or Kind.ERROR if its an invalid character
+     *
+     * if it should be a keyword, it will be converted to the appropriate Kind in the
+     * Token constructor
+     */
     /**
      *
      * @return a token of Kind.IDENTIFIER or Kind.ERROR if its an
