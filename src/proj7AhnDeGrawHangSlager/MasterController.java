@@ -355,7 +355,7 @@ public class MasterController {
      */
     @FXML
     public void handleDarkMode(){
-       handleThemeChange("proj7AhnDeGrawHangSlager/DarkMode.css", darkModeMenuItem);
+       handleThemeChange("proj7AhnDeGrawHangSlager/resources/DarkMode.css", darkModeMenuItem);
         System.out.println("Dark");
     }
 
@@ -374,7 +374,7 @@ public class MasterController {
      */
     @FXML
     public void handleFunMode(){
-        handleThemeChange("proj7AhnDeGrawHangSlager/FunMode.css", funModeMenuItem);
+        handleThemeChange("proj7AhnDeGrawHangSlager/resources/FunMode.css", funModeMenuItem);
         System.out.println("Fun");
     }
 
@@ -385,7 +385,7 @@ public class MasterController {
      */
     @FXML
     public void handleHallowThemeMode(){
-        handleThemeChange("proj7AhnDeGrawHangSlager/HallowTheme.css", hallowThemeItem);
+        handleThemeChange("proj7AhnDeGrawHangSlager/resources/HallowTheme.css", hallowThemeItem);
         System.out.println("Hallow");
     }
     /**

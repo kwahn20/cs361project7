@@ -32,7 +32,7 @@
       xmlns:fx="http://javafx.com/fxml/1"
       fx:controller="proj7AhnDeGrawHangSlager.MasterController"
       fx:id="vBox"
-      stylesheets="@../Main.css">
+      stylesheets="@Main.css">
     <MenuBar>
 
         <Menu fx:id="fileMenu" mnemonicParsing="false" text="File">
