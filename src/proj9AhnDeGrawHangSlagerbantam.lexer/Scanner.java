@@ -114,10 +114,14 @@ public class Scanner
         currentChar = this.sourceFile.getNextChar();
 
         if (currentChar.equals('=')) {
+            this.goToNextChar = true;
             String tokenSpelling = prevChar.toString().concat(currentChar.toString());
             return new Token(Token.Kind.COMPARE, tokenSpelling, this.sourceFile.getCurrentLineNumber());
         }
-        else return new Token(Token.Kind.COMPARE, prevChar.toString(), this.sourceFile.getCurrentLineNumber());
+        else {
+            this.goToNextChar = false;
+            return new Token(Token.Kind.COMPARE, prevChar.toString(), this.sourceFile.getCurrentLineNumber());
+        }
     }
 
 
