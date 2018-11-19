@@ -236,8 +236,16 @@ public class Scanner
             spelling.concat(currentChar.toString());
             currentChar = this.sourceFile.getNextChar();
         }
+
         this.goToNextChar = false;
-        return new Token(Token.Kind.INTCONST, spelling, this.sourceFile.getCurrentLineNumber());
+        if(Integer.parseInt(spelling) < Math.pow(2,31)-1)
+            return new Token(Token.Kind.INTCONST, spelling, this.sourceFile.getCurrentLineNumber());
+        else
+            this.errorHandler.register(Error.Kind.LEX_ERROR,
+                    this.sourceFile.getFilename(), this.sourceFile.getCurrentLineNumber(),
+                    "INVALID INTEGER CONSTANT");
+            return new Token(Token.Kind.ERROR, currentChar.toString(),
+                this.sourceFile.getCurrentLineNumber());
     }
 
 
