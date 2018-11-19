@@ -58,9 +58,9 @@ public class Scanner
 
             case('/'):
 
-            case('+'): return this.getAddToken();
+            case('+'): return this.getPlusMinusToken();
 
-            case('-'): return this.getMinusToken();
+            case('-'): return this.getPlusMinusToken();
 
             case('>'): return this.getCompareToken();
 
@@ -68,11 +68,9 @@ public class Scanner
 
             case('='): return this.getCompareToken();
 
-
             case('&'): return getBinaryLogicToken();
 
             case('|'): return getBinaryLogicToken();
-
 
             case('{'): return new Token(Token.Kind.LCURLY,
                     currentChar.toString(), this.sourceFile.getCurrentLineNumber());
@@ -106,7 +104,6 @@ public class Scanner
                 else return getIdentifierOrKeywordToken();
          }
     }
-
 
     /**
      *
@@ -170,33 +167,24 @@ public class Scanner
 
     /**
      *
-     * @return a token of Kind PLUSMINUS, can be ++ or +
+     * @return a token of Kind PLUSMINUS
      */
-    private Token getAddToken(){
-        currentChar = this.sourceFile.getNextChar();
-        if (currentChar.equals('+')){
-            this.goToNextChar = true;
-            return new Token(Token.Kind.PLUSMINUS, "++", this.sourceFile.getCurrentLineNumber());
-        }
-        else {
-            this.goToNextChar = false;
-            return  new Token(Token.Kind.PLUSMINUS,"+", this.sourceFile.getCurrentLineNumber());
-        }
-    }
+    private Token getPlusMinusToken() {
 
-    /**
-     *
-     * @return a token of Kind PLUSMINUS, can be -- or -
-     */
-    private Token getMinusToken(){
+        Character prevChar = currentChar;
         currentChar = this.sourceFile.getNextChar();
-        if (currentChar.equals('-')){
+
+        if (currentChar.equals(prevChar)) {
             this.goToNextChar = true;
-            return new Token(Token.Kind.PLUSMINUS, "--", this.sourceFile.getCurrentLineNumber());
+
+            String spelling = prevChar.toString().concat(currentChar.toString());
+            return new Token(Token.Kind.PLUSMINUS, spelling,
+                    this.sourceFile.getCurrentLineNumber());
         }
         else {
             this.goToNextChar = false;
-            return  new Token(Token.Kind.PLUSMINUS,"-", this.sourceFile.getCurrentLineNumber());
+            return new Token(Token.Kind.ERROR, currentChar.toString(),
+                    this.sourceFile.getCurrentLineNumber());
         }
     }
 
@@ -210,14 +198,6 @@ public class Scanner
         return new Token(Token.Kind.INTCONST, spelling, this.sourceFile.getCurrentLineNumber());
     }
 
-
-    /**
-     *
-     * @return a token of Kind.IDENTIFIER or Kind.ERROR if its an
-     *
-     * if it should be a keyword, it will be converted to the appropriate Kind in the
-     * Token constructer
-     */
     /**
      *
      * @return a token of Kind.IDENTIFIER or Kind.ERROR if its an
