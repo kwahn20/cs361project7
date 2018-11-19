@@ -129,11 +129,20 @@ public class Scanner
     private Token getIdentifierOrKeywordToken() {
         String spelling = "";
         while(!illegalIdentifierOrKeywordChars.contains(currentChar)){
-            spelling.concat(currentChar.toString());
-            currentChar = this.sourceFile.getNextChar();
+            if(Character.isLetterOrDigit(currentChar) || currentChar.equals('_')) {
+                spelling.concat(currentChar.toString());
+                currentChar = this.sourceFile.getNextChar();
+            }
+            else{
+
+            }
         }
         this.goToNextChar = false;
         return new Token(Token.Kind.IDENTIFIER, spelling, this.sourceFile.getCurrentLineNumber());
+    }
+
+    public static void main (String[] args){
+
     }
 
 }
