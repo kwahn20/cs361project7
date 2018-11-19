@@ -10,6 +10,7 @@ public class Scanner
     private SourceFile sourceFile;
     private ErrorHandler errorHandler;
     private Character currentChar;
+    private boolean goToNextChar = true;
 
     private final Set<Character> digitChars =
             Set.of('0', '1', '2', '3', '4', '5', '6', '7', '8', '9');
@@ -42,7 +43,8 @@ public class Scanner
      */
     public Token scan()
     {
-        currentChar = sourceFile.getNextChar();
+        if (this.goToNextChar) currentChar = sourceFile.getNextChar();
+
 
         if (currentChar == this.sourceFile.eof) return new Token(Token.Kind.EOF,
                 currentChar.toString(), this.sourceFile.getCurrentLineNumber());
@@ -63,6 +65,19 @@ public class Scanner
             case('<'):
 
             case('='):
+                currentChar = this.sourceFile.getNextChar();
+
+                if (currentChar.equals('=')) {
+                    this.goToNextChar = true;
+                    return new Token(Token.Kind.COMPARE,
+                            "==", this.sourceFile.getCurrentLineNumber());
+                }
+
+                else {
+                    this.goToNextChar = false;
+                    return new Token(Token.Kind.LCURLY,
+                            "=", this.sourceFile.getCurrentLineNumber());
+                }
 
             case('&'):
 
@@ -105,8 +120,8 @@ public class Scanner
     }
 
     private Token getIdentifierOrKeywordToken() {
+
         return null;
     }
-
 
 }
