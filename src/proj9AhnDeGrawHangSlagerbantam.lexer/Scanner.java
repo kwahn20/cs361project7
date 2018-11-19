@@ -94,6 +94,12 @@ public class Scanner
 
             case('!'): return this.getNotToken();
 
+            case('.'): return new Token(Token.Kind.DOT,
+                    currentChar.toString(), this.sourceFile.getCurrentLineNumber());
+
+            case(','): return new Token(Token.Kind.COMMA,
+                    currentChar.toString(), this.sourceFile.getCurrentLineNumber());
+
             default:
 
                 if (Character.isDigit(currentChar)) return getIntConstToken();
@@ -249,15 +255,8 @@ public class Scanner
     }
 
 
-    /**
-     *
-     * @return a token of Kind.IDENTIFIER or Kind.ERROR if its an invalid character
-     *
-     * if it should be a keyword, it will be converted to the appropriate Kind in the
-     * Token constructor
-     */
-    /**
-     *
+
+     /**
      * @return a token of Kind.IDENTIFIER or Kind.ERROR if its an
      *
      * if it should be a keyword, it will be converted to the appropriate Kind in the
