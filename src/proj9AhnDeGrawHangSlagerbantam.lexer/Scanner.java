@@ -3,12 +3,20 @@ package proj9AhnDeGrawHangSlagerbantam.lexer;
 import proj9AhnDeGrawHangSlagerbantam.util.ErrorHandler;
 import javax.xml.transform.Source;
 import java.io.*;
+import java.util.Set;
 
 public class Scanner
 {
     private SourceFile sourceFile;
     private ErrorHandler errorHandler;
     private Character currentChar;
+
+    private final Set<Character> digitChars =
+            Set.of('0', '1', '2', '3', '4', '5', '6', '7', '8', '9');
+
+    private final Set<Character> illegalIdentifierOrKeywordChars =
+            Set.of('"', '/', '+', '-', '>', '<', '=', '&', '{',
+                    '}', '[', ']', '(', ')', ';', ':', '!');
 
 
     public Scanner(ErrorHandler handler) {
@@ -39,8 +47,57 @@ public class Scanner
         if (currentChar == this.sourceFile.eof) return new Token(Token.Kind.EOF,
                 currentChar.toString(), this.sourceFile.getCurrentLineNumber());
 
-        // this is a placeholder, scan() will never actually return null
+        // special 'cases' are when we may be building tokens that are > 1 char long
+        switch(currentChar) {
+
+            case('"'):
+
+            case('/'):
+
+            case('+'):
+
+            case('-'):
+
+            case('>'):
+
+            case('<'):
+
+            case('='):
+
+            case('&'):
+
+            case('{'):
+
+            case('}'):
+
+            case('['):
+
+            case(']'):
+
+            case('('):
+
+            case(')'):
+
+            case(';'):
+
+            case(':'):
+
+            case('!'):
+
+            default:
+
+                if (digitChars.contains(currentChar)) return getIntConstToken();
+                else return getIdentifierOrKeywordToken();
+         }
+    }
+
+    private Token getIntConstToken() {
         return null;
     }
+
+    private Token getIdentifierOrKeywordToken() {
+        return null;
+    }
+
 
 }

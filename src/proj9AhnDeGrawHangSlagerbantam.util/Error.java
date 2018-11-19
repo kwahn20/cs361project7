@@ -14,6 +14,7 @@ public class Error {
     public enum Kind
     {  LEX_ERROR, PARSE_ERROR, CODEGEN_ERROR, SEMANT_ERROR }
 
+
     /**
      * Type of an error (lex, parse, semantic, code generation)
      */

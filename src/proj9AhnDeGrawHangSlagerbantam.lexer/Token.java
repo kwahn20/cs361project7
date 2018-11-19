@@ -54,7 +54,6 @@
 
      public enum Kind
      {
-
          // literals, identifiers...
          INTCONST, STRCONST, BOOLEAN, IDENTIFIER,
 
