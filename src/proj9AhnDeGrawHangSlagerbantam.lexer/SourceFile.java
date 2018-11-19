@@ -42,7 +42,7 @@ class SourceFile
      *
      * @param filename the name of the file to be read.
      */
-    SourceFile(String filename) {
+    public SourceFile(String filename) {
         try {
             sourceReader = new FileReader(filename);
         } catch (FileNotFoundException e) {
@@ -54,18 +54,18 @@ class SourceFile
     }
 
 
-    SourceFile(Reader in) {
+    public SourceFile(Reader in) {
         sourceReader = in;
         currentLineNumber = 1;
         prevChar = -1;
     }
 
 
-    int getCurrentLineNumber() {
+    public int getCurrentLineNumber() {
         return currentLineNumber;
     }
 
-    String getFilename() { return filename; }
+    public String getFilename() { return filename; }
 
     /**
      * Finds and returns the next character in the source file.
@@ -76,7 +76,7 @@ class SourceFile
      *
      * @return the next character in the source file
      */
-    char getNextChar(){
+    public char getNextChar(){
         try {
             int c = sourceReader.read();
 

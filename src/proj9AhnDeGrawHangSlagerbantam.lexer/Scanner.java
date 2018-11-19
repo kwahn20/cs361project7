@@ -84,11 +84,14 @@ public class Scanner
             case(')'): return new Token(Token.Kind.RPAREN,
                     currentChar.toString(), this.sourceFile.getCurrentLineNumber());
 
-            case(';'):
+            case(';'): return new Token(Token.Kind.SEMICOLON,
+                    currentChar.toString(), this.sourceFile.getCurrentLineNumber());
 
-            case(':'):
+            case(':'): return new Token(Token.Kind.COLON,
+                    currentChar.toString(), this.sourceFile.getCurrentLineNumber());
 
-            case('!'):
+            case('!'): return new Token(Token.Kind.UNARYNOT,
+                    currentChar.toString(), this.sourceFile.getCurrentLineNumber());
 
             default:
 
