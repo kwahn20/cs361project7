@@ -66,17 +66,23 @@ public class Scanner
 
             case('&'):
 
-            case('{'):
+            case('{'): return new Token(Token.Kind.LCURLY,
+                    currentChar.toString(), this.sourceFile.getCurrentLineNumber());
 
-            case('}'):
+            case('}'): return new Token(Token.Kind.RCURLY,
+                    currentChar.toString(), this.sourceFile.getCurrentLineNumber());
 
-            case('['):
+            case('['): return new Token(Token.Kind.LBRACKET,
+                    currentChar.toString(), this.sourceFile.getCurrentLineNumber());
 
-            case(']'):
+            case(']'): return new Token(Token.Kind.RBRACKET,
+                    currentChar.toString(), this.sourceFile.getCurrentLineNumber());
 
-            case('('):
+            case('('): return new Token(Token.Kind.LPAREN,
+                    currentChar.toString(), this.sourceFile.getCurrentLineNumber());
 
-            case(')'):
+            case(')'): return new Token(Token.Kind.RPAREN,
+                    currentChar.toString(), this.sourceFile.getCurrentLineNumber());
 
             case(';'):
 
