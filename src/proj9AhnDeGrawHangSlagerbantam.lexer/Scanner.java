@@ -127,8 +127,13 @@ public class Scanner
     }
 
     private Token getIdentifierOrKeywordToken() {
-
-        return null;
+        String spelling = "";
+        while(!illegalIdentifierOrKeywordChars.contains(currentChar)){
+            spelling.concat(currentChar.toString());
+            currentChar = this.sourceFile.getNextChar();
+        }
+        this.goToNextChar = false;
+        return new Token(Token.Kind.IDENTIFIER, spelling, this.sourceFile.getCurrentLineNumber());
     }
 
 }
