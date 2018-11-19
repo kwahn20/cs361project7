@@ -54,7 +54,7 @@ public class Scanner
         // special 'cases' are when we may be building tokens that are > 1 char long
         switch(currentChar) {
 
-            case('"'):
+            case('"'): return this.getStringConstToken();
 
             case('/'): return this.getCommentOrMulDivToken();
 
@@ -97,6 +97,8 @@ public class Scanner
                     currentChar.toString(), this.sourceFile.getCurrentLineNumber());
 
             case('!'): return this.getUnaryNotOrCompareToken();
+
+            case(' '):
 
             case('.'): return new Token(Token.Kind.DOT,
                     currentChar.toString(), this.sourceFile.getCurrentLineNumber());
@@ -377,9 +379,35 @@ public class Scanner
                         this.sourceFile.getCurrentLineNumber());
             }
         }
+
         this.goToNextChar = false;
         return new Token(Token.Kind.IDENTIFIER, spelling, this.sourceFile.getCurrentLineNumber());
     }
+
+
+    private Token getStringConstToken() {
+
+        String spelling = "";
+        while(!currentChar.equals('"')){
+            if(currentChar.equals(SourceFile.eof)){
+                this.errorHandler.register(Error.Kind.LEX_ERROR,
+                        this.sourceFile.getFilename(), this.sourceFile.getCurrentLineNumber(),
+                        "UNCLOSED QUOTE");
+                this.goToNextChar = false;
+                return new Token(Token.Kind.ERROR, spelling,
+                        this.sourceFile.getCurrentLineNumber());
+
+            }
+
+            spelling.concat(currentChar.toString());
+            currentChar = this.sourceFile.getNextChar();
+        }
+        spelling.concat(currentChar.toString());
+        this.goToNextChar = true;
+
+        return new Token(Token.Kind.STRCONST, spelling, this.sourceFile.getCurrentLineNumber());
+    }
+
 
     public static void main (String[] args){
 
