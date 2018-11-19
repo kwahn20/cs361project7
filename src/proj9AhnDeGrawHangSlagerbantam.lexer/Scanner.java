@@ -40,14 +40,13 @@ public class Scanner
      * file, any calls to scan() result in a Token of kind EOF.
      */
     public Token scan() {
-//        System.out.println("scanning");
 
         if (this.goToNextChar) {
             System.out.println("getting next char");
             currentChar = sourceFile.getNextChar();
 
         }
-//
+
         System.out.println("curChar: " + currentChar);
         if (currentChar.equals(SourceFile.eof)) return new Token(Token.Kind.EOF,
                 currentChar.toString(), this.sourceFile.getCurrentLineNumber());
