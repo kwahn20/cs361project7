@@ -1,3 +1,11 @@
+/*
+ * File: JavaTab.java
+ * Names: Kevin Ahn, Lucas DeGraw, Jackie Hang, Kyle Slager
+ * Class: CS 361
+ * Project 9
+ * Date: November 20, 2018
+ */
+
 package proj9AhnDeGrawHangSlager;
 
 import javafx.scene.control.Alert;
@@ -9,10 +17,25 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
 
+/**
+ * This is the JavaTab class which stores a JavaCodeArea
+ *
+ * @author Kevin Ahn, Lucas DeGraw, Jackie Hang, Kyle Slager
+ * @version 1.0
+ * @since 11-20-2018
+ */
 public class JavaTab extends Tab {
     private JavaCodeArea codeArea;
 
-
+    /**
+     * Constructor for a JavaTab
+     *
+     * @param fileController
+     * @param contextMenuController
+     * @param tabPane
+     * @param filename
+     * @param file
+     */
     public JavaTab(FileController fileController, ContextMenuController contextMenuController,
                    JavaTabPane tabPane, String filename, File file) {
 
@@ -39,9 +62,10 @@ public class JavaTab extends Tab {
     }
 
     /**
+     * Grabs the content from the file
      *
      * @param file the file tha
-     * @return
+     * @return string
      */
     public String getFileContents(File file) {
 

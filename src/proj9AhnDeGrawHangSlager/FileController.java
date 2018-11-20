@@ -385,7 +385,6 @@ public class FileController {
         //result in calling handleUpdateCurrentTab() because the currently selected tab will
         //change, and thus the wrong File will be removed from the HashMaps
         JavaTab curTab = (JavaTab)this.javaTabPane.getSelectionModel().getSelectedItem();
-//        saveStatus.remove(curTab);
         tabFilepathMap.remove(curTab);
         javaTabPane.removeTab(curTab);
     }
