@@ -11,7 +11,7 @@
  *
  */
 
-package proj7AhnDeGrawHangSlager;
+package proj9AhnDeGrawHangSlager;
 
 import javafx.event.Event;
 
@@ -55,13 +55,7 @@ import proj9AhnDeGrawHangSlagerbantam.util.ErrorHandler;
 public class FileController {
 
     private JavaTabPane javaTabPane;
-
-    // "True" means that the file has not been changed since its last save,
-    // if any. False means that something has been changed in the file.
-//    private HashMap<Tab, Boolean> saveStatus;
-
     private HashMap<Tab, String> tabFilepathMap;
-
     private VBox vBox;
 
     /**
@@ -282,7 +276,8 @@ public class FileController {
                 return "cancel";
             }
             else if (result.get() == saveOptions.getYesButton()){
-                this.handleSave();
+                boolean saved = this.handleSave();
+                if (saved) return "yes";
                 event.consume();
                 return null;
             }
@@ -327,9 +322,8 @@ public class FileController {
 
 
     public void handleScan(Event event) {
+
         JavaTab curTab = (JavaTab)this.javaTabPane.getSelectionModel().getSelectedItem();
-
-
 
         if (this.javaTabPane.tabIsSaved(curTab)) {
             String filename = this.tabFilepathMap.get(curTab);
@@ -356,10 +350,13 @@ public class FileController {
         }
         else if (saveStatus == "no") {
             if (tabFilepathMap.get(curTab) == null) {
+                System.out.println("RETURNING");
                 return;
             }
         }
+        else if (saveStatus == "yes") handleScan(event);
     }
+
 
     public List<Error> getScanningErrors() {
         if (this.scanner == null) return null;

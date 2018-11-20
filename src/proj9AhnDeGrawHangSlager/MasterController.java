@@ -11,7 +11,7 @@
  *
  */
 
-package proj7AhnDeGrawHangSlager;
+package proj9AhnDeGrawHangSlager;
 
 
 import javafx.beans.property.SimpleListProperty;
@@ -379,7 +379,7 @@ public class MasterController {
      */
     @FXML
     public void handleDarkMode(){
-       handleThemeChange("proj7AhnDeGrawHangSlager/resources/DarkMode.css", darkModeMenuItem);
+       handleThemeChange("proj9AhnDeGrawHangSlager/resources/DarkMode.css", darkModeMenuItem);
         System.out.println("Dark");
     }
 
@@ -398,7 +398,7 @@ public class MasterController {
      */
     @FXML
     public void handleFunMode(){
-        handleThemeChange("proj7AhnDeGrawHangSlager/resources/FunMode.css", funModeMenuItem);
+        handleThemeChange("proj9AhnDeGrawHangSlager/resources/FunMode.css", funModeMenuItem);
         System.out.println("Fun");
     }
 
@@ -409,7 +409,7 @@ public class MasterController {
      */
     @FXML
     public void handleHallowThemeMode(){
-        handleThemeChange("proj7AhnDeGrawHangSlager/resources/HallowTheme.css", hallowThemeItem);
+        handleThemeChange("proj9AhnDeGrawHangSlager/resources/HallowTheme.css", hallowThemeItem);
         System.out.println("Hallow");
     }
     /**

@@ -48,11 +48,15 @@ public class Scanner
     }
 
 
+    /**
+     *
+     * @return a list of errors from the ErrorHandler instance of this class
+     */
     public List<Error> getErrors() {
         return this.errorHandler.getErrorList();
     }
 
-    /* Each call of this method builds the next Token from the contents
+    /** Each call of this method builds the next Token from the contents
      * of the file being scanned and returns it. When it reaches the end of the
      * file, any calls to scan() result in a Token of kind EOF.
      */
@@ -185,7 +189,7 @@ public class Scanner
 
     /**
      *
-     * @return
+     * @return a token of Kind.COMMENT
      */
     private Token getSingleLineCommentToken() {
 
@@ -207,7 +211,7 @@ public class Scanner
 
     /**
      *
-     * @return a token of Kind.COMMENT or Kind.ERROR
+     * @return a token of Kind.COMMENT or Kind.ERROR if the multiline comment was unclosed
      */
     private Token getMultilineCommentToken(Character prevChar) {
 
