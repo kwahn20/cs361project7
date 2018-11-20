@@ -304,11 +304,14 @@ public class FileController {
 
         Token nextToken;
 
-        while ( (nextToken = scanner.scan()).kind != Token.Kind.EOF) {
-            System.out.println("nextToken: " + nextToken);
+        this.handleNew(null);
+        curTab = (JavaTab)this.javaTabPane.getSelectionModel().getSelectedItem();
 
-            // send token to parser
+        while ( (nextToken = scanner.scan()).kind != Token.Kind.EOF) {
+            curTab.getCodeArea().appendText(nextToken.toString()+"\n");
+
         }
+
     }
 
     /**

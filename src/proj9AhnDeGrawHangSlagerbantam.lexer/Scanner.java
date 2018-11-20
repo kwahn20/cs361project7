@@ -38,6 +38,9 @@ public class Scanner
         sourceFile = new SourceFile(reader);
     }
 
+    public ErrorHandler getErrorHandler(){
+        return this.errorHandler;
+    }
     /* Each call of this method builds the next Token from the contents
      * of the file being scanned and returns it. When it reaches the end of the
      * file, any calls to scan() result in a Token of kind EOF.
@@ -51,6 +54,7 @@ public class Scanner
         if (currentChar.equals(SourceFile.eof)) return new Token(Token.Kind.EOF,
                 currentChar.toString(), this.sourceFile.getCurrentLineNumber());
 
+        //gets rid of whitespace
         else if (currentChar.equals('\t') || currentChar.equals('\r')
                 || currentChar.equals('\n') || currentChar.equals('\f')) {
             this.goToNextChar = true;

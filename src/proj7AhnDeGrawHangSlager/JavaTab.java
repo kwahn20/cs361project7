@@ -10,6 +10,7 @@ import java.io.FileNotFoundException;
 import java.util.Scanner;
 
 public class JavaTab extends Tab {
+    private JavaCodeArea codeArea;
 
 
     public JavaTab(FileController fileController, ContextMenuController contextMenuController,
@@ -17,7 +18,7 @@ public class JavaTab extends Tab {
 
         super(filename);
 
-        JavaCodeArea codeArea = new JavaCodeArea(contextMenuController);
+        codeArea = new JavaCodeArea(contextMenuController);
 
         // bind code area to method updating its saved status in the tabSavedStatusMap of the TabPane
         codeArea.setOnKeyPressed(
@@ -61,5 +62,10 @@ public class JavaTab extends Tab {
         }
         return content;
     }
+
+    public JavaCodeArea getCodeArea(){
+        return this.codeArea;
+    }
+
 
 }
