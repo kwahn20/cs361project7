@@ -37,7 +37,7 @@ public class JavaTabPane extends TabPane {
         this.getSelectionModel().select(newTab);
         // add it to the map indicating that it has never been saved
 
-        if (file == null) this.tabSavedStatusMap.put(newTab, null);
+        if (file == null) this.tabSavedStatusMap.put(newTab, false);
         else this.tabSavedStatusMap.put(newTab, true);
 
     }

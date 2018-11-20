@@ -127,7 +127,7 @@ public class FileController {
         if (file == null) this.tabFilepathMap.put(t, null);
         else {
             this.tabFilepathMap.put(t, file.getPath());
-            System.out.println();
+
         }
 
     }
@@ -205,6 +205,7 @@ public class FileController {
         fileChooser.setTitle("Save as...");
         Window stage = this.vBox.getScene().getWindow();
         File file = fileChooser.showSaveDialog(stage);
+
         if (file == null){
             return false;
         }
@@ -265,6 +266,36 @@ public class FileController {
     }
 
     /**
+     * Creates a pop-up window which allows the user to select whether they wish to save
+     * the current file or not.
+     * Used by handleClose.
+     *
+     * @param event the tab closing event that may be consumed
+     */
+    private String askSaveAndScan(Event event) {
+        ShowSaveOptionAlert saveOptions = new ShowSaveOptionAlert();
+        Optional<ButtonType> result = saveOptions.getUserSaveDecision();
+
+        if (result.isPresent()) {
+            if (result.get() == saveOptions.getCancelButton()) {
+                event.consume();
+                return "cancel";
+            }
+            else if (result.get() == saveOptions.getYesButton()){
+                this.handleSave();
+                event.consume();
+                return null;
+            }
+            else {
+                event.consume();
+                return "no";
+            }
+        }
+        return null;
+    }
+
+
+    /**
      * Saves the text present in the current tab to a given filename.
      * Used by handleSave, handleSaveAs.
      *
@@ -295,32 +326,43 @@ public class FileController {
     }
 
 
-    /**
-     *
-     */
-    public void handleScan() {
-
+    public void handleScan(Event event) {
         JavaTab curTab = (JavaTab)this.javaTabPane.getSelectionModel().getSelectedItem();
-        String filename = this.tabFilepathMap.get(curTab);
-        try {
-            this.scanner = new Scanner(filename, new ErrorHandler());
+
+
+
+        if (this.javaTabPane.tabIsSaved(curTab)) {
+            String filename = this.tabFilepathMap.get(curTab);
+            try {
+                this.scanner = new Scanner(filename, new ErrorHandler());
+            }
+            catch(CompilationException e){
+                throw e;
+            }
+
+            this.handleNew(null);
+            curTab = (JavaTab) this.javaTabPane.getSelectionModel().getSelectedItem();
+            Token nextToken;
+            while ( (nextToken = scanner.scan()).kind != Token.Kind.EOF) {
+                curTab.getCodeArea().appendText(nextToken.toString()+"\n");
+            }
+            return;
         }
-        catch(CompilationException e){
-            throw e;
+
+        String saveStatus = this.askSaveAndScan(event);
+        if (saveStatus == "cancel") {
+            this.scanner = null;
+            return;
         }
-
-        this.handleNew(null);
-        curTab = (JavaTab)this.javaTabPane.getSelectionModel().getSelectedItem();
-
-        Token nextToken;
-        while ( (nextToken = scanner.scan()).kind != Token.Kind.EOF) {
-            curTab.getCodeArea().appendText(nextToken.toString()+"\n");
+        else if (saveStatus == "no") {
+            if (tabFilepathMap.get(curTab) == null) {
+                return;
+            }
         }
-
-
     }
 
     public List<Error> getScanningErrors() {
+        if (this.scanner == null) return null;
         return this.scanner.getErrors();
     }
 

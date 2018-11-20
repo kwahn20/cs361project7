@@ -214,22 +214,26 @@ public class MasterController {
         compileHelper("handleCompileAndRun");
     }
 
-    @FXML public void handleScan(){
+    @FXML public void handleScan(Event event) throws InterruptedException {
+
         this.console.clear();
         try {
-            this.fileController.handleScan();
-        }
-        catch(CompilationException e){
+            this.fileController.handleScan(event);
+        } catch (CompilationException e) {
             this.console.writeLine(e.toString() + "\n", "ERROR");
             return;
         }
 
         List<Error> scanningErrors = fileController.getScanningErrors();
-        for (Error e : scanningErrors)
-            this.console.writeLine(e.toString() + "\n", "ERROR");
 
-        this.console.writeLine(scanningErrors.size() +
-                " illegal tokens were found.", "ERROR");
+        if (scanningErrors != null) {
+
+            for (Error e : scanningErrors)
+                this.console.writeLine(e.toString() + "\n", "ERROR");
+
+            this.console.writeLine(scanningErrors.size() +
+                    " illegal tokens were found.", "ERROR");
+        }
     }
     /**
      * Handler for the Stop button in the toolbar.
