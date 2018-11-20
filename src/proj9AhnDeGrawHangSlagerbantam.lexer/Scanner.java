@@ -407,7 +407,8 @@ public class Scanner
                         "UNSUPPORTED IDENTIFIER CHARACTER");
 
                 this.goToNextChar = true;
-                return new Token(Token.Kind.ERROR, currentChar.toString(),
+                spelling= spelling.concat(currentChar.toString());
+                return new Token(Token.Kind.ERROR, spelling,
                         this.sourceFile.getCurrentLineNumber());
             }
         }
