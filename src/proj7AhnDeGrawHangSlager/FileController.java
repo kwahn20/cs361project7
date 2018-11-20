@@ -37,6 +37,7 @@ import org.fxmisc.flowless.VirtualizedScrollPane;
 import org.fxmisc.richtext.CodeArea;
 import proj9AhnDeGrawHangSlagerbantam.lexer.Scanner;
 import proj9AhnDeGrawHangSlagerbantam.lexer.Token;
+import proj9AhnDeGrawHangSlagerbantam.util.CompilationException;
 import proj9AhnDeGrawHangSlagerbantam.util.Error;
 import proj9AhnDeGrawHangSlagerbantam.util.ErrorHandler;
 
@@ -301,8 +302,12 @@ public class FileController {
 
         JavaTab curTab = (JavaTab)this.javaTabPane.getSelectionModel().getSelectedItem();
         String filename = this.tabFilepathMap.get(curTab);
-
-        this.scanner = new Scanner( filename, new ErrorHandler() );
+        try {
+            this.scanner = new Scanner(filename, new ErrorHandler());
+        }
+        catch(CompilationException e){
+            throw e;
+        }
 
         this.handleNew(null);
         curTab = (JavaTab)this.javaTabPane.getSelectionModel().getSelectedItem();

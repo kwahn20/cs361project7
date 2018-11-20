@@ -27,6 +27,7 @@ import java.awt.Desktop;
 import java.io.IOException;
 import java.util.List;
 
+import proj9AhnDeGrawHangSlagerbantam.util.CompilationException;
 import proj9AhnDeGrawHangSlagerbantam.util.Error;
 
 /**
@@ -215,7 +216,13 @@ public class MasterController {
 
     @FXML public void handleScan(){
         this.console.clear();
-        this.fileController.handleScan();
+        try {
+            this.fileController.handleScan();
+        }
+        catch(CompilationException e){
+            this.console.writeLine(e.toString() + "\n", "ERROR");
+            return;
+        }
 
         List<Error> scanningErrors = fileController.getScanningErrors();
         for (Error e : scanningErrors)
