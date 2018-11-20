@@ -70,15 +70,12 @@ public class ContextMenuController {
     private void setOnShown(ContextMenu rightClickMenu, final Node node) {
         rightClickMenu.setOnShown(onShowEvent -> {
             node.setOnMouseClicked(e -> {
-                System.out.println("shown event");
                 // clicking on the left button hides the context menu
                 if (e.getButton() == MouseButton.PRIMARY) {
                     rightClickMenu.hide();
-                    System.out.println("hiding");
                 }
                 // clicking on the right button moves the context menu to the clicked position
                 else if (e.getButton() == MouseButton.SECONDARY) {
-                    System.out.println("showing");
                     rightClickMenu.show(node, e.getScreenX(), e.getScreenY());
                 }
             });
@@ -166,7 +163,6 @@ public class ContextMenuController {
                 new SeparatorMenuItem(), indentItem, unindentItem);
 
         styledJavaCodeArea.setOnContextMenuRequested(event -> {
-            System.out.println("menu requested");
             rightClickMenu.show(styledJavaCodeArea, event.getScreenX(), event.getSceneY());
         });
         this.setOnShown(rightClickMenu, styledJavaCodeArea);

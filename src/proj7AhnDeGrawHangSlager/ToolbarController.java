@@ -60,10 +60,6 @@ public class ToolbarController {
         compileThread.start();
     }
 
-//    public void handleScan(String filename){
-//        System.out.println("HELLO");
-//    }
-
     /**
      * Calls compile and runs the code
      * @param filename the name of the file to compile and run

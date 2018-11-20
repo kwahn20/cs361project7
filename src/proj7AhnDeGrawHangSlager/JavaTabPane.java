@@ -55,7 +55,6 @@ public class JavaTabPane extends TabPane {
     }
 
     public boolean tabIsSaved(JavaTab t) {
-        System.out.println("NULL TAB: " + t);
         return this.tabSavedStatusMap.get(t);
     }
 

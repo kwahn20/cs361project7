@@ -328,9 +328,6 @@ public class FileController {
 
     public void handleScan(Event event) {
         JavaTab curTab = (JavaTab)this.javaTabPane.getSelectionModel().getSelectedItem();
-
-
-
         if (this.javaTabPane.tabIsSaved(curTab)) {
             String filename = this.tabFilepathMap.get(curTab);
             try {
