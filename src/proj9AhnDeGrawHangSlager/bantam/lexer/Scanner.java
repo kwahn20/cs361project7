@@ -8,19 +8,16 @@
  * Edited From: Dale Skrien
  */
 
-package Lexer;
+package proj9AhnDeGrawHangSlager.bantam.lexer;
 
-import Errors.CompilationException;
-import Errors.ErrorHandler;
+import proj9AhnDeGrawHangSlager.bantam.util.CompilationException;
+import proj9AhnDeGrawHangSlager.bantam.util.ErrorHandler;
 
 import java.io.*;
-import java.sql.Time;
 import java.util.List;
 import java.util.Set;
-import java.util.concurrent.CompletionException;
-import java.util.concurrent.TimeUnit;
 
-import Errors.Error;
+import proj9AhnDeGrawHangSlager.bantam.util.Error;
 
 
 /**

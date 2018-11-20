@@ -27,8 +27,8 @@ import java.awt.Desktop;
 import java.io.IOException;
 import java.util.List;
 
-import Errors.CompilationException;
-import Errors.Error;
+import proj9AhnDeGrawHangSlager.bantam.util.CompilationException;
+import proj9AhnDeGrawHangSlager.bantam.util.Error;
 
 /**
  * This is the master controller for the program. it references

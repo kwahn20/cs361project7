@@ -26,7 +26,7 @@
    Modified by Dale Skrien, Fall 2018
 */
 
-package Errors;
+package proj9AhnDeGrawHangSlager.bantam.util;
 
 import java.util.ArrayList;
 import java.util.Collections;
