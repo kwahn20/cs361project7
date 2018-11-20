@@ -1,10 +1,3 @@
-/*
- * File: JavaCodeArea.java
- * Names: Zena Abulhab, Paige Hanssen, Kyle Slager, Kevin Zhou
- * Project 5
- * Date: October 12, 2018
- */
-
 package proj9AhnDeGrawHangSlager;
 /*
  * File: JavaCodeArea.java
@@ -33,9 +26,8 @@ import java.util.regex.Pattern;
  * Specifically the compile, compile and run, and stop buttons
  *
  * @author Kevin Ahn, Lucas DeGraw, Jackie Hang, Kyle Slager
- * @author Zena Abulhab, Paige Hanssen, Kyle Slager Kevin Zhou
- * @version 2.0
- * @since 11-02-2018
+ * @version 3.0
+ * @since 11-20-2018
  */
 
 public class JavaCodeArea extends CodeArea {
