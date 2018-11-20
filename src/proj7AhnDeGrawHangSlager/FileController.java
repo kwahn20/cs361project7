@@ -68,7 +68,6 @@ public class FileController {
      */
     private ContextMenuController contextMenuController;
 
-    private DirectoryController directoryController;
 
     private Scanner scanner;
 
@@ -76,10 +75,9 @@ public class FileController {
      * Constructor for the class. Intializes the save status
      * and the tabFilepathMap in a HashMap
      */
-    public FileController(VBox vBox, JavaTabPane javaTabPane, DirectoryController directoryController) {
+    public FileController(VBox vBox, JavaTabPane javaTabPane) {
         this.vBox = vBox;
         this.javaTabPane = javaTabPane;
-        this.directoryController = directoryController;
         this.tabFilepathMap = new HashMap<>();
     }
 
@@ -147,7 +145,7 @@ public class FileController {
         if (file != null){
             handleNew(file);
         }
-        directoryController.createDirectoryTree();
+
     }
 
 
@@ -213,7 +211,6 @@ public class FileController {
             writeFile(file);
             tabFilepathMap.replace(curTab,file.getPath());
             this.javaTabPane.updateTabSavedStatus(curTab, true);
-            this.directoryController.createDirectoryTree();
         }
         curTab.setText(file.getName());
         return true;

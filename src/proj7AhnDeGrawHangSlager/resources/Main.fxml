@@ -100,11 +100,6 @@
         <Button fx:id="replaceBtn" onAction="#handleReplaceText" text="Replace"/>
     </ToolBar>
 
-    <SplitPane dividerPositions="0.2" maxHeight="Infinity"
-               maxWidth="Infinity"
-               VBox.vgrow="ALWAYS">
-        <TreeView fx:id="directoryTree"/>
-
         <SplitPane orientation="VERTICAL" focusTraversable="true" VBox.vgrow="ALWAYS">
             <items>
                 <JavaTabPane fx:id="javaTabPane" prefHeight="392.0" prefWidth="600.0" VBox.vgrow="ALWAYS">
@@ -115,6 +110,6 @@
                 </Console>
             </items>
         </SplitPane>
-    </SplitPane>
+
 
 </VBox>

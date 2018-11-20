@@ -74,14 +74,14 @@ public class MasterController {
     // this line from JianQuanMarcello project 6
     private ContextMenuController contextMenuController;
 
-    private DirectoryController directoryController;
+
 
     @FXML
     public void initialize(){
-        directoryController = new DirectoryController();
+
         editController = new EditController(javaTabPane, findTextEntry, findPrevBtn, findNextBtn, replaceTextEntry);
-        fileController = new FileController(vBox,javaTabPane, directoryController);
-        setupDirectoryController();
+        fileController = new FileController(vBox,javaTabPane);
+
 
         toolbarController = new ToolbarController(console,stopButton,compileButton,compileRunButton,javaTabPane);
         SimpleListProperty<Tab> listProperty = new SimpleListProperty<Tab> (javaTabPane.getTabs());
@@ -509,15 +509,6 @@ public class MasterController {
         this.replaceTextEntry.requestFocus();
     }
 
-    /**
-     * Creates a reference to the DirectoryController and passes in the directory
-     * tree for the controller to take ownership of.
-     * @author Abrams-Deutsch-Durst-Jones
-     */
-    private void setupDirectoryController() {
-        this.directoryController.setDirectoryTree(directoryTree);
-        this.directoryController.setTabPane(this.javaTabPane);
-        this.directoryController.setFileController(this.fileController);
-    }
+
 
 }
