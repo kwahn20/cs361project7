@@ -5,7 +5,7 @@
  * Date: October 12, 2018
  */
 
-package proj7AhnDeGrawHangSlager;
+package proj9AhnDeGrawHangSlager;
 /*
  * File: JavaCodeArea.java
  * Names: Kevin Ahn, Lucas DeGraw, Jackie Hang, Kyle Slager
@@ -16,7 +16,6 @@ package proj7AhnDeGrawHangSlager;
 
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
-import javafx.scene.control.ContextMenu;
 import org.fxmisc.richtext.CodeArea;
 import org.fxmisc.richtext.LineNumberFactory;
 import org.fxmisc.richtext.model.StyleSpans;

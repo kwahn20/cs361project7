@@ -1,12 +1,9 @@
-package proj7AhnDeGrawHangSlager;
+package proj9AhnDeGrawHangSlager;
 
-import javafx.scene.control.Alert;
 import javafx.scene.control.TabPane;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.util.HashMap;
-import java.util.Scanner;
 
 public class JavaTabPane extends TabPane {
 

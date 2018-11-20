@@ -1,18 +1,35 @@
-package proj9AhnDeGrawHangSlagerbantam.lexer;
+/*
+ * File: Scanner.java
+ * Names: Kevin Ahn, Lucas DeGraw, Jackie Hang, Kyle Slager
+ * Class: CS 361
+ * Project 9
+ * Date: November 20, 2018
+ * ---------------------------
+ * Edited From: Dale Skrien
+ */
 
-import proj9AhnDeGrawHangSlagerbantam.util.CompilationException;
-import proj9AhnDeGrawHangSlagerbantam.util.ErrorHandler;
+package proj9AhnDeGrawHangSlager.bantam.lexer;
+
+import proj9AhnDeGrawHangSlager.bantam.util.CompilationException;
+import proj9AhnDeGrawHangSlager.bantam.util.ErrorHandler;
 
 import java.io.*;
-import java.sql.Time;
 import java.util.List;
 import java.util.Set;
-import java.util.concurrent.CompletionException;
-import java.util.concurrent.TimeUnit;
 
-import proj9AhnDeGrawHangSlagerbantam.util.Error;
+import proj9AhnDeGrawHangSlager.bantam.util.Error;
 
 
+/**
+ * This is the scanner class whose main responsibility is to
+ * produce tokens from a Source File Object
+ * as well as return
+ *
+ * @author Dale Skrien
+ * @author Kevin Ahn, Lucas DeGraw, Jackie Hang, Kyle Slager
+ * @version 1.0
+ * @since 11-20-2018
+ */
 public class Scanner
 {
     private SourceFile sourceFile;
@@ -48,11 +65,15 @@ public class Scanner
     }
 
 
+    /**
+     *
+     * @return a list of errors from the ErrorHandler instance of this class
+     */
     public List<Error> getErrors() {
         return this.errorHandler.getErrorList();
     }
 
-    /* Each call of this method builds the next Token from the contents
+    /** Each call of this method builds the next Token from the contents
      * of the file being scanned and returns it. When it reaches the end of the
      * file, any calls to scan() result in a Token of kind EOF.
      */
@@ -164,6 +185,7 @@ public class Scanner
 
     /**
      *
+     *
      * @return a token of Kind.COMMENT, Kind.MULDIV or Kind.ERROR
      */
     private Token getCommentOrMulDivToken() {
@@ -184,7 +206,7 @@ public class Scanner
 
 
     /**
-     *
+     * Creates and returns a single line comment token
      * @return
      */
     private Token getSingleLineCommentToken() {
@@ -206,7 +228,7 @@ public class Scanner
     }
 
     /**
-     *
+     *Creates and returns a multi-line comment token
      * @return a token of Kind.COMMENT or Kind.ERROR
      */
     private Token getMultilineCommentToken(Character prevChar) {
@@ -249,6 +271,8 @@ public class Scanner
     }
 
     /**
+     * Creates and returns a token of Kind.BINARYLOGIC (|| or &&)
+     * or Kind.ERROR if neither are found
      *
      * @return a token of Kind.BINARYLOGIC (|| or &&) or Kind.ERROR if neither found
      */
@@ -272,6 +296,7 @@ public class Scanner
     }
 
     /**
+     * Creates and returns a Compare token
      *
      * @return a token of Kind COMPARE, could be >, >=, <, <=
      */
@@ -291,6 +316,7 @@ public class Scanner
     }
 
     /**
+     * Creates and returns a COMPARE or UNARYNOT token
      *
      * @return a token of Kind either COMPARE (if !=) or UNARYNOT (if just !)
      */
@@ -309,8 +335,9 @@ public class Scanner
     }
 
     /**
+     * Creates and returns an ASSIGN or COMPARE token
      *
-     * @return a token of Kind PLUSMINUS
+     * @return a token of Kind ASSIGN(=) or COMPARE(==)
      */
     private Token getEqualsToken() {
 
@@ -332,8 +359,9 @@ public class Scanner
     }
 
     /**
+     * Creates a PLUSMINUS or UNARYINCR token
      *
-     * @return a token of Kind PLUSMINUS
+     * @return a token of Kind PLUSMINUS(+) or UNARYINCR(++)
      */
     private Token getPlusToken() {
 
@@ -357,7 +385,7 @@ public class Scanner
     /**
      * Creates a minus token or a unary decrement token
      *
-     * @return a token of Kind PLUSMINUS
+     * @return a token of Kind PLUSMINUS(++) or UNARYDECR(--)
      */
     private Token getMinusToken() {
 
@@ -482,9 +510,15 @@ public class Scanner
         }
     }
 
+    /**
+     * Tester Method for the Scanner class.
+     * Prints all the tokens of a file
+     *
+     * @param args command line file arguments
+     */
 
     public static void main (String[] args){
-        if(args.length > 1){
+        if(args.length > 0){
             for(int i = 0; i< args.length; i ++){
                 Scanner scanner;
                 try {

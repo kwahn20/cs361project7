@@ -11,7 +11,7 @@
  *
  */
 
-package proj7AhnDeGrawHangSlager;
+package proj9AhnDeGrawHangSlager;
 
 import javafx.event.Event;
 
@@ -35,11 +35,11 @@ import javafx.stage.Window;
 
 import org.fxmisc.flowless.VirtualizedScrollPane;
 import org.fxmisc.richtext.CodeArea;
-import proj9AhnDeGrawHangSlagerbantam.lexer.Scanner;
-import proj9AhnDeGrawHangSlagerbantam.lexer.Token;
-import proj9AhnDeGrawHangSlagerbantam.util.CompilationException;
-import proj9AhnDeGrawHangSlagerbantam.util.Error;
-import proj9AhnDeGrawHangSlagerbantam.util.ErrorHandler;
+import proj9AhnDeGrawHangSlager.bantam.lexer.Scanner;
+import proj9AhnDeGrawHangSlager.bantam.lexer.Token;
+import proj9AhnDeGrawHangSlager.bantam.util.CompilationException;
+import proj9AhnDeGrawHangSlager.bantam.util.Error;
+import proj9AhnDeGrawHangSlager.bantam.util.ErrorHandler;
 
 /**
  * This class contains the handlers for each of the menu options in the IDE.
@@ -55,13 +55,7 @@ import proj9AhnDeGrawHangSlagerbantam.util.ErrorHandler;
 public class FileController {
 
     private JavaTabPane javaTabPane;
-
-    // "True" means that the file has not been changed since its last save,
-    // if any. False means that something has been changed in the file.
-//    private HashMap<Tab, Boolean> saveStatus;
-
     private HashMap<Tab, String> tabFilepathMap;
-
     private VBox vBox;
 
     /**
@@ -282,7 +276,8 @@ public class FileController {
                 return "cancel";
             }
             else if (result.get() == saveOptions.getYesButton()){
-                this.handleSave();
+                boolean saved = this.handleSave();
+                if (saved) return "yes";
                 event.consume();
                 return null;
             }
@@ -327,7 +322,9 @@ public class FileController {
 
 
     public void handleScan(Event event) {
+
         JavaTab curTab = (JavaTab)this.javaTabPane.getSelectionModel().getSelectedItem();
+
         if (this.javaTabPane.tabIsSaved(curTab)) {
             String filename = this.tabFilepathMap.get(curTab);
             try {
@@ -353,10 +350,13 @@ public class FileController {
         }
         else if (saveStatus == "no") {
             if (tabFilepathMap.get(curTab) == null) {
+                System.out.println("RETURNING");
                 return;
             }
         }
+        else if (saveStatus == "yes") handleScan(event);
     }
+
 
     public List<Error> getScanningErrors() {
         if (this.scanner == null) return null;

@@ -11,7 +11,7 @@
  *
  */
 
-package proj7AhnDeGrawHangSlager;
+package proj9AhnDeGrawHangSlager;
 
 
 import javafx.beans.property.SimpleListProperty;
@@ -27,8 +27,8 @@ import java.awt.Desktop;
 import java.io.IOException;
 import java.util.List;
 
-import proj9AhnDeGrawHangSlagerbantam.util.CompilationException;
-import proj9AhnDeGrawHangSlagerbantam.util.Error;
+import proj9AhnDeGrawHangSlager.bantam.util.CompilationException;
+import proj9AhnDeGrawHangSlager.bantam.util.Error;
 
 /**
  * This is the master controller for the program. it references
@@ -83,7 +83,6 @@ public class MasterController {
         editController = new EditController(javaTabPane, findTextEntry, findPrevBtn, findNextBtn, replaceTextEntry);
         fileController = new FileController(vBox,javaTabPane);
 
-
         toolbarController = new ToolbarController(console,stopButton,compileButton,compileRunButton,javaTabPane);
         SimpleListProperty<Tab> listProperty = new SimpleListProperty<Tab> (javaTabPane.getTabs());
         editMenu.disableProperty().bind(listProperty.emptyProperty());
@@ -93,8 +92,6 @@ public class MasterController {
         scanButton.disableProperty().bind(listProperty.emptyProperty());
         this.toolbarController.setReceivedCommand(false);
         this.console.setToolbarController(this.toolbarController);
-
-        //disableToolbar();
 
         // this line from JianQuanMarcello project 6
         this.setupContextMenuController();
@@ -379,8 +376,7 @@ public class MasterController {
      */
     @FXML
     public void handleDarkMode(){
-       handleThemeChange("proj7AhnDeGrawHangSlager/resources/DarkMode.css", darkModeMenuItem);
-
+       handleThemeChange("proj9AhnDeGrawHangSlager/resources/DarkMode.css", darkModeMenuItem);
     }
 
     /**
@@ -398,7 +394,7 @@ public class MasterController {
      */
     @FXML
     public void handleFunMode(){
-        handleThemeChange("proj7AhnDeGrawHangSlager/resources/FunMode.css", funModeMenuItem);
+        handleThemeChange("proj9AhnDeGrawHangSlager/resources/FunMode.css", funModeMenuItem);
 
     }
 
@@ -409,8 +405,7 @@ public class MasterController {
      */
     @FXML
     public void handleHallowThemeMode(){
-        handleThemeChange("proj7AhnDeGrawHangSlager/resources/HallowTheme.css", hallowThemeItem);
-
+        handleThemeChange("proj9AhnDeGrawHangSlager/resources/HallowTheme.css", hallowThemeItem);
     }
     /**
      * Helper method to change the theme

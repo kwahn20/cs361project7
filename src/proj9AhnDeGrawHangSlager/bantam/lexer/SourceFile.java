@@ -14,9 +14,9 @@
  * Modified by Dale Skrien, Fall 2018
  */
 
-package proj9AhnDeGrawHangSlagerbantam.lexer;
+package proj9AhnDeGrawHangSlager.bantam.lexer;
 
-import proj9AhnDeGrawHangSlagerbantam.util.CompilationException;
+import proj9AhnDeGrawHangSlager.bantam.util.CompilationException;
 
 import java.io.*;
 
