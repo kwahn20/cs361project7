@@ -65,6 +65,7 @@ public class MasterController {
     @FXML private TextField replaceTextEntry;
     @FXML private Menu prefMenu;
     @FXML private TreeView directoryTree;
+    @FXML private Button scanButton;
 
     private EditController editController;
     private FileController fileController;
@@ -88,8 +89,10 @@ public class MasterController {
         saveMenuItem.disableProperty().bind(listProperty.emptyProperty());
         saveAsMenuItem.disableProperty().bind(listProperty.emptyProperty());
         closeMenuItem.disableProperty().bind(listProperty.emptyProperty());
+        scanButton.disableProperty().bind(listProperty.emptyProperty());
         this.toolbarController.setReceivedCommand(false);
         this.console.setToolbarController(this.toolbarController);
+
         //disableToolbar();
 
         // this line from JianQuanMarcello project 6
@@ -210,15 +213,15 @@ public class MasterController {
         compileHelper("handleCompileAndRun");
     }
 
-    @FXML public void handleScan() throws InterruptedException {
+    @FXML public void handleScan(){
+        this.console.clear();
         this.fileController.handleScan();
 
         List<Error> scanningErrors = fileController.getScanningErrors();
-
         for (Error e : scanningErrors)
-            this.console.WriteLineToConsole(e.toString() + "\n", "ERROR");
+            this.console.writeLine(e.toString() + "\n", "ERROR");
 
-        this.console.WriteLineToConsole(scanningErrors.size() +
+        this.console.writeLine(scanningErrors.size() +
                 " illegal tokens were found.", "ERROR");
     }
     /**

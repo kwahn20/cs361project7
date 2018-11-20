@@ -158,7 +158,7 @@ public class FileController {
      * Otherwise, just close the tab.
      */
     public void handleClose(Event event) {
-        System.out.println("in close");
+
         JavaTab curTab = (JavaTab)this.javaTabPane.getSelectionModel().getSelectedItem();
 
         if (tabFilepathMap.get(curTab) != null) {
@@ -297,6 +297,9 @@ public class FileController {
     }
 
 
+    /**
+     *
+     */
     public void handleScan() {
 
         JavaTab curTab = (JavaTab)this.javaTabPane.getSelectionModel().getSelectedItem();
@@ -310,7 +313,6 @@ public class FileController {
         Token nextToken;
         while ( (nextToken = scanner.scan()).kind != Token.Kind.EOF) {
             curTab.getCodeArea().appendText(nextToken.toString()+"\n");
-
         }
 
 

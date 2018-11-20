@@ -79,7 +79,7 @@ public class ToolbarController {
     public void handleStop(){
         if(curFutureTask!=null) {
             this.curFutureTask.cancel(true);
-            this.console.WriteLineToConsole("Process terminated.\n", "CONS");
+            this.console.writeLine("Process terminated.\n", "CONS");
         }
     }
 
@@ -142,7 +142,7 @@ public class ToolbarController {
             compSuccessful = curFutureTask.get();
             if (compSuccessful) {
                 Platform.runLater(() ->
-                        this.console.WriteLineToConsole("Compilation was Successful.\n", "CONS"));
+                        this.console.writeLine("Compilation was Successful.\n", "CONS"));
             }
             compileExecutor.shutdown();
         } catch (ExecutionException | InterruptedException | CancellationException e) {
@@ -270,11 +270,11 @@ public class ToolbarController {
                 final char finalError = (char)err;
 
                 if (inp >= 0) {
-                    Platform.runLater(() -> this.console.WriteLineToConsole(Character.toString(finalInput), "INPUT"));
+                    Platform.runLater(() -> this.console.writeLine(Character.toString(finalInput), "INPUT"));
                 }
                 if(err >= 0) {
                     taskSuccessful = false;
-                    Platform.runLater(() -> this.console.WriteLineToConsole(Character.toString(finalError), "ERROR"));
+                    Platform.runLater(() -> this.console.writeLine(Character.toString(finalError), "ERROR"));
                 }
                 try {
                     Thread.sleep(2);

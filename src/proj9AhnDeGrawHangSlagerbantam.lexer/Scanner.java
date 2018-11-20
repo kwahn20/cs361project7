@@ -146,7 +146,12 @@ public class Scanner
             default:
 
                 if (Character.isDigit(currentChar)) return getIntConstToken();
-                else return getIdentifierOrKeywordToken();
+                else if (Character.isLetter(currentChar)) return getIdentifierOrKeywordToken();
+                else {
+                    this.goToNextChar = true;
+                    return new Token(Token.Kind.ERROR, currentChar.toString(),
+                            this.sourceFile.getCurrentLineNumber());
+                }
          }
     }
 
@@ -164,7 +169,7 @@ public class Scanner
             case('*'): return this.getMultilineCommentToken(prevChar);
 
             default:
-                this.goToNextChar = true;
+                this.goToNextChar = false;
                 return new Token(Token.Kind.MULDIV, prevChar.toString(),
                     this.sourceFile.getCurrentLineNumber());
         }
@@ -402,6 +407,7 @@ public class Scanner
      */
     private Token getIdentifierOrKeywordToken() {
 
+        System.out.println("getIDorKeyword()");
         String spelling = "";
         while(!illegalIdentifierOrKeywordChars.contains(currentChar)){
 

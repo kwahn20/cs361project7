@@ -75,7 +75,7 @@ public class Console extends StyleClassedTextArea {
      * Used in ToolbarController when printing to the console.
      * @param newString the string to add to the console
      */
-    public void WriteLineToConsole(String newString, String type){
+    public void writeLine(String newString, String type){
 
         int fromIndex = this.getText().length();
         this.appendText(newString);
@@ -163,4 +163,3 @@ public class Console extends StyleClassedTextArea {
     }
 
 }
-
