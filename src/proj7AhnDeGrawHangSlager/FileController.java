@@ -320,11 +320,6 @@ public class FileController {
 
         }
 
-//        ErrorHandler errorHandler = scanner.getErrorHandler();
-//        for( proj9AhnDeGrawHangSlagerbantam.util.Error e : errorHandler.getErrorList()){
-//
-//
-//        }
 
     }
 

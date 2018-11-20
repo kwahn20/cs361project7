@@ -421,8 +421,9 @@ public class Scanner
 
 
     private Token getStringConstToken() {
-
         String spelling = "";
+        spelling = spelling.concat(currentChar.toString());
+        currentChar = this.sourceFile.getNextChar();
         while(!currentChar.equals('"')){
             if(currentChar.equals(SourceFile.eof) || currentChar.equals('\n')){
                 this.errorHandler.register(Error.Kind.LEX_ERROR,
@@ -433,6 +434,7 @@ public class Scanner
                         this.sourceFile.getCurrentLineNumber());
 
             }
+
             spelling = spelling.concat(currentChar.toString());
             currentChar = this.sourceFile.getNextChar();
         }
