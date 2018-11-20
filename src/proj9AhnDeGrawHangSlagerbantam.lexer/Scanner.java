@@ -1,11 +1,13 @@
 package proj9AhnDeGrawHangSlagerbantam.lexer;
 
+import proj9AhnDeGrawHangSlagerbantam.util.CompilationException;
 import proj9AhnDeGrawHangSlagerbantam.util.ErrorHandler;
 
 import java.io.*;
 import java.sql.Time;
 import java.util.List;
 import java.util.Set;
+import java.util.concurrent.CompletionException;
 import java.util.concurrent.TimeUnit;
 
 import proj9AhnDeGrawHangSlagerbantam.util.Error;
@@ -32,7 +34,12 @@ public class Scanner
     public Scanner(String filename, ErrorHandler handler) {
         errorHandler = handler;
         currentChar = ' ';
-        sourceFile = new SourceFile(filename);
+        try {
+            sourceFile = new SourceFile(filename);
+        }
+        catch (CompilationException e){
+            throw e;
+        }
     }
 
     public Scanner(Reader reader, ErrorHandler handler) {
@@ -481,7 +488,15 @@ public class Scanner
     public static void main (String[] args){
         if(args.length > 1){
             for(int i = 0; i< args.length; i ++){
-                Scanner scanner = new Scanner(args[i],new ErrorHandler());
+                Scanner scanner;
+                try {
+                   scanner = new Scanner(args[i], new ErrorHandler());
+                }
+                catch(CompilationException e){
+                    System.out.println(e);
+                    continue;
+                }
+
                 Token nextToken;
                 while ( (nextToken = scanner.scan()).kind != Token.Kind.EOF) {
                     System.out.println(nextToken);
@@ -496,7 +511,6 @@ public class Scanner
                     System.out.println("Scanning of " + args[i] + " was successful. " +
                             "No errors were found.\n\n");
                 }
-
 
             }
         }
