@@ -4,7 +4,7 @@
  * Date: Fall 2018
  */
 
-package proj9AhnDeGrawHangSlagerbantam.util;
+package Errors;
 
 /**
  * Class for representing errors

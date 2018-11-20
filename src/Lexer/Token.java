@@ -13,7 +13,7 @@
   * Modified by Dale Skrien, Fall 2018
   */
 
- package proj9AhnDeGrawHangSlagerbantam.lexer;
+ package Lexer;
 
  import java.util.Set;
 
