@@ -422,7 +422,7 @@ public class Scanner
 
         String spelling = "";
         while(!currentChar.equals('"')){
-            if(currentChar.equals(SourceFile.eof)){
+            if(currentChar.equals(SourceFile.eof) || currentChar.equals('\n')){
                 this.errorHandler.register(Error.Kind.LEX_ERROR,
                         this.sourceFile.getFilename(), this.sourceFile.getCurrentLineNumber(),
                         "UNCLOSED QUOTE");
@@ -431,14 +431,23 @@ public class Scanner
                         this.sourceFile.getCurrentLineNumber());
 
             }
-
             spelling = spelling.concat(currentChar.toString());
             currentChar = this.sourceFile.getNextChar();
         }
         spelling = spelling.concat(currentChar.toString());
         this.goToNextChar = true;
 
-        return new Token(Token.Kind.STRCONST, spelling, this.sourceFile.getCurrentLineNumber());
+        if(spelling.length()<5000) {
+            return new Token(Token.Kind.STRCONST, spelling, this.sourceFile.getCurrentLineNumber());
+        }
+        else{
+            this.errorHandler.register(Error.Kind.LEX_ERROR,
+                    this.sourceFile.getFilename(), this.sourceFile.getCurrentLineNumber(),
+                    "STRING EXCEEDS MAX CHAR LENGTH 5000");
+            this.goToNextChar = false;
+            return new Token(Token.Kind.ERROR, spelling,
+                    this.sourceFile.getCurrentLineNumber());
+        }
     }
 
 
