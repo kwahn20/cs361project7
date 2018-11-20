@@ -413,8 +413,6 @@ public class Scanner
      * @return a token of Kind.IDENTIFIER or Kind.ERROR if its an invalid character
      */
     private Token getIdentifierOrKeywordToken() {
-
-        System.out.println("getIDorKeyword()");
         String spelling = "";
         while(!illegalIdentifierOrKeywordChars.contains(currentChar)){
 
