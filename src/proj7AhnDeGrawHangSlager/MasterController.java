@@ -218,6 +218,8 @@ public class MasterController {
         for (Error e : scanningErrors)
             this.console.WriteLineToConsole(e.toString() + "\n", "ERROR");
 
+        this.console.WriteLineToConsole(scanningErrors.size() +
+                " illegal tokens were found.", "ERROR");
     }
     /**
      * Handler for the Stop button in the toolbar.

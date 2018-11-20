@@ -20,7 +20,8 @@ public class Scanner
 
     private final Set<Character> illegalIdentifierOrKeywordChars =
             Set.of('"', '/', '+', '-', '>', '<', '=', '&', '{',
-                    '}', '[', ']', '(', ')', ';', ':', '!', ' ', '.');
+                    '}', '[', ']', '(', ')', ';', ':', '!', ' ',
+                    '.', ',', '\r', '\n');
 
     public Scanner(ErrorHandler handler) {
         errorHandler = handler;
