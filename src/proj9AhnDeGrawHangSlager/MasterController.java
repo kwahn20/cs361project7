@@ -391,6 +391,7 @@ public class MasterController {
     public void handleNormalMode(){
         vBox.getStylesheets().remove(vBox.getStylesheets().size()-1);
         enableUnselectedThemes(normalModeMenuItem);
+
     }
 
     /**
