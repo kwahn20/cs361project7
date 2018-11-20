@@ -124,8 +124,12 @@ public class FileController {
     public void handleNew(File file) {
         this.javaTabPane.createNewTab(this, contextMenuController, file);
         JavaTab t = (JavaTab)this.javaTabPane.getSelectionModel().getSelectedItem();
+
         if (file == null) this.tabFilepathMap.put(t, null);
-        else this.tabFilepathMap.put(t, file.getPath());
+        else {
+            this.tabFilepathMap.put(t, file.getPath());
+            System.out.println();
+        }
 
     }
 

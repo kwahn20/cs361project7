@@ -36,7 +36,10 @@ public class JavaTabPane extends TabPane {
         // focus on the new tab
         this.getSelectionModel().select(newTab);
         // add it to the map indicating that it has never been saved
-        this.tabSavedStatusMap.put(newTab, null);
+
+        if (file == null) this.tabSavedStatusMap.put(newTab, null);
+        else this.tabSavedStatusMap.put(newTab, true);
+
     }
 
     public void updateTabSavedStatus(JavaTab t, Boolean newStatus) {
@@ -51,7 +54,8 @@ public class JavaTabPane extends TabPane {
         return this.tabSavedStatusMap.get(t);
     }
 
-    public boolean tabIsSaved(JavaTab t ) {
+    public boolean tabIsSaved(JavaTab t) {
+        System.out.println("NULL TAB: " + t);
         return this.tabSavedStatusMap.get(t);
     }
 
