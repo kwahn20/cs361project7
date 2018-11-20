@@ -15,6 +15,7 @@ package proj7AhnDeGrawHangSlager;
 
 import javafx.event.Event;
 
+import java.util.List;
 import java.util.Optional;
 import java.io.File;
 import java.io.BufferedWriter;
@@ -36,6 +37,7 @@ import org.fxmisc.flowless.VirtualizedScrollPane;
 import org.fxmisc.richtext.CodeArea;
 import proj9AhnDeGrawHangSlagerbantam.lexer.Scanner;
 import proj9AhnDeGrawHangSlagerbantam.lexer.Token;
+import proj9AhnDeGrawHangSlagerbantam.util.Error;
 import proj9AhnDeGrawHangSlagerbantam.util.ErrorHandler;
 
 /**
@@ -67,6 +69,8 @@ public class FileController {
     private ContextMenuController contextMenuController;
 
     private DirectoryController directoryController;
+
+    private Scanner scanner;
 
     /**
      * Constructor for the class. Intializes the save status
@@ -297,27 +301,31 @@ public class FileController {
 
 
     public void handleScan() {
+
         JavaTab curTab = (JavaTab)this.javaTabPane.getSelectionModel().getSelectedItem();
-
         String filename = this.tabFilepathMap.get(curTab);
-        Scanner scanner = new Scanner( filename, new ErrorHandler() );
 
-        Token nextToken;
+        this.scanner = new Scanner( filename, new ErrorHandler() );
 
         this.handleNew(null);
         curTab = (JavaTab)this.javaTabPane.getSelectionModel().getSelectedItem();
 
+        Token nextToken;
         while ( (nextToken = scanner.scan()).kind != Token.Kind.EOF) {
             curTab.getCodeArea().appendText(nextToken.toString()+"\n");
 
         }
 
-        ErrorHandler errorHandler = scanner.getErrorHandler();
-        for( proj9AhnDeGrawHangSlagerbantam.util.Error e : errorHandler.getErrorList()){
+//        ErrorHandler errorHandler = scanner.getErrorHandler();
+//        for( proj9AhnDeGrawHangSlagerbantam.util.Error e : errorHandler.getErrorList()){
+//
+//
+//        }
 
+    }
 
-        }
-
+    public List<Error> getScanningErrors() {
+        return this.scanner.getErrors();
     }
 
     /**

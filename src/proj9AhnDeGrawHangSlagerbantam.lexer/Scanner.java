@@ -4,6 +4,7 @@ import proj9AhnDeGrawHangSlagerbantam.util.ErrorHandler;
 
 import java.io.*;
 import java.sql.Time;
+import java.util.List;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
@@ -38,9 +39,11 @@ public class Scanner
         sourceFile = new SourceFile(reader);
     }
 
-    public ErrorHandler getErrorHandler(){
-        return this.errorHandler;
+
+    public List<Error> getErrors() {
+        return this.errorHandler.getErrorList();
     }
+
     /* Each call of this method builds the next Token from the contents
      * of the file being scanned and returns it. When it reaches the end of the
      * file, any calls to scan() result in a Token of kind EOF.
@@ -62,7 +65,6 @@ public class Scanner
         }
 
 
-        // special 'cases' are when we may be building tokens that are > 1 char long
         switch(currentChar) {
 
             case(' '):

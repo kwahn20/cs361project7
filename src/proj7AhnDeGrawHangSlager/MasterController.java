@@ -25,6 +25,9 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.awt.Desktop;
 import java.io.IOException;
+import java.util.List;
+
+import proj9AhnDeGrawHangSlagerbantam.util.Error;
 
 /**
  * This is the master controller for the program. it references
@@ -210,6 +213,10 @@ public class MasterController {
     @FXML public void handleScan() throws InterruptedException {
         System.out.println("TEST");
         this.fileController.handleScan();
+
+        List<Error> scanningErrors = fileController.getScanningErrors();
+
+
     }
     /**
      * Handler for the Stop button in the toolbar.

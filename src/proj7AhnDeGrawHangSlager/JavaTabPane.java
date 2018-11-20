@@ -37,8 +37,6 @@ public class JavaTabPane extends TabPane {
         this.getSelectionModel().select(newTab);
         // add it to the map indicating that it has never been saved
         this.tabSavedStatusMap.put(newTab, null);
-
-        System.out.println("numtabs0: " + this.getTabs().size());
     }
 
     public void updateTabSavedStatus(JavaTab t, Boolean newStatus) {
@@ -61,4 +59,5 @@ public class JavaTabPane extends TabPane {
         this.getTabs().remove(t);
         this.tabSavedStatusMap.remove(t);
     }
+
 }
