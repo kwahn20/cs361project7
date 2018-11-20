@@ -77,16 +77,13 @@ class SourceFile
      * @return the next character in the source file
      */
     public char getNextChar(){
-        System.out.println("getting next char!!!");
         try {
             int c = sourceReader.read();
 
             if (c == -1) {
-                System.out.println("EOF!");
                 c = eof;
             }
             else if (c == cr || (c == eol && prevChar != cr)) {
-                System.out.println("EOL?: " + (c == eol));
                 currentLineNumber++;
             }
             prevChar = c;

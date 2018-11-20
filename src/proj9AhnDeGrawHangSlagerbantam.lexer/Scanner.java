@@ -3,7 +3,10 @@ package proj9AhnDeGrawHangSlagerbantam.lexer;
 import proj9AhnDeGrawHangSlagerbantam.util.ErrorHandler;
 
 import java.io.*;
+import java.sql.Time;
 import java.util.Set;
+import java.util.concurrent.TimeUnit;
+
 import proj9AhnDeGrawHangSlagerbantam.util.Error;
 
 
@@ -42,17 +45,25 @@ public class Scanner
     public Token scan() {
 
         if (this.goToNextChar) {
-            System.out.println("getting next char");
             currentChar = sourceFile.getNextChar();
-
         }
 
-        System.out.println("curChar: " + currentChar);
         if (currentChar.equals(SourceFile.eof)) return new Token(Token.Kind.EOF,
                 currentChar.toString(), this.sourceFile.getCurrentLineNumber());
 
+        else if (currentChar.equals('\t') || currentChar.equals('\r')
+                || currentChar.equals('\n') || currentChar.equals('\f')) {
+            this.goToNextChar = true;
+            return this.scan();
+        }
+
+
         // special 'cases' are when we may be building tokens that are > 1 char long
         switch(currentChar) {
+
+            case(' '):
+                this.goToNextChar = true;
+                return this.scan();
 
             case('"'): return this.getStringConstToken();
 
@@ -72,38 +83,57 @@ public class Scanner
 
             case('|'): return getBinaryLogicToken();
 
-            case('{'): return new Token(Token.Kind.LCURLY,
+            case('{'):
+                this.goToNextChar = true;
+                return new Token(Token.Kind.LCURLY,
                     currentChar.toString(), this.sourceFile.getCurrentLineNumber());
 
-            case('}'): return new Token(Token.Kind.RCURLY,
+            case('}'):
+                this.goToNextChar = true;
+                return new Token(Token.Kind.RCURLY,
                     currentChar.toString(), this.sourceFile.getCurrentLineNumber());
 
-            case('['): return new Token(Token.Kind.LBRACKET,
+            case('['):
+                this.goToNextChar = true;
+                return new Token(Token.Kind.LBRACKET,
                     currentChar.toString(), this.sourceFile.getCurrentLineNumber());
 
-            case(']'): return new Token(Token.Kind.RBRACKET,
+            case(']'):
+                this.goToNextChar = true;
+                return new Token(Token.Kind.RBRACKET,
                     currentChar.toString(), this.sourceFile.getCurrentLineNumber());
 
-            case('('): return new Token(Token.Kind.LPAREN,
+            case('('):
+                this.goToNextChar = true;
+                return new Token(Token.Kind.LPAREN,
                     currentChar.toString(), this.sourceFile.getCurrentLineNumber());
 
-            case(')'): return new Token(Token.Kind.RPAREN,
+            case(')'):
+                this.goToNextChar = true;
+                return new Token(Token.Kind.RPAREN,
                     currentChar.toString(), this.sourceFile.getCurrentLineNumber());
 
-            case(';'): return new Token(Token.Kind.SEMICOLON,
+            case(';'):
+                this.goToNextChar = true;
+                return new Token(Token.Kind.SEMICOLON,
                     currentChar.toString(), this.sourceFile.getCurrentLineNumber());
 
-            case(':'): return new Token(Token.Kind.COLON,
+            case(':'):
+                this.goToNextChar = true;
+                return new Token(Token.Kind.COLON,
                     currentChar.toString(), this.sourceFile.getCurrentLineNumber());
 
             case('!'): return this.getUnaryNotOrCompareToken();
 
-            case(' '):
-
-            case('.'): return new Token(Token.Kind.DOT,
+            case('.'):
+                this.goToNextChar = true;
+                return new Token(Token.Kind.DOT,
                     currentChar.toString(), this.sourceFile.getCurrentLineNumber());
 
-            case(','): return new Token(Token.Kind.COMMA,
+
+            case(','):
+                this.goToNextChar = true;
+                return new Token(Token.Kind.COMMA,
                     currentChar.toString(), this.sourceFile.getCurrentLineNumber());
 
             default:
@@ -111,7 +141,6 @@ public class Scanner
                 if (Character.isDigit(currentChar)) return getIntConstToken();
                 else return getIdentifierOrKeywordToken();
          }
-//        return new Token(Token.Kind.COMMENT, "hey", 5);
     }
 
     /**
@@ -278,7 +307,7 @@ public class Scanner
         }
         else {
             this.goToNextChar = false;
-            return new Token(Token.Kind.ASSIGN, currentChar.toString(),
+            return new Token(Token.Kind.ASSIGN, prevChar.toString(),
                     this.sourceFile.getCurrentLineNumber());
         }
     }
@@ -334,10 +363,9 @@ public class Scanner
      * @return
      */
     private Token getIntConstToken() {
-        System.out.println("getIntConst()");
         String spelling = "";
         while(Character.isDigit(currentChar)){
-            spelling.concat(currentChar.toString());
+            spelling = spelling.concat(currentChar.toString());
             currentChar = this.sourceFile.getNextChar();
         }
 
@@ -361,12 +389,12 @@ public class Scanner
      * Token constructor
      */
     private Token getIdentifierOrKeywordToken() {
-        System.out.println("getIDorKKeyword()");
+
         String spelling = "";
         while(!illegalIdentifierOrKeywordChars.contains(currentChar)){
 
             if(Character.isLetterOrDigit(currentChar) || currentChar.equals('_')) {
-                spelling.concat(currentChar.toString());
+                spelling = spelling.concat(currentChar.toString());
                 currentChar = this.sourceFile.getNextChar();
             }
             else{
@@ -399,10 +427,10 @@ public class Scanner
 
             }
 
-            spelling.concat(currentChar.toString());
+            spelling = spelling.concat(currentChar.toString());
             currentChar = this.sourceFile.getNextChar();
         }
-        spelling.concat(currentChar.toString());
+        spelling = spelling.concat(currentChar.toString());
         this.goToNextChar = true;
 
         return new Token(Token.Kind.STRCONST, spelling, this.sourceFile.getCurrentLineNumber());
@@ -414,4 +442,3 @@ public class Scanner
     }
 
 }
-// hey

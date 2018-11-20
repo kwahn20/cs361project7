@@ -178,6 +178,7 @@ public class FileController {
      */
     public boolean handleSave() {
         JavaTab curTab = (JavaTab)this.javaTabPane.getSelectionModel().getSelectedItem();
+
         if (tabFilepathMap.get(curTab) != null){
             File file = new File(tabFilepathMap.get(curTab));    // this is what gets the path
             writeFile(file);
@@ -205,7 +206,7 @@ public class FileController {
         }
         else{
             writeFile(file);
-//            tabFilepathMap.replace(curTab,file.getPath());
+            tabFilepathMap.replace(curTab,file.getPath());
 //            saveStatus.replace(curTab, true);
             this.javaTabPane.updateTabSavedStatus(curTab, true);
             this.directoryController.createDirectoryTree();
