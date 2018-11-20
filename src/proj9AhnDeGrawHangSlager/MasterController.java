@@ -211,7 +211,12 @@ public class MasterController {
         compileHelper("handleCompileAndRun");
     }
 
-    @FXML public void handleScan(Event event) throws InterruptedException {
+    /**
+     * This method clears the console, tries to scan
+     * and will write any errors to the console
+     * @param event press of the Scan button triggering this method
+     */
+    @FXML public void handleScan(Event event) {
 
         this.console.clear();
         try {

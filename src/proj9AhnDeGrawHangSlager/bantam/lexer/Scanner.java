@@ -37,17 +37,27 @@ public class Scanner
     private Character currentChar;
     private boolean goToNextChar = true;
 
-    private final Set<Character> illegalIdentifierOrKeywordChars =
+    private final Set<Character> charsEndingIdentifierOrKeyword =
             Set.of('"', '/', '+', '-', '>', '<', '=', '&', '{',
                     '}', '[', ']', '(', ')', ';', ':', '!', ' ',
                     '.', ',', '\r', '\n');
 
+
+    /**
+     *
+     * @param handler an ErrorHandler
+     */
     public Scanner(ErrorHandler handler) {
         errorHandler = handler;
         currentChar = ' ';
         sourceFile = null;
     }
 
+    /**
+     *
+     * @param filename the name of the file that will be passed to the SourceFile
+     * @param handler an ErrorHandler
+     */
     public Scanner(String filename, ErrorHandler handler) {
         errorHandler = handler;
         currentChar = ' ';
@@ -59,19 +69,16 @@ public class Scanner
         }
     }
 
+    /**
+     *
+     * @param reader a Reader linked to existing File to be passed to the SourceFile
+     * @param handler an ErrorHandler
+     */
     public Scanner(Reader reader, ErrorHandler handler) {
         errorHandler = handler;
         sourceFile = new SourceFile(reader);
     }
 
-
-    /**
-     *
-     * @return a list of errors from the ErrorHandler instance of this class
-     */
-    public List<Error> getErrors() {
-        return this.errorHandler.getErrorList();
-    }
 
     /** Each call of this method builds the next Token from the contents
      * of the file being scanned and returns it. When it reaches the end of the
@@ -185,7 +192,6 @@ public class Scanner
 
     /**
      *
-     *
      * @return a token of Kind.COMMENT, Kind.MULDIV or Kind.ERROR
      */
     private Token getCommentOrMulDivToken() {
@@ -195,7 +201,7 @@ public class Scanner
 
             case('/'): return this.getSingleLineCommentToken();
 
-            case('*'): return this.getMultilineCommentToken(prevChar);
+            case('*'): return this.getBlockCommentToken(prevChar);
 
             default:
                 this.goToNextChar = false;
@@ -204,10 +210,9 @@ public class Scanner
         }
     }
 
-
     /**
      * Creates and returns a single line comment token
-     * @return
+     * @return a token of Kind.COMMENT
      */
     private Token getSingleLineCommentToken() {
 
@@ -228,10 +233,10 @@ public class Scanner
     }
 
     /**
-     *Creates and returns a multi-line comment token
-     * @return a token of Kind.COMMENT or Kind.ERROR
+     * Creates and returns a multi-line comment token
+     * @return a token of Kind.COMMENT or Kind.ERROR if it was unclosed
      */
-    private Token getMultilineCommentToken(Character prevChar) {
+    private Token getBlockCommentToken(Character prevChar) {
 
         String commentBody = "/*";
 
@@ -298,7 +303,7 @@ public class Scanner
     /**
      * Creates and returns a Compare token
      *
-     * @return a token of Kind COMPARE, could be >, >=, <, <=
+     * @return a token of Kind.COMPARE, could be >, >=, <, <=
      */
     private Token getCompareToken() {
         Character prevChar = currentChar;
@@ -318,7 +323,7 @@ public class Scanner
     /**
      * Creates and returns a COMPARE or UNARYNOT token
      *
-     * @return a token of Kind either COMPARE (if !=) or UNARYNOT (if just !)
+     * @return a token of Kind.COMPARE (if !=) or Kind.UNARYNOT (if just !)
      */
     private Token getUnaryNotOrCompareToken(){
         currentChar = this.sourceFile.getNextChar();
@@ -337,7 +342,7 @@ public class Scanner
     /**
      * Creates and returns an ASSIGN or COMPARE token
      *
-     * @return a token of Kind ASSIGN(=) or COMPARE(==)
+     * @return a token of Kind.ASSIGN(=) or Kind.COMPARE(==)
      */
     private Token getEqualsToken() {
 
@@ -361,7 +366,7 @@ public class Scanner
     /**
      * Creates a PLUSMINUS or UNARYINCR token
      *
-     * @return a token of Kind PLUSMINUS(+) or UNARYINCR(++)
+     * @return a token of Kind.PLUSMINUS(+) or Kind.UNARYINCR(++)
      */
     private Token getPlusToken() {
 
@@ -383,9 +388,9 @@ public class Scanner
     }
 
     /**
-     * Creates a minus token or a unary decrement token
+     * Creates and returns a minus token or a unary decrement token
      *
-     * @return a token of Kind PLUSMINUS(++) or UNARYDECR(--)
+     * @return a token of Kind.PLUSMINUS(-) or UNARYDECR(---)
      */
     private Token getMinusToken() {
 
@@ -408,8 +413,8 @@ public class Scanner
 
     /**
      * Returns an integer constant token, where the integer
-     * value does not exceed (2^31 -1)
-     * @return integer constant token
+     * value does not exceed (2^31 - 1)
+     * @return token of Kind.INTCONST or Kind.ERROR
      */
     private Token getIntConstToken() {
         String spelling = "";
@@ -432,7 +437,6 @@ public class Scanner
                 this.sourceFile.getCurrentLineNumber());
     }
 
-
     /**
      * Returns a identifier or keyword token
      * if it should be a keyword, it will be converted to the appropriate Kind in the
@@ -442,7 +446,7 @@ public class Scanner
      */
     private Token getIdentifierOrKeywordToken() {
         String spelling = "";
-        while(!illegalIdentifierOrKeywordChars.contains(currentChar)){
+        while(!charsEndingIdentifierOrKeyword.contains(currentChar)){
 
             if(Character.isLetterOrDigit(currentChar) || currentChar.equals('_')) {
                 spelling = spelling.concat(currentChar.toString());
@@ -471,9 +475,11 @@ public class Scanner
      * @return string constant token
      */
     private Token getStringConstToken() {
+
         String spelling = "";
         spelling = spelling.concat(currentChar.toString());
         currentChar = this.sourceFile.getNextChar();
+
         //while the quote is unmatched continue getting chars
         while(!currentChar.equals('"')){
 
@@ -510,13 +516,22 @@ public class Scanner
         }
     }
 
+
+    /**
+     *
+     * @return a list of errors from the ErrorHandler instance of this class
+     */
+    public List<Error> getErrors() {
+        return this.errorHandler.getErrorList();
+    }
+
+
     /**
      * Tester Method for the Scanner class.
      * Prints all the tokens of a file
      *
      * @param args command line file arguments
      */
-
     public static void main (String[] args){
         if(args.length > 0){
             for(int i = 0; i< args.length; i ++){

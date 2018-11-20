@@ -321,9 +321,16 @@ public class FileController {
     }
 
 
+    /**
+     * this method is called when the Scan button is pressed
+     * if the file is not saved it prompts the user to save before scanning
+     * it will scan the file and display the tokens in a new tab
+     * @param event press of the Scan button triggering the handleScan method
+     */
     public void handleScan(Event event) {
 
         JavaTab curTab = (JavaTab)this.javaTabPane.getSelectionModel().getSelectedItem();
+
 
         if (this.javaTabPane.tabIsSaved(curTab)) {
             String filename = this.tabFilepathMap.get(curTab);
@@ -358,6 +365,11 @@ public class FileController {
     }
 
 
+    /**
+     *
+     * @return the list of errors from the most recent scan performed on a file
+     * return value will be null if there is no valid file open to scan
+     */
     public List<Error> getScanningErrors() {
         if (this.scanner == null) return null;
         return this.scanner.getErrors();
@@ -378,11 +390,4 @@ public class FileController {
         javaTabPane.removeTab(curTab);
     }
 
-    /**
-     *A getter to get the hashmap that stores the tabFilepathMap
-     * @return  Hashmap<Tab,String> of tabs and the tabFilepathMap of files in the tabs
-     */
-    public HashMap<Tab,String> getTabFilepathMap(){
-        return this.tabFilepathMap;
-    }
 }
