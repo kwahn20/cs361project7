@@ -211,12 +211,12 @@ public class MasterController {
     }
 
     @FXML public void handleScan() throws InterruptedException {
-//        System.out.println("TEST");
         this.fileController.handleScan();
 
         List<Error> scanningErrors = fileController.getScanningErrors();
 
-        for (Error e : scanningErrors)  this.console.WriteLineToConsole(e.toString() + "\n", "ERROR");
+        for (Error e : scanningErrors)
+            this.console.WriteLineToConsole(e.toString() + "\n", "ERROR");
 
     }
     /**

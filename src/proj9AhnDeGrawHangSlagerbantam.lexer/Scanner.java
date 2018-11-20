@@ -336,7 +336,7 @@ public class Scanner
         }
         else {
             this.goToNextChar = false;
-            return new Token(Token.Kind.PLUSMINUS, currentChar.toString(),
+            return new Token(Token.Kind.PLUSMINUS, prevChar.toString(),
                     this.sourceFile.getCurrentLineNumber());
         }
     }
@@ -359,7 +359,7 @@ public class Scanner
         }
         else {
             this.goToNextChar = false;
-            return new Token(Token.Kind.PLUSMINUS, currentChar.toString(),
+            return new Token(Token.Kind.PLUSMINUS, prevChar.toString(),
                     this.sourceFile.getCurrentLineNumber());
         }
     }
