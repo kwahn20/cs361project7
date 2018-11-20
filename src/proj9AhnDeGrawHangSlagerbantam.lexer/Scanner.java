@@ -474,7 +474,7 @@ public class Scanner
 
     public static void main (String[] args){
         if(args.length > 1){
-            for(int i = 1; i< args.length; i ++){
+            for(int i = 0; i< args.length; i ++){
                 Scanner scanner = new Scanner(args[i],new ErrorHandler());
                 Token nextToken;
                 while ( (nextToken = scanner.scan()).kind != Token.Kind.EOF) {
@@ -483,13 +483,14 @@ public class Scanner
 
                 if(scanner.getErrors().size() > 0){
                     System.out.println("Scanning of " + args[i] + " was not successful. "+
-                            scanner.getErrors().size() +" errors were found.");
+                            scanner.getErrors().size() +" errors were found.\n\n");
                 }
                 else{
 
                     System.out.println("Scanning of " + args[i] + " was successful. " +
-                            "No errors were found.");
+                            "No errors were found.\n\n");
                 }
+
 
             }
         }
