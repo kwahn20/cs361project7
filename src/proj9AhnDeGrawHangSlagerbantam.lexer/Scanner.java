@@ -59,7 +59,7 @@ public class Scanner
 
         //gets rid of whitespace
         else if (currentChar.equals('\t') || currentChar.equals('\r')
-                || currentChar.equals('\n') || currentChar.equals('\f')) {
+                || currentChar.equals('\n') || currentChar.equals('\f') || currentChar.equals(' ')) {
             this.goToNextChar = true;
             return this.scan();
         }
@@ -67,9 +67,10 @@ public class Scanner
 
         switch(currentChar) {
 
-            case(' '):
+            case('*'):
                 this.goToNextChar = true;
-                return this.scan();
+                return new Token(Token.Kind.MULDIV, currentChar.toString(),
+                        this.sourceFile.getCurrentLineNumber());
 
             case('"'): return this.getStringConstToken();
 
