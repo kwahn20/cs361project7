@@ -343,6 +343,7 @@ public class Scanner
     }
 
     /**
+     * Creates a minus token or a unary decrement token
      *
      * @return a token of Kind PLUSMINUS
      */
@@ -366,8 +367,9 @@ public class Scanner
     }
 
     /**
-     *
-     * @return
+     * Returns an integer constant token, where the integer
+     * value does not exceed (2^31 -1)
+     * @return integer constant token
      */
     private Token getIntConstToken() {
         String spelling = "";
@@ -392,11 +394,11 @@ public class Scanner
 
 
     /**
-     *
-     * @return a token of Kind.IDENTIFIER or Kind.ERROR if its an invalid character
-     *
+     * Returns a identifier or keyword token
      * if it should be a keyword, it will be converted to the appropriate Kind in the
      * Token constructor
+     *
+     * @return a token of Kind.IDENTIFIER or Kind.ERROR if its an invalid character
      */
     private Token getIdentifierOrKeywordToken() {
 
@@ -423,12 +425,20 @@ public class Scanner
         return new Token(Token.Kind.IDENTIFIER, spelling, this.sourceFile.getCurrentLineNumber());
     }
 
-
+    /**
+     * Returns a string constant token ensuring that
+     * no strings are over 5000 characters
+     *
+     * @return string constant token
+     */
     private Token getStringConstToken() {
         String spelling = "";
         spelling = spelling.concat(currentChar.toString());
         currentChar = this.sourceFile.getNextChar();
+        //while the quote is unmatched continue getting chars
         while(!currentChar.equals('"')){
+
+            //if you've reached an eof or a new line in a string, throws error
             if(currentChar.equals(SourceFile.eof) || currentChar.equals('\n')){
                 this.errorHandler.register(Error.Kind.LEX_ERROR,
                         this.sourceFile.getFilename(), this.sourceFile.getCurrentLineNumber(),
@@ -436,15 +446,18 @@ public class Scanner
                 this.goToNextChar = false;
                 return new Token(Token.Kind.ERROR, spelling,
                         this.sourceFile.getCurrentLineNumber());
-
             }
 
+            //otherwise add on to the string
             spelling = spelling.concat(currentChar.toString());
             currentChar = this.sourceFile.getNextChar();
         }
+
+        //add on end quote
         spelling = spelling.concat(currentChar.toString());
         this.goToNextChar = true;
 
+        //makes sure the string is less than 5000 chars
         if(spelling.length()<5000) {
             return new Token(Token.Kind.STRCONST, spelling, this.sourceFile.getCurrentLineNumber());
         }
@@ -460,6 +473,26 @@ public class Scanner
 
 
     public static void main (String[] args){
+        if(args.length > 1){
+            for(int i = 1; i< args.length; i ++){
+                Scanner scanner = new Scanner(args[i],new ErrorHandler());
+                Token nextToken;
+                while ( (nextToken = scanner.scan()).kind != Token.Kind.EOF) {
+                    System.out.println(nextToken);
+                }
+
+                if(scanner.getErrors().size() > 0){
+                    System.out.println("Scanning of " + args[i] + " was not successful. "+
+                            scanner.getErrors().size() +" errors were found.");
+                }
+                else{
+
+                    System.out.println("Scanning of " + args[i] + " was successful. " +
+                            "No errors were found.");
+                }
+
+            }
+        }
 
     }
 

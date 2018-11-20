@@ -161,9 +161,6 @@ public class FileController {
         System.out.println("in close");
         JavaTab curTab = (JavaTab)this.javaTabPane.getSelectionModel().getSelectedItem();
 
-//        if (this.javaTabPane.tabIsSaved(curTab)) this.closeTab();
-//        else this.askSaveAndClose(event);
-
         if (tabFilepathMap.get(curTab) != null) {
             // check if any changes were made
             if (this.javaTabPane.tabIsSaved(curTab))
@@ -215,7 +212,6 @@ public class FileController {
         else{
             writeFile(file);
             tabFilepathMap.replace(curTab,file.getPath());
-//            saveStatus.replace(curTab, true);
             this.javaTabPane.updateTabSavedStatus(curTab, true);
             this.directoryController.createDirectoryTree();
         }
@@ -297,9 +293,6 @@ public class FileController {
             return;
         }
 
-        // update File array
-//        tabFilepathMap.replace(curTab, file.getPath());
-//        saveStatus.replace(curTab, true);
         this.javaTabPane.updateTabSavedStatus(curTab, true);
     }
 
