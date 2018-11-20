@@ -138,7 +138,6 @@ public class Scanner
                 return new Token(Token.Kind.DOT,
                     currentChar.toString(), this.sourceFile.getCurrentLineNumber());
 
-
             case(','):
                 this.goToNextChar = true;
                 return new Token(Token.Kind.COMMA,
@@ -378,13 +377,16 @@ public class Scanner
         }
 
         this.goToNextChar = false;
-        if(Integer.parseInt(spelling) < Math.pow(2,31)-1)
-            return new Token(Token.Kind.INTCONST, spelling, this.sourceFile.getCurrentLineNumber());
-        else
+        try {
+            if (Integer.parseInt(spelling) < Math.pow(2, 31) - 1)
+                return new Token(Token.Kind.INTCONST, spelling, this.sourceFile.getCurrentLineNumber());
+        }
+        catch (NumberFormatException e){
             this.errorHandler.register(Error.Kind.LEX_ERROR,
                     this.sourceFile.getFilename(), this.sourceFile.getCurrentLineNumber(),
                     "INVALID INTEGER CONSTANT");
-            return new Token(Token.Kind.ERROR, currentChar.toString(),
+        }
+        return new Token(Token.Kind.ERROR, spelling,
                 this.sourceFile.getCurrentLineNumber());
     }
 
